@@ -14,9 +14,9 @@
   "author": "Francesco Lombardo",
   "license": "Apache 2.0",
   "devDependencies": {
-    "nodemon": "^1.11.0"
+    "nodemon": "*"
   },
   "dependencies": {
-    "express": "^4.15.2"
+    "express": "*"
   }
 }

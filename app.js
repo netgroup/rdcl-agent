@@ -1,10 +1,11 @@
 var express = require('express'),
+  config = require('./config/config'),
   app = express(),
-  port = process.env.PORT || 3000;
+  port = config.web.port;
 
 var agent_routes = require('./api/routes/agentRoutes');
 app.use(agent_routes);
 
 app.listen(port);
 
-console.log('OSHI MININET AGENT RDCL server started on: ' + port);
+console.log( config.name + ' server started on: ' + port);
