@@ -15,7 +15,10 @@ router.use(logErrors);
 
 // get all info about a deployment
 router.get('/deployments/:id', function(req, res) {
+	var DeploymentController = require('../controllers/deployment');
 
+	var dtrl = new DeploymentController();
+	res.status(201).json({});
 });
 
 // get all info about a deployment
