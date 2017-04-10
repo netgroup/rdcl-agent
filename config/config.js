@@ -1,6 +1,6 @@
 var config = {};
 
-config.name = "OSHI RDCL AGENT - on MININET"
+config.name = "OSHI RDCL AGENT - on MININET";
 config.redis = {};
 config.web = {};
 
