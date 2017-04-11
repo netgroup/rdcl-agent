@@ -17,6 +17,7 @@
     "nodemon": "*"
   },
   "dependencies": {
+    "body-parser": "^1.17.1",
     "express": "*"
   }
 }
