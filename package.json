@@ -18,6 +18,9 @@
   },
   "dependencies": {
     "body-parser": "^1.17.1",
-    "express": "*"
+    "command-exists": "^1.2.2",
+    "express": "*",
+    "ps-node": "^0.1.5",
+    "underscore": "^1.8.3"
   }
 }
