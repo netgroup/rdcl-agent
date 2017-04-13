@@ -14,22 +14,22 @@ dreamer.ShellInABox = (function (global) {
 
 
     ShellInABox.prototype.start = function (data, success, error) {
+        console.log(DEBUG_LOG, "Start process...");
+        var sib_arguments = ['-t', '-s', '/:user:user:HOME:/home/user/mininet_ssh_connect.sh ${url}', '-p', '8081', '-b']
+        this.stop(data, function () {
+                console.log(DEBUG_LOG, "Starting process...");
 
-        var sib_arguments = ['-t', '-s', '/:user:user:HOME:/home/user/mininet_ssh_connect.sh ${url}',  '-p', '8081', '-b']
-        this.stop(data, function(){
-            var execFile = require('child_process').execFile;
-            var child = execFile("shellinaboxd",sib_arguments, {
-                //'cwd': config.mininet.mininet_extension_path
-            }, function(error, stdout, stderr){
-                if (error) {
-                    throw error;
-                }
-                console.log(stdout);
-            });
-        },
-        function(){
+                var spawn = require('child_process').spawn;
+                var sh = spawn('shellinaboxd', sib_arguments, {
+                    stdio: 'ignore', // piping all stdio to /dev/null
+                    detached: true
+                }).unref();
+                success && success();
 
-        })
+            },
+            function () {
+
+            })
 
     };
 
@@ -43,8 +43,8 @@ dreamer.ShellInABox = (function (global) {
                 ps.kill(pid, {
                     signal: 'SIGKILL'
                 }, function (err) {
-                    if(err)
-                        console.log(DEBUG_LOG,"kill del processo", parseInt(pid), "fallito");
+                    if (err)
+                        console.log(DEBUG_LOG, "kill del processo", parseInt(pid), "fallito");
                     else
                         console.log(DEBUG_LOG, "kill del processo", parseInt(pid), "completato.");
                 });
@@ -54,7 +54,7 @@ dreamer.ShellInABox = (function (global) {
 
             error && error(e);
         });
-              //console.log( 'PID: %s, COMMAND: %s, ARGUMENTS: %s', process.pid, process.command, process.arguments );
+        //console.log( 'PID: %s, COMMAND: %s, ARGUMENTS: %s', process.pid, process.command, process.arguments );
 
     };
 
@@ -76,14 +76,14 @@ dreamer.ShellInABox = (function (global) {
         var ps = require('ps-node');
         ps.lookup({
             command: 'shellinaboxd',
+            psargs: 'ax'
         }, function (err, resultList) {
             if (err) {
                 error && error(err);
             }
-
-            if (resultList !== undefined && resultList.length > 0) {
+            console.log(resultList);
+            if (resultList != undefined && resultList.length > 0) {
                 console.log(DEBUG_LOG, "Is running.");
-                console.log(DEBUG_LOG, "Pid list:", pid_list.toString());
                 success && success(resultList);
             } else {
                 console.log(DEBUG_LOG, "Is not running.");
