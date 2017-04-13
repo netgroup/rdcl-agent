@@ -15,6 +15,21 @@ dreamer.ShellInABox = (function (global) {
 
     ShellInABox.prototype.start = function (data, success, error) {
 
+        var sib_arguments = ['-t', '-s', '/:user:user:HOME:/home/user/mininet_ssh_connect.sh ${url}',  '-p', '8081', '-b']
+        this.stop(data, function(){
+            var execFile = require('child_process').execFile;
+            var child = execFile("shellinaboxd",sib_arguments, {
+                //'cwd': config.mininet.mininet_extension_path
+            }, function(error, stdout, stderr){
+                if (error) {
+                    throw error;
+                }
+                console.log(stdout);
+            });
+        },
+        function(){
+
+        })
 
     };
 
@@ -22,7 +37,7 @@ dreamer.ShellInABox = (function (global) {
         console.log(DEBUG_LOG, "kill process...");
         this.isRunning(function (resultList) {
             //list of pid
-            var pid_list = _.pluck(resultList, 'pid')
+            var pid_list = _.pluck(resultList, 'pid');
             var ps = require('ps-node');
             pid_list.forEach(function (pid) {
                 ps.kill(pid, {
@@ -34,9 +49,10 @@ dreamer.ShellInABox = (function (global) {
                         console.log(DEBUG_LOG, "kill del processo", parseInt(pid), "completato.");
                 });
             });
+            success && success();
         }, function (e) {
 
-            error && error(e)
+            error && error(e);
         });
               //console.log( 'PID: %s, COMMAND: %s, ARGUMENTS: %s', process.pid, process.command, process.arguments );
 
@@ -50,7 +66,7 @@ dreamer.ShellInABox = (function (global) {
             success && success("shellinaboxd installed.");
         } else {
             console.log(DEBUG_LOG, "command not exists");
-            error && error("shellinaboxd not installed.!")
+            error && error("shellinaboxd not installed.!");
         }
 
     };
@@ -65,7 +81,7 @@ dreamer.ShellInABox = (function (global) {
                 error && error(err);
             }
 
-            if (resultList != undefined && resultList.length > 0) {
+            if (resultList !== undefined && resultList.length > 0) {
                 console.log(DEBUG_LOG, "Is running.");
                 console.log(DEBUG_LOG, "Pid list:", pid_list.toString());
                 success && success(resultList);
@@ -75,7 +91,7 @@ dreamer.ShellInABox = (function (global) {
             }
 
         });
-    }
+    };
 
 
 

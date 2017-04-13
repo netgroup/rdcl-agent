@@ -1,6 +1,6 @@
 var config = {};
 
-config.name = "OSHI RDCL AGENT - on MININET";
+config.name = "RDCL AGENT";
 
 config.mininet = {};
 config.mininet.mininet_extension_path = "/home/user/workspace/Dreamer-Mininet-Extensions";
