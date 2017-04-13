@@ -51,8 +51,14 @@ router.post('/deployments/:id/stop', function(req, res) {
     },
     function(error) {
 
-    })
+    });
 
+});
+
+router.get('/deployments/:id/node/:nodeId/console', function(req, res) {
+
+        res.status(201).json(status_agent);
+    
 });
 
 // get info about agent, current deployment and shellinabox

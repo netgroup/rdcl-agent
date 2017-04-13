@@ -24,7 +24,7 @@ dreamer.AgentController = (function (global){
         this.deployment.launch(
             function(){
                 console.log(DEBUG_LOG, 'createDeployment callback launch success');
-                
+
             }, function(error){
                 console.log(DEBUG_LOG, 'createDeployment callback launch fail');
             }
@@ -35,9 +35,12 @@ dreamer.AgentController = (function (global){
     AgentController.prototype.stopDeployment = function(args, success, fail){
         console.log(DEBUG_LOG, 'stopDeployment');
 
+        if(this.deployment)
+
+        this.deployment = null;
     };
 
-    AgentController.prototype.getStatus = function(args){
+    AgentController.prototype.getStatus = function(args, success, fail){
         console.log(DEBUG_LOG, 'getStatus');
         var status = {
             status: "",

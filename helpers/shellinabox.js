@@ -22,7 +22,7 @@ dreamer.ShellInABox = (function (global){
   	};
 
     ShellInABox.prototype.check = function(){
-
+        
 
   	};
 
