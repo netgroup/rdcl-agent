@@ -9,7 +9,7 @@ dreamer.ShellInABox = (function (global) {
 
     function ShellInABox() {
         console.log(DEBUG_LOG, "Constructor");
-        this.isInstalled();
+        
     }
 
 
