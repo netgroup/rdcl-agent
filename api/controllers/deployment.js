@@ -41,6 +41,7 @@ dreamer.DeploymentController = (function (global){
 
             this.sh.on('error', function(e){
                 console.log("error:", e);
+                error(e);
             });
 
             this.sh.on('close', function(code){
@@ -78,6 +79,12 @@ dreamer.DeploymentController = (function (global){
     };
 
     DeploymentController.prototype.getInfo = function(){
+
+    };
+
+    DeploymentController.prototype.getNodeConsole = function(args, success, fail){
+        console.log(DEBUG_LOG, 'getNodeConsole');
+
 
     };
 

@@ -15,6 +15,7 @@ dreamer.AgentController = (function (global){
         console.log(DEBUG_LOG, 'Constructor');
         this.log_actions = [];
         this.deployment = null;
+        this.status = "Runnig";
     }
 
     AgentController.prototype.createDeployment = function(args, success, fail){
@@ -24,9 +25,10 @@ dreamer.AgentController = (function (global){
         this.deployment.launch(
             function(){
                 console.log(DEBUG_LOG, 'createDeployment callback launch success');
-
+                success();
             }, function(error){
                 console.log(DEBUG_LOG, 'createDeployment callback launch fail');
+                fail(error);
             }
         );
 
@@ -35,15 +37,16 @@ dreamer.AgentController = (function (global){
     AgentController.prototype.stopDeployment = function(args, success, fail){
         console.log(DEBUG_LOG, 'stopDeployment');
 
-        if(this.deployment)
-
+        if(this.deployment){
+            this.deployment.stop()
+        }
         this.deployment = null;
     };
 
     AgentController.prototype.getStatus = function(args, success, fail){
         console.log(DEBUG_LOG, 'getStatus');
         var status = {
-            status: "",
+            status: this.status,
             deployment: {
 
             },
@@ -55,6 +58,17 @@ dreamer.AgentController = (function (global){
         };
 
         return status;
+    };
+
+    AgentController.prototype.getNodeConsole = function(args, success, fail){
+        console.log(DEBUG_LOG, 'getNodeConsole');
+
+        if(this.deployment){
+            this.deployment.getNodeConsole(args, success, fail);
+        }
+        else{
+            return fail('Deployment not found.');
+        }
     };
 
 
