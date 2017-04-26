@@ -45,10 +45,15 @@ dreamer.DeploymentController = (function (global){
             });
 
             this.sh.on('close', function(code){
+                console.log("CODE:", code);
+                var msg_exit = "MininetDeployment process exited with code: " + code;
+                console.log(msg_exit);
+                self.console_output.push(msg_exit);
                 if (code !== 0) {
-                    var msg_exit = "MininetDeployment process exited with code: " + code;
-                  console.log(msg_exit);
-                  self.console_output.push(msg_exit);
+                    fail(msg_exit);
+                }
+                else{
+                    success();
                 }
             });
 
@@ -75,8 +80,9 @@ dreamer.DeploymentController = (function (global){
     };
 
     DeploymentController.prototype.stop = function(success, error){
-        console.log("DeploymentController launch", this._topology_path);
-        var stsh = spawn("sudo",['python','mininet_deployer.py' , '--clean-all'], {
+        var self = this;
+        console.log("DeploymentController stop", this._topology_path);
+        var stsh = spawn("sudo",['python','mininet_deployer.py' , '--stop-all'], {
                 'cwd': config.mininet.mininet_extension_path
             });
             stsh.on('error', function(e){
@@ -85,11 +91,15 @@ dreamer.DeploymentController = (function (global){
             });
 
             stsh.on('close', function(code){
+                console.log("CODE:", code);
+                var msg_exit = "MininetDeployment process clean exited with code: " + code;
+                console.log(msg_exit);
+                self.console_output.push(msg_exit);
                 if (code !== 0) {
-                    var msg_exit = "MininetDeployment clean process exited with code: " + code;
-                  console.log(msg_exit);
-                  self.console_output.push(msg_exit);
-                  success();
+                    fail(msg_exit);
+                }
+                else{
+                    success();
                 }
             });
 

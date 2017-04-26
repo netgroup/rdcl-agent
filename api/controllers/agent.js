@@ -39,8 +39,12 @@ dreamer.AgentController = (function (global){
 
         if(this.deployment){
             this.deployment.stop(success, fail)
+            this.deployment = null;
         }
-        this.deployment = null;
+        else{
+            fail('Deployment not found');
+        }
+        
     };
 
     AgentController.prototype.getStatus = function(args, success, fail){
