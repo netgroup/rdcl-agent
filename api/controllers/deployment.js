@@ -50,7 +50,7 @@ dreamer.DeploymentController = (function (global){
                 console.log(msg_exit);
                 self.console_output.push(msg_exit);
                 if (code !== 0) {
-                    fail(msg_exit);
+                    error(msg_exit);
                 }
                 else{
                     success();
@@ -96,7 +96,7 @@ dreamer.DeploymentController = (function (global){
                 console.log(msg_exit);
                 self.console_output.push(msg_exit);
                 if (code !== 0) {
-                    fail(msg_exit);
+                    error(msg_exit);
                 }
                 else{
                     success();
