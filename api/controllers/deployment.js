@@ -56,7 +56,7 @@ dreamer.DeploymentController = (function (global){
 
     };
 
-    DeploymentController.prototype.launch = function(succes, error){
+    DeploymentController.prototype.launch = function(success, error){
         console.log("DeploymentController launch", this._topology_path);
         var self = this;
         var h = new Helper();
@@ -65,7 +65,7 @@ dreamer.DeploymentController = (function (global){
             self.sh = spawn("sudo",['python','mininet_deployer.py' , '--topology', self._topology_path, '--version', '2'], {
                 'cwd': config.mininet.mininet_extension_path
             });
-            self._initSh(succes, error);
+            self._initSh(success, error);
 
         },function(e){
             error(e);
@@ -74,12 +74,35 @@ dreamer.DeploymentController = (function (global){
 
     };
 
-    DeploymentController.prototype.stop = function(){
+    DeploymentController.prototype.stop = function(success, error){
+        console.log("DeploymentController launch", this._topology_path);
+        var stsh = spawn("sudo",['python','mininet_deployer.py' , '--clean-all'], {
+                'cwd': config.mininet.mininet_extension_path
+            });
+            stsh.on('error', function(e){
+                console.log("error:", e);
+                error(e);
+            });
+
+            stsh.on('close', function(code){
+                if (code !== 0) {
+                    var msg_exit = "MininetDeployment clean process exited with code: " + code;
+                  console.log(msg_exit);
+                  self.console_output.push(msg_exit);
+                  success();
+                }
+            });
+
 
     };
 
-    DeploymentController.prototype.getInfo = function(){
+    DeploymentController.prototype.getInfo = function(args, success, fail){
+        var info_data = {
+            id: this._id,
+            topology_deployment: this._topology_deployment
+        };
 
+        return success(info_data);
     };
 
     DeploymentController.prototype.getNodeConsole = function(args, success, fail){

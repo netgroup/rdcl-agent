@@ -38,7 +38,7 @@ dreamer.AgentController = (function (global){
         console.log(DEBUG_LOG, 'stopDeployment');
 
         if(this.deployment){
-            this.deployment.stop()
+            this.deployment.stop(success, fail)
         }
         this.deployment = null;
     };
