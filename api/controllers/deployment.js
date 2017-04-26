@@ -116,6 +116,7 @@ dreamer.DeploymentController = (function (global){
     };
 
     DeploymentController.prototype.getStatus = function(args, success, fail){
+        console.log("getStatus")
         var info_data = {
             id: this._id,
             topology_deployment: this._topology_deployment
