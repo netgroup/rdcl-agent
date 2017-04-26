@@ -115,6 +115,15 @@ dreamer.DeploymentController = (function (global){
         return success(info_data);
     };
 
+    DeploymentController.prototype.getStatus = function(args, success, fail){
+        var info_data = {
+            id: this._id,
+            topology_deployment: this._topology_deployment
+        };
+
+        return success(info_data);
+    };
+
     DeploymentController.prototype.getNodeConsole = function(args, success, fail){
         console.log(DEBUG_LOG, 'getNodeConsole');
 

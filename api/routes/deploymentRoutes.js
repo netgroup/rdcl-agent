@@ -33,9 +33,22 @@ module.exports = function(args){
 
     });
 
+
+
     // get all info about a deployment
     router.get('/:id', function(req, res) {
-        var status_deployment = agentController.getStatus({
+        var status_deployment = agentController.getDeploymentInfo({
+            deployment_id: req.params.id
+        });
+        if(status_deployment !== undefined)
+            res.status(201).json(status_deployment);
+        else
+            res.status(404).json({'error': 'No info about deployment.'});
+    });
+
+    // get all info about a deployment
+    router.get('/:id/status', function(req, res) {
+        var status_deployment = agentController.getDeploymentStatus({
             deployment_id: req.params.id
         });
         if(status_deployment !== undefined)
