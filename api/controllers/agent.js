@@ -73,7 +73,7 @@ dreamer.AgentController = (function (global){
         }
     };
 
-    AgentController.prototype.getDeploymentinfo = function(args, success, fail){
+    AgentController.prototype.getDeploymentInfo = function(args, success, fail){
         console.log(DEBUG_LOG, 'getDeploymentInfo');
         if(this.deployment){
             this.deployment.getInfo(args, success, fail);

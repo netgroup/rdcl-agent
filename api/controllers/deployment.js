@@ -9,6 +9,7 @@ dreamer.DeploymentController = (function (global){
     var spawn = require('child_process').spawn;
     var config = require('../../config/config');
     var Helper = require('../../helpers/helper');
+    var ShellInABox = require('../../helpers/shellinabox');
     /**
         Constructor
     */
@@ -126,9 +127,17 @@ dreamer.DeploymentController = (function (global){
     };
 
     DeploymentController.prototype.getNodeConsole = function(args, success, fail){
-        console.log(DEBUG_LOG, 'getNodeConsole');
+        console.log(DEBUG_LOG, 'getNodeConsole', JSON.stringify(args));
+        var shellinabox = new ShellInABox();
+        var result = {
+            console_enabled: true,
+            console_info: {
+                'url': shellinabox.getNodeEndPoint(args),
+                'type': 'shellinabox'
+            }
+        }
 
-
+        return success(result)
     };
 
 

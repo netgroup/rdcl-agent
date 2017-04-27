@@ -37,11 +37,12 @@ module.exports = function(args){
 
     // get all info about a deployment
     router.get('/:id', function(req, res) {
+        console.log("get info deployment")
         agentController.getDeploymentInfo({
             deployment_id: req.params.id
-        },function(status_deployment){
-            if(status_deployment !== undefined)
-                res.status(201).json(status_deployment);
+        },function(info_deployment){
+            if(info_deployment !== undefined)
+                res.status(201).json(info_deployment);
             else
                 res.status(404).json({'error': 'No info about deployment.'});
         },function(e){
@@ -81,9 +82,12 @@ module.exports = function(args){
 
     //Get web console information for a node
     router.get('/:id/node/:nodeId/console', function(req, res) {
+        var hostname = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host
+ 
         agentController.getNodeConsole({
             deployment_id: req.params.id,
-            node_id: req.params.nodeId
+            node_id: req.params.nodeId,
+            hostname: hostname
         }, function(result){
             res.status(201).json(result);
         },

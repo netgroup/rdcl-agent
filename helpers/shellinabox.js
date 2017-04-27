@@ -6,6 +6,7 @@ dreamer.ShellInABox = (function (global) {
     'use strict';
     var DEBUG_LOG = "[ShellInABox]";
     var _ = require('underscore');
+    var config = require('../config/config');
 
     function ShellInABox() {
         console.log(DEBUG_LOG, "Constructor");
@@ -15,7 +16,7 @@ dreamer.ShellInABox = (function (global) {
 
     ShellInABox.prototype.start = function (data, success, error) {
         console.log(DEBUG_LOG, "Start process...");
-        var sib_arguments = ['-t', '-s', '/:user:user:HOME:/home/user/mininet_ssh_connect.sh ${url}', '-p', '8081', '-b']
+        var sib_arguments = config.shellinabox.start_cmd;
         this.stop(data, function () {
                 console.log(DEBUG_LOG, "Starting process...");
 
@@ -92,6 +93,12 @@ dreamer.ShellInABox = (function (global) {
 
         });
     };
+
+    ShellInABox.prototype.getNodeEndPoint = function(args){
+        console.log(JSON.stringify(args));
+        var node_endpoint = 'http://'+ args['hostname'] +':'+config.shellinabox.port+'/?nodeId='+args['node_id']
+        return node_endpoint;
+    }
 
 
 
