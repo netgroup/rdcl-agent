@@ -10,7 +10,7 @@ dreamer.ShellInABox = (function (global) {
 
     function ShellInABox() {
         console.log(DEBUG_LOG, "Constructor");
-        
+
     }
 
 
@@ -30,7 +30,7 @@ dreamer.ShellInABox = (function (global) {
             },
             function () {
 
-            })
+            });
 
     };
 
