@@ -128,16 +128,35 @@ dreamer.DeploymentController = (function (global){
 
     DeploymentController.prototype.getNodeConsole = function(args, success, fail){
         console.log(DEBUG_LOG, 'getNodeConsole', JSON.stringify(args));
-        var shellinabox = new ShellInABox();
-        var result = {
-            console_enabled: true,
-            console_info: {
-                'url': shellinabox.getNodeEndPoint(args),
-                'type': 'shellinabox'
+        var helper = new Helper();
+        helper.impJsonFromFile('/tmp/overall_info.json', function(data_result){
+            if(data_result.error){
+                return fail(data_result.error.message)
             }
-        }
+            else{
+                var node_data = data_result.data[args.node_id] || undefined;
+                var shellinabox = new ShellInABox();
+                var result = {
+                        console_enabled: false,
+                        console_info: {
+                            'url': '',
+                            'type': 'shellinabox'
+                        }
+                    }
+                if(node_data && node_data['mgt_IP']){
 
-        return success(result)
+                    args['mgt_IP'] = node_data['mgt_IP'];
+                    result.console_info.url = shellinabox.getNodeEndPoint(args);
+                    result.console_enabled = true;
+                }
+                return success(result);
+
+            }
+
+        });
+        
+
+        
     };
 
 

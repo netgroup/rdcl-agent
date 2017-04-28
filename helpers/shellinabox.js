@@ -96,7 +96,7 @@ dreamer.ShellInABox = (function (global) {
 
     ShellInABox.prototype.getNodeEndPoint = function(args){
         console.log(JSON.stringify(args));
-        var node_endpoint = 'http://'+ args['hostname'] +':'+config.shellinabox.port+'/?nodeId='+args['node_id']
+        var node_endpoint = 'http://'+ args['hostname'] +':'+config.shellinabox.port+'/?nodeIP='+args['mgt_IP']
         return node_endpoint;
     }
 
