@@ -75,14 +75,14 @@ dreamer.ShellInABox = (function (global) {
     ShellInABox.prototype.isRunning = function (success, error) {
         console.log(DEBUG_LOG, "check if is running...");
         var ps = require('ps-node');
+       // console.log("command", 'shellinaboxd ' +config.shellinabox.start_cmd.join(' '));
         ps.lookup({
-            command: 'shellinaboxd',
+            command: "shellinaboxd",
             psargs: 'ax'
         }, function (err, resultList) {
             if (err) {
                 error && error(err);
             }
-            console.log(resultList);
             if (resultList != undefined && resultList.length > 0) {
                 console.log(DEBUG_LOG, "Is running.");
                 success && success(resultList);
