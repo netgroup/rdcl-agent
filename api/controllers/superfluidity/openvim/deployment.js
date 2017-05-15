@@ -28,7 +28,7 @@ dreamer.DeploymentController = (function (global){
                 var fullfilename = config.openvim.openvim_base_cwd + "/" + filename + "."  + ext_file;
                 log.info("[%s]  creating file %s.%s", DEBUG_LOG, desc_type, ext_file);
                 var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename]; 
-                fs.writeFile('/tmp/'+fullfilename, JSON.str);
+                fs.writeFile(fullfilename, JSON.str);
                 
                 
             }
