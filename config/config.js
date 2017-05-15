@@ -15,6 +15,10 @@ shellinabox.port = 8089;
 shellinabox.script_path = '/home/user/workspace/oshi-rdcl-agent/scripts/shellinabox/mininet_ssh_connect.sh';
 shellinabox.start_cmd = ['-t', '-s', '/:user:user:HOME:' + shellinabox.script_path +' ${url}', '-p', shellinabox.port, '-b'];
 
+
+config.openvim = {}
+config.openvim.openvim_base_cwd = '/home/user/workspace/oshi-rdcl-agent/scripts/superfluidity';
+
 config.web = {};
 config.web.port = process.env.PORT || 3030;
 

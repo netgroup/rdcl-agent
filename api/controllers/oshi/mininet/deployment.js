@@ -19,7 +19,7 @@ dreamer.DeploymentController = (function (global){
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController Constructor");
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
-        this._topology_deployment = args.topology;
+        this._deployment_descriptor = args.topology;
 
         //this.start();
         this.console_output = [];
@@ -66,7 +66,7 @@ dreamer.DeploymentController = (function (global){
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController launch " + this._topology_path);
         var self = this;
         var h = new Helper();
-        h.newJSONfile(this._topology_path, this._topology_deployment,
+        h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
             self.sh = spawn("sudo",['python','mininet_deployer.py' , '--topology', self._topology_path, '--version', '2'], {
                 'cwd': config.mininet.mininet_extension_path
@@ -110,7 +110,7 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.getInfo = function(args, success, fail){
         var info_data = {
             id: this._id,
-            topology_deployment: this._topology_deployment
+            topology_deployment: this._deployment_descriptor
         };
 
         return success(info_data);
@@ -120,7 +120,7 @@ dreamer.DeploymentController = (function (global){
         log.info("[%s] %s",DEBUG_LOG,"getStatus")
         var info_data = {
             id: this._id,
-            topology_deployment: this._topology_deployment
+            topology_deployment: this._deployment_descriptor
         };
 
         return success(info_data);

@@ -9,9 +9,9 @@ dreamer.DeploymentController = (function (global){
     var log = new Log('info');
     var DEBUG_LOG = "DeploymentController";
     var spawn = require('child_process').spawn;
-    var config = require('../../config/config');
-    var Helper = require('../../helpers/helper');
-    var ShellInABox = require('../../helpers/shellinabox');
+    var config = require('../../../../config/config');
+    var Helper = require('../../../../helpers/helper');
+    var ShellInABox = require('../../../../helpers/shellinabox');
     /**
         Constructor
     */
@@ -47,7 +47,7 @@ dreamer.DeploymentController = (function (global){
             });
 
             this.sh.on('close', function(code){
-                var msg_exit = "MininetDeployment process exited with code: " + code;
+                var msg_exit = "OpenVimDeployment process exited with code: " + code;
                 log.info("[%s] %s",DEBUG_LOG,msg_exit);
                 self.console_output.push(msg_exit);
                 if (code !== 0) {
@@ -68,8 +68,10 @@ dreamer.DeploymentController = (function (global){
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
-            self.sh = spawn("sudo",['python','mininet_deployer.py' , '--topology', self._topology_path, '--version', '2'], {
-                'cwd': config.mininet.mininet_extension_path
+            //self.sh = spawn("sudo",['python','mininet_deployer.py' , '--topology', self._topology_path, '--version', '2'], {
+            //self.sh = spawn("sh",['openvimanagement.sh'], {
+            self.sh = spawn("./openvimanagement.sh",[], {
+                'cwd': config.openvim.openvim_base_cwd
             });
             self._initSh(success, error);
 
