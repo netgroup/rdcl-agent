@@ -1069,7 +1069,8 @@ var ovdeployment = new Deployment({
             }]
         }
     }
-}});
+}
+});
 
 ovdeployment.launch(function(){
 	console.log("Deployment started.");

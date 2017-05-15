@@ -16,8 +16,13 @@ shellinabox.script_path = '/home/user/workspace/oshi-rdcl-agent/scripts/shellina
 shellinabox.start_cmd = ['-t', '-s', '/:user:user:HOME:' + shellinabox.script_path +' ${url}', '-p', shellinabox.port, '-b'];
 
 
-config.openvim = {}
+config.openvim = {};
 config.openvim.openvim_base_cwd = '/home/rfb/rdcl-agent/scripts/supefluidity';
+config.openvim.OPENVIM_HOST = 'localhost';
+config.openvim.OPENVIM_PORT = 9080;
+config.openvim.OPENVIM_ADMIN_PORT = 9085;
+config.openvim.OPENVIM_TENANT= '96035cba-b313-11e6-866f-0cc47a7794be'
+
 
 config.web = {};
 config.web.port = process.env.PORT || 3030;

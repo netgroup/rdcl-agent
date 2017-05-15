@@ -79,10 +79,14 @@ dreamer.DeploymentController = (function (global){
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
-            //self.sh = spawn("sudo",['python','mininet_deployer.py' , '--topology', self._topology_path, '--version', '2'], {
-            //self.sh = spawn("sh",['openvimanagement.sh'], {
             self.sh = spawn("bash",['openvimanagement.sh'], {
-                'cwd': config.openvim.openvim_base_cwd
+                'cwd': config.openvim.openvim_base_cwd,
+                'env': {
+                    'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
+                    'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
+                    'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
+                    'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
+                }
             });
             self._initSh(success, error);
 
