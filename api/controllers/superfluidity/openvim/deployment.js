@@ -108,9 +108,9 @@ dreamer.DeploymentController = (function (global){
         var self = this;
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController stop");
         for(var elm_cat in this._openvim){
-            for(var element in this._openvim[elm_cat]){
+            for(var index in this._openvim[elm_cat]){
                 var arg_del = elm_cat + '-delete';
-                execFile('./openvim', [arg_del, element],{
+                execFile('./openvim', [arg_del, this._openvim[elm_cat][index]],{
                     'cwd': config.openvim.openvim_client,
                     'env': {
                         'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
