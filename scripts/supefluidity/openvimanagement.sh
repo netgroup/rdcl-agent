@@ -9,9 +9,9 @@
 NSDFILE="nsd.json"
 FLAVORUUID="5a258552-0a51-11e7-a086-0cc47a7794be"
 # openvim client
-OPENVIM="/home/openvim/openvim-one/openvim/openvim" 
-CLICKINJECTOR="/home/openvim/rdcl3dopenvim/configinjector"
-STAMINALCLICKOSIMAGE="/home/openvim/rdcl3dopenvim/clickos_x86_64_staminal"
+OPENVIM="/home/rfb/openvimclient" 
+CLICKINJECTOR="/home/rfb/configinjector"
+STAMINALCLICKOSIMAGE="/home/rfb/configinjector/clickos_x86_64_staminal"
 
 # directory to store yamls
 YAMLDIR="$(pwd)/yamls"
