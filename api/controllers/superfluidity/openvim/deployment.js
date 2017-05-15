@@ -26,12 +26,10 @@ dreamer.DeploymentController = (function (global){
             for(var filename in this._deployment_descriptor[desc_type]){
                 var ext_file = (desc_type !== 'click')? 'json':'click';
                 var fullfilename = config.openvim.openvim_base_cwd + "/" + filename + "."  + ext_file;
-                log.info("[%s]  creating file %s.%s", DEBUG_LOG, desc_type, ext_file);
+                log.info("[%s]  creating file %s.%s", DEBUG_LOG, filename, ext_file);
                 var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename]; 
-                fs.writeFile(fullfilename, JSON.str);
-                
-                
-            }
+                fs.writeFile(fullfilename, data);
+             }
         }
 
         //this.start();
@@ -83,7 +81,7 @@ dreamer.DeploymentController = (function (global){
         function(){
             //self.sh = spawn("sudo",['python','mininet_deployer.py' , '--topology', self._topology_path, '--version', '2'], {
             //self.sh = spawn("sh",['openvimanagement.sh'], {
-            self.sh = spawn("./openvimanagement.sh",[], {
+            self.sh = spawn("bash",['openvimanagement.sh'], {
                 'cwd': config.openvim.openvim_base_cwd
             });
             self._initSh(success, error);
