@@ -5,9 +5,7 @@ if (typeof dreamer === 'undefined') {
 
 dreamer.DeploymentController = (function (global){
     'use strict';
-    var Log = require('log')
-    var log = new Log('info');
-    var DEBUG_LOG = "DeploymentController";
+    var DEBUG_LOG = "[DeploymentController]";
     var spawn = require('child_process').spawn;
     var config = require('../../config/config');
     var Helper = require('../../helpers/helper');
@@ -16,7 +14,8 @@ dreamer.DeploymentController = (function (global){
         Constructor
     */
     function DeploymentController(args){
-        log.info("[%s] %s",DEBUG_LOG,"DeploymentController Constructor");
+        console.log("DeploymentController Constructor");
+        console.log(JSON.stringify(args));
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._topology_deployment = args.topology;
@@ -27,28 +26,29 @@ dreamer.DeploymentController = (function (global){
 
 
     DeploymentController.prototype._initSh = function(success, error){
-        log.info("[%s] %s",DEBUG_LOG,"DeploymentController _initSh");
+        console.log("DeploymentController _initSh");
             var self = this;
             this.sh.stderr.setEncoding('utf-8');
             this.sh.stdout.setEncoding('utf-8');
             this.sh.stdout.on('data', function(data){
-                log.info("[%s] %s",DEBUG_LOG,"stdout:", data);
+                console.log("stdout:", data);
                 self.console_output.push(data);
             });
 
             this.sh.stderr.on('data', function (data){
-                log.info("[%s] %s",DEBUG_LOG,"stderr:", data);
+                console.log("stderr:", data);
                 self.console_output.push(data);
             });
 
             this.sh.on('error', function(e){
-                log.info("[%s] %s",DEBUG_LOG,"error:", e);
+                console.log("error:", e);
                 error(e);
             });
 
             this.sh.on('close', function(code){
+                console.log("CODE:", code);
                 var msg_exit = "MininetDeployment process exited with code: " + code;
-                log.info("[%s] %s",DEBUG_LOG,msg_exit);
+                console.log(msg_exit);
                 self.console_output.push(msg_exit);
                 if (code !== 0) {
                     error(msg_exit);
@@ -63,7 +63,7 @@ dreamer.DeploymentController = (function (global){
     };
 
     DeploymentController.prototype.launch = function(success, error){
-        log.info("[%s] %s",DEBUG_LOG,"DeploymentController launch " + this._topology_path);
+        console.log("DeploymentController launch", this._topology_path);
         var self = this;
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._topology_deployment,
@@ -82,19 +82,19 @@ dreamer.DeploymentController = (function (global){
 
     DeploymentController.prototype.stop = function(success, error){
         var self = this;
-        log.info("[%s] %s",DEBUG_LOG,"DeploymentController stop");
+        console.log("DeploymentController stop", this._topology_path);
         var stsh = spawn("sudo",['python','mininet_deployer.py' , '--stop-all'], {
                 'cwd': config.mininet.mininet_extension_path
             });
             stsh.on('error', function(e){
-                log.info("[%s] %s",DEBUG_LOG,"error: " + e);
+                console.log("error:", e);
                 error(e);
             });
 
             stsh.on('close', function(code){
-               
+                console.log("CODE:", code);
                 var msg_exit = "MininetDeployment process clean exited with code: " + code;
-                log.info("[%s] %s",DEBUG_LOG,msg_exit);
+                console.log(msg_exit);
                 self.console_output.push(msg_exit);
                 if (code !== 0) {
                     error(msg_exit);
@@ -117,7 +117,7 @@ dreamer.DeploymentController = (function (global){
     };
 
     DeploymentController.prototype.getStatus = function(args, success, fail){
-        log.info("[%s] %s",DEBUG_LOG,"getStatus")
+        console.log("getStatus")
         var info_data = {
             id: this._id,
             topology_deployment: this._topology_deployment
@@ -127,7 +127,7 @@ dreamer.DeploymentController = (function (global){
     };
 
     DeploymentController.prototype.getNodeConsole = function(args, success, fail){
-        log.info("[%s] %s", DEBUG_LOG, 'getNodeConsole');
+        console.log(DEBUG_LOG, 'getNodeConsole', JSON.stringify(args));
         var helper = new Helper();
         helper.impJsonFromFile('/tmp/overall_info.json', function(data_result){
             if(data_result.error){

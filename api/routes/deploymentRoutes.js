@@ -8,7 +8,7 @@ module.exports = function(args){
 
     // a middleware function with no mount path. This code is executed for every request to the router
     router.use(function (req, res, next) {
-        console.log(MODULE_NAME, req.method, req.originalUrl, Date.now());
+        log.info("[%s] %s %s",MODULE_NAME, req.method, req.originalUrl);
         next();
     });
 

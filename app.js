@@ -1,8 +1,8 @@
-var express = require('express'),
-  app = express();
+var express = require('express');
+var app = express();
 var bodyParser = require('body-parser');
-var config = require('./config/config'),
-  port = config.web.port;
+var config = require('./config/config');
+var port = config.web.port;
 var agent_routes = require('./api/routes/agentRoutes');
 var ShellInABox = require('./helpers/shellinabox');
 var shellinabox = new ShellInABox();

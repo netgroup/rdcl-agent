@@ -20,6 +20,7 @@
     "body-parser": "^1.17.1",
     "command-exists": "^1.2.2",
     "express": "*",
+    "log": "^1.4.0",
     "ps-node": "^0.1.5",
     "underscore": "^1.8.3"
   }
