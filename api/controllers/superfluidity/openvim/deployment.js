@@ -20,6 +20,19 @@ dreamer.DeploymentController = (function (global){
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._deployment_descriptor = args.deployment_descriptor;
+        var fs = require('fs');
+        for(var desc_type in this._deployment_descriptor){
+            log.info("[%s] %s", DEBUG_LOG, desc_type)
+            for(var filename in this._deployment_descriptor[desc_type]){
+                var ext_file = (desc_type !== 'click')? 'json':'click';
+                var fullfilename = config.openvim.openvim_base_cwd + "/" + filename + "."  + ext_file;
+                log.info("[%s]  creating file %s.%s", DEBUG_LOG, desc_type, ext_file);
+                var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename]; 
+                fs.writeFile('/tmp/'+fullfilename, JSON.str);
+                
+                
+            }
+        }
 
         //this.start();
         this.console_output = [];
