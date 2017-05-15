@@ -9,6 +9,7 @@ dreamer.DeploymentController = (function (global){
     var log = new Log('info');
     var DEBUG_LOG = "DeploymentController";
     var spawn = require('child_process').spawn;
+    var execFile = require('child_process').execFile;
     var config = require('../../../../config/config');
     var Helper = require('../../../../helpers/helper');
     var ShellInABox = require('../../../../helpers/shellinabox');
@@ -20,12 +21,17 @@ dreamer.DeploymentController = (function (global){
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._deployment_descriptor = args.deployment_descriptor;
+        this._openvim = {
+            'vm': ['vm-clickos-vlan', 'vm-clickos-ping', 'vm-clickos-firewall'],
+            'net': ['net-vl1', 'net-vl2', 'net-vl3'],
+            'image': ['clickos-vnf_click_vdu_ping', 'clickos-vnf_click_vdu_vlan', 'clickos-vnf_click_vdu_fwall']
+        }
         var fs = require('fs');
         for(var desc_type in this._deployment_descriptor){
             log.info("[%s] %s", DEBUG_LOG, desc_type)
             for(var filename in this._deployment_descriptor[desc_type]){
                 var ext_file = (desc_type !== 'click')? 'json':'click';
-                var fullfilename = config.openvim.openvim_base_cwd + "/" + filename + "."  + ext_file;
+                var fullfilename = config.openvim.BASE_CWD + "/" + filename + "."  + ext_file;
                 log.info("[%s]  creating file %s.%s", DEBUG_LOG, filename, ext_file);
                 var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename]; 
                 fs.writeFile(fullfilename, data);
@@ -74,13 +80,14 @@ dreamer.DeploymentController = (function (global){
     };
 
     DeploymentController.prototype.launch = function(success, error){
-        log.info("[%s] %s",DEBUG_LOG,"DeploymentController launch " + this._topology_path);
+        log.info("[%s] %s",DEBUG_LOG,"DeploymentController launch ");
         var self = this;
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
+            
             self.sh = spawn("bash",['openvimanagement.sh'], {
-                'cwd': config.openvim.openvim_base_cwd,
+                'cwd': config.openvim.BASE_CWD,
                 'env': {
                     'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
                     'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
@@ -89,7 +96,7 @@ dreamer.DeploymentController = (function (global){
                 }
             });
             self._initSh(success, error);
-
+            
         },function(e){
             error(e);
         });
@@ -100,8 +107,35 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.stop = function(success, error){
         var self = this;
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController stop");
+        for(var elm_cat in this._openvim){
+            for(var element in this._openvim[elm_cat]){
+                var arg_del = elm_cat + '-delete';
+                execFile('./openvim', [arg_del, element],{
+                    'cwd': config.openvim.openvim_client,
+                    'env': {
+                        'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
+                        'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
+                        'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
+                        'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
+                    }
+                }, function(err, stdout, stderr){
+                    if (err) {
+                        console.error(err);
+                        return;
+                    }
+                      console.log(stdout);
+                });
+            }
+        }
+        /*
         var stsh = spawn("sudo",['python','mininet_deployer.py' , '--stop-all'], {
-                'cwd': config.mininet.mininet_extension_path
+                'cwd': config.openvim.openvim_client,
+                'env': {
+                    'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
+                    'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
+                    'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
+                    'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
+                }
             });
             stsh.on('error', function(e){
                 log.info("[%s] %s",DEBUG_LOG,"error: " + e);
@@ -120,6 +154,8 @@ dreamer.DeploymentController = (function (global){
                     success();
                 }
             });
+
+            */
 
 
     };
