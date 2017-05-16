@@ -61,5 +61,7 @@ typings/
 # dotenv environment variables file
 .env
 
-
+scripts/superfluidity/*.json
+scripts/superfluidity/*.click
+scripts/superfluidity/yamls/
 # End of https://www.gitignore.io/api/node
