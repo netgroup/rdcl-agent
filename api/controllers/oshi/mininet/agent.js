@@ -10,9 +10,9 @@ dreamer.AgentController = (function (global){
 
     var DEBUG_LOG = "AgentController";
     var spawn = require('child_process').spawn;
-    var config = require('../../config/config');
-    var DeploymentController = require('../controllers/deployment');
-    var shellInABoxController = require('../../helpers/shellinabox')();
+    var config = require('../../../../config/config');
+    var DeploymentController = require('./deployment');
+    var shellInABoxController = require('../../../../helpers/shellinabox')();
 
     function AgentController(args){
         log.info("[%s] %s", 'Constructor');
@@ -24,16 +24,21 @@ dreamer.AgentController = (function (global){
     AgentController.prototype.createDeployment = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'createDeployment');
         var self = this;
-        this.deployment = new DeploymentController(args);
-        this.deployment.launch(
-            function(){
-                log.info("[%s] %s", DEBUG_LOG, 'createDeployment callback launch success');
-                success();
-            }, function(error){
-                log.error("[%s] %s", DEBUG_LOG, 'createDeployment callback launch fail');
-                fail(error);
-            }
-        );
+        if(this.deployment =! undefined){
+            this.deployment = new DeploymentController(args);
+            this.deployment.launch(
+                function(){
+                    log.info("[%s] %s", DEBUG_LOG, 'createDeployment callback launch success');
+                    success();
+                }, function(error){
+                    log.error("[%s] %s", DEBUG_LOG, 'createDeployment callback launch fail');
+                    fail(error);
+                }
+            );
+        }
+        else{
+            fail("Agent busy with another deployment.")
+        }
 
     };
 

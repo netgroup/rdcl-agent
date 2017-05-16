@@ -9,9 +9,10 @@ dreamer.DeploymentController = (function (global){
     var log = new Log('info');
     var DEBUG_LOG = "DeploymentController";
     var spawn = require('child_process').spawn;
-    var config = require('../../config/config');
-    var Helper = require('../../helpers/helper');
-    var ShellInABox = require('../../helpers/shellinabox');
+    var config = require('../../../../config/config');
+    var Helper = require('../../../../helpers/helper');
+    var ShellInABox = require('../../../../helpers/shellinabox');
+
     /**
         Constructor
     */
@@ -110,7 +111,8 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.getInfo = function(args, success, fail){
         var info_data = {
             id: this._id,
-            deployment_descriptor: this._deployment_descriptor
+            deployment_descriptor: this._deployment_descriptor,
+            topology_deployment: this._deployment_descriptor
         };
 
         return success(info_data);
@@ -120,7 +122,8 @@ dreamer.DeploymentController = (function (global){
         log.info("[%s] %s",DEBUG_LOG,"getStatus")
         var info_data = {
             id: this._id,
-            deployment_descriptor: this._deployment_descriptor
+            deployment_descriptor: this._deployment_descriptor,
+            topology_deployment: this._deployment_descriptor
         };
 
         return success(info_data);
