@@ -1,4 +1,6 @@
 var express = require('express');
+var Log = require('log')
+var log = new Log('info');
 
 module.exports = function(args){
     var agentController = args.agentController;
@@ -18,16 +20,20 @@ module.exports = function(args){
     // create a new deployment
     router.post('/', function(req, res) {
         console.log(req.body.deployment_id);
-        if (req.body.topology && req.body.deployment_id) {
+        if (req.body.deployment_descriptor && req.body.deployment_id) {
             console.log("Loading new deployment with id: ", req.body.deployment_id);
                 agentController.createDeployment({
-                topology: req.body.topology,
+                deployment_descriptor: req.body.deployment_descriptor,
                 deployment_id: req.body.deployment_id
             },function(){
                 res.status(201).json({'result': 'Deployment successiful loaded.'});
             },function(error){
                 res.status(201).json({'error': error});
             });
+        }
+        else{
+            log.info("[%s] No deployment descriptor data in the request.", MODULE_NAME);
+            res.status(201).json({'error': 'No deployment descriptor data in the request.'});
         }
 
 
@@ -48,7 +54,7 @@ module.exports = function(args){
         },function(e){
             res.status(404).json({'error': 'No info about deployment.'});
         });
-        
+
     });
 
     // get all info about a deployment
@@ -63,7 +69,7 @@ module.exports = function(args){
         },function(e){
             res.status(404).json({'error': 'No info about deployment.'});
         });
-        
+
     });
 
     //stop a specific deployment
@@ -83,7 +89,7 @@ module.exports = function(args){
     //Get web console information for a node
     router.get('/:id/node/:nodeId/console', function(req, res) {
         var hostname = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host
- 
+
         agentController.getNodeConsole({
             deployment_id: req.params.id,
             node_id: req.params.nodeId,

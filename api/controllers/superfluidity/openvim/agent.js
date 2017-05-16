@@ -10,9 +10,9 @@ dreamer.AgentController = (function (global){
 
     var DEBUG_LOG = "AgentController";
     var spawn = require('child_process').spawn;
-    var config = require('../../config/config');
-    var DeploymentController = require('../controllers/deployment');
-    var shellInABoxController = require('../../helpers/shellinabox')();
+    var config = require('../../../../config/config');
+    var DeploymentController = require('./deployment');
+    var shellInABoxController = require('../../../../helpers/shellinabox')();
 
     function AgentController(args){
         log.info("[%s] %s", 'Constructor');
@@ -39,7 +39,7 @@ dreamer.AgentController = (function (global){
         else{
             fail("Agent busy with another deployment.")
         }
-        
+
 
     };
 

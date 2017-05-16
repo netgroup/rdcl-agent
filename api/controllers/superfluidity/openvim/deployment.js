@@ -26,17 +26,7 @@ dreamer.DeploymentController = (function (global){
             'net': ['net-vl1', 'net-vl2', 'net-vl3'],
             'image': ['clickos-vnf_click_vdu_ping', 'clickos-vnf_click_vdu_vlan', 'clickos-vnf_click_vdu_fwall']
         }
-        var fs = require('fs');
-        for(var desc_type in this._deployment_descriptor){
-            log.info("[%s] %s", DEBUG_LOG, desc_type)
-            for(var filename in this._deployment_descriptor[desc_type]){
-                var ext_file = (desc_type !== 'click')? 'json':'click';
-                var fullfilename = config.openvim.BASE_CWD + "/" + filename + "."  + ext_file;
-                log.info("[%s]  creating file %s.%s", DEBUG_LOG, filename, ext_file);
-                var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename]; 
-                fs.writeFile(fullfilename, data);
-             }
-        }
+
 
         //this.start();
         this.console_output = [];
@@ -82,10 +72,21 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.launch = function(success, error){
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController launch ");
         var self = this;
+        var fs = require('fs');
+        for(var desc_type in this._deployment_descriptor){
+            log.info("[%s] %s", DEBUG_LOG, desc_type)
+            for(var filename in this._deployment_descriptor[desc_type]){
+                var ext_file = (desc_type !== 'click')? 'json':'click';
+                var fullfilename = config.openvim.BASE_CWD + "/" + filename + "."  + ext_file;
+                log.info("[%s]  creating file %s.%s", DEBUG_LOG, filename, ext_file);
+                var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename];
+                fs.writeFile(fullfilename, data);
+             }
+        }
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
-            
+
             self.sh = spawn("bash",['openvimanagement.sh'], {
                 'cwd': config.openvim.BASE_CWD,
                 'env': {
@@ -96,7 +97,7 @@ dreamer.DeploymentController = (function (global){
                 }
             });
             self._initSh(success, error);
-            
+
         },function(e){
             error(e);
         });
@@ -108,10 +109,11 @@ dreamer.DeploymentController = (function (global){
         var self = this;
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController stop");
         for(var elm_cat in this._openvim){
+
             this._openvim[elm_cat].forEach(function(element){
                 var arg_del = elm_cat + '-delete';
                 console.log(element);
-                
+
                 var delete_elem = execFile('./openvim', [arg_del, '-f', element],{
                     'cwd': config.openvim.OPENVIM_CLI_HOME,
                     'env': {
@@ -129,37 +131,8 @@ dreamer.DeploymentController = (function (global){
                 });
             })
         }
-        /*
-        var stsh = spawn("sudo",['python','mininet_deployer.py' , '--stop-all'], {
-                'cwd': config.openvim.openvim_client,
-                'env': {
-                    'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
-                    'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
-                    'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
-                    'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
-                }
-            });
-            stsh.on('error', function(e){
-                log.info("[%s] %s",DEBUG_LOG,"error: " + e);
-                error(e);
-            });
-
-            stsh.on('close', function(code){
-               
-                var msg_exit = "MininetDeployment process clean exited with code: " + code;
-                log.info("[%s] %s",DEBUG_LOG,msg_exit);
-                self.console_output.push(msg_exit);
-                if (code !== 0) {
-                    error(msg_exit);
-                }
-                else{
-                    success();
-                }
-            });
-
-            */
-
-
+        //FIXME we have to decide an error criteria
+        success && success();
     };
 
     DeploymentController.prototype.getInfo = function(args, success, fail){
@@ -209,9 +182,9 @@ dreamer.DeploymentController = (function (global){
             }
 
         });
-        
 
-        
+
+
     };
 
 
