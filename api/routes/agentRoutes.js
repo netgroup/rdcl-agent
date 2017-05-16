@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Log = require('log')
+var Log = require('log');
 var log = new Log('info');
 
 var AgentController = require('../controllers/superfluidity/openvim/agent');

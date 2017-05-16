@@ -1,5 +1,5 @@
 var express = require('express');
-var Log = require('log')
+var Log = require('log');
 var log = new Log('info');
 
 module.exports = function(args){
@@ -43,7 +43,7 @@ module.exports = function(args){
 
     // get all info about a deployment
     router.get('/:id', function(req, res) {
-        console.log("get info deployment")
+        log.info("[%s] get info deployment",MODULE_NAME);
         agentController.getDeploymentInfo({
             deployment_id: req.params.id
         },function(info_deployment){
@@ -88,7 +88,7 @@ module.exports = function(args){
 
     //Get web console information for a node
     router.get('/:id/node/:nodeId/console', function(req, res) {
-        var hostname = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host
+        var hostname = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host;
 
         agentController.getNodeConsole({
             deployment_id: req.params.id,
@@ -103,7 +103,7 @@ module.exports = function(args){
     });
 
     function logErrors (err, req, res, next) {
-      console.error(MODULE_NAME, err.stack);
+      log.error("[%s] %s",MODULE_NAME, err.stack);
       next(err);
     }
     return router;

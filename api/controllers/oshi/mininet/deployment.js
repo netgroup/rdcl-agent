@@ -19,7 +19,7 @@ dreamer.DeploymentController = (function (global){
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController Constructor");
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
-        this._deployment_descriptor = args.topology;
+        this._deployment_descriptor = args.deployment_descriptor;
 
         //this.start();
         this.console_output = [];
@@ -92,7 +92,7 @@ dreamer.DeploymentController = (function (global){
             });
 
             stsh.on('close', function(code){
-               
+
                 var msg_exit = "MininetDeployment process clean exited with code: " + code;
                 log.info("[%s] %s",DEBUG_LOG,msg_exit);
                 self.console_output.push(msg_exit);
@@ -110,7 +110,7 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.getInfo = function(args, success, fail){
         var info_data = {
             id: this._id,
-            topology_deployment: this._deployment_descriptor
+            deployment_descriptor: this._deployment_descriptor
         };
 
         return success(info_data);
@@ -120,7 +120,7 @@ dreamer.DeploymentController = (function (global){
         log.info("[%s] %s",DEBUG_LOG,"getStatus")
         var info_data = {
             id: this._id,
-            topology_deployment: this._deployment_descriptor
+            deployment_descriptor: this._deployment_descriptor
         };
 
         return success(info_data);
@@ -154,9 +154,9 @@ dreamer.DeploymentController = (function (global){
             }
 
         });
-        
 
-        
+
+
     };
 
 

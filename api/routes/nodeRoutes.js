@@ -1,5 +1,5 @@
 var express = require('express');
-var Log = require('log')
+var Log = require('log');
 var log = new Log('info');
 
 module.exports = function(args){

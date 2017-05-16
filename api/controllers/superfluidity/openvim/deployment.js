@@ -129,7 +129,7 @@ dreamer.DeploymentController = (function (global){
                     }
                       console.log(stdout);
                 });
-            })
+            });
         }
         //FIXME we have to decide an error criteria
         success && success();
@@ -138,17 +138,17 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.getInfo = function(args, success, fail){
         var info_data = {
             id: this._id,
-            _deployment_descriptor: this._deployment_descriptor
+            deployment_descriptor: this._deployment_descriptor
         };
 
         return success(info_data);
     };
 
     DeploymentController.prototype.getStatus = function(args, success, fail){
-        log.info("[%s] %s",DEBUG_LOG,"getStatus")
+        log.info("[%s] %s",DEBUG_LOG,"getStatus");
         var info_data = {
             id: this._id,
-            _deployment_descriptor: this._deployment_descriptor
+            deployment_descriptor: this._deployment_descriptor,
         };
 
         return success(info_data);
@@ -156,39 +156,16 @@ dreamer.DeploymentController = (function (global){
 
     DeploymentController.prototype.getNodeConsole = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getNodeConsole');
-        var helper = new Helper();
-        helper.impJsonFromFile('/tmp/overall_info.json', function(data_result){
-            if(data_result.error){
-                return fail(data_result.error.message)
+        var result = {
+            console_enabled: false,
+            console_info: {
+                'url': '',
+                'type': 'shellinabox'
             }
-            else{
-                var node_data = data_result.data[args.node_id] || undefined;
-                var shellinabox = new ShellInABox();
-                var result = {
-                        console_enabled: false,
-                        console_info: {
-                            'url': '',
-                            'type': 'shellinabox'
-                        }
-                    }
-                if(node_data && node_data['mgt_IP']){
+        };
 
-                    args['mgt_IP'] = node_data['mgt_IP'];
-                    result.console_info.url = shellinabox.getNodeEndPoint(args);
-                    result.console_enabled = true;
-                }
-                return success(result);
-
-            }
-
-        });
-
-
-
+        return success(result);
     };
-
-
-
 
 
     return DeploymentController;
