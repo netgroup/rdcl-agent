@@ -17,7 +17,7 @@ shellinabox.start_cmd = ['-t', '-s', '/:user:user:HOME:' + shellinabox.script_pa
 
 
 config.openvim = {};
-config.openvim.BASE_CWD = '/home/rfb/rdcl-agent/scripts/supefluidity';
+config.openvim.BASE_CWD = '/home/rfb/rdcl-agent/scripts/superfluidity';
 config.openvim.OPENVIM_CLI_HOME = '/home/rfb/openvimclient'
 config.openvim.OPENVIM_HOST = 'localhost';
 config.openvim.OPENVIM_PORT = 9080;
