@@ -1,1 +1,3 @@
-# RDCL3D Agent
+# OSHI RDCL 3D Agent
+
+This agent is used in the RDCL 3D framework to deploy [OSHI (Open Source Hybrid IP/SDN)](http://netgroup.uniroma2.it/OSHI/) topologies over a Mininet emulator.
