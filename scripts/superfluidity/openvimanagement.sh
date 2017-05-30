@@ -24,6 +24,9 @@ declare -A UUID_networks
 # ASSUMPTION: a VNF has only one VDU
 declare -A VNF2VDU
 
+# store the vdu hypervisors here
+declare -A VDUHYPERVISOR
+
 # map virtualLinkProfileId to virtualLinkId
 declare -A VLPID2VLID
 
@@ -118,38 +121,59 @@ for vnfid in $vnfids; do
 
     # search for the click vdu in the VNF descriptor
     # search for all the vduIds of the VDUs that have vduNestedDescType == "click"
-    vduids=$(jq '.["vdu"][] | select(.vduNestedDescType == "click") | .["vduId"]' "${vnfid}.json" | transformlist)
+    vduids=$(jq '.["vdu"][] | .["vduId"]' "${vnfid}.json" | transformlist)
     # ASSUMPTION: we have at most one vduid per vnfid
-    vduid=$(echo $vduids | awk '{print $1}')
+    vduid=$(echo $vduids | head -n 1 | awk '{print $1}')
 
     echo "vduid: $vduid"
 
-    if [ ! -e "${vduid}.click" ]; then
-        echo "${vduid}.click file not found. skipping"
+    if [ -z "$vduid" ]; then
+        echo "VDU ID not found. skipping"
         continue
     fi
 
+    vdutype=$(jq '.["vdu"][] | select(.vduId == "'${vduid}'") | .["vduNestedDescType"]' "${vnfid}.json" | transformlist)
+
+    if [ "$vdutype" == "click" ]; then
+        if [ ! -e "${vduid}.click" ]; then
+            echo "${vduid}.click file not found. skipping"
+            continue
+        fi
+
+        # create a new image corresponding to the click configuration
+        cp "$STAMINALCLICKOSIMAGE" "${YAMLDIR}/clickos_${vduid}"
+        $CLICKINJECTOR "${vduid}.click" "${YAMLDIR}/clickos_${vduid}"
+        chmod u+rw "${YAMLDIR}/clickos_${vduid}"
+
+        # copy the image to the server. The way to do this is not defined by openvim, so we use scp
+        # ASSUMPTION: we are using scp to transfer images to openvim
+        scp -P2222 "${YAMLDIR}/clickos_${vduid}" root@127.0.0.1:/var/lib/libvirt/images/
+
+        # create the yaml for the image
+        echo "generating yaml: image-clickos-${vduid}.yaml"
+        generateimageyaml ${vduid} > ${YAMLDIR}/image-clickos-${vduid}.yaml
+        # onboard the image and get its UUID
+        UUID_images[${vduid}]=$($OPENVIM image-create ${YAMLDIR}/image-clickos-${vduid}.yaml | awk '{print $1}')
+        # TODO: check if onboarding was successful
+        # the hypervisor for ClickOS VMs is called xen-unik
+        VDUHYPERVISOR[${vduid}]="xen-unik"
+    else
+        # ASSUMPTION: we have a "normal" VDU, which corresponds to an HVM virtual machine
+        # find the image UUID corresponding to swImageDesc
+        swimage=$(jq '.["vdu"][] | select(.vduId == "vnf_click_vdu_ping") | .["swImageDesc"]["swImage"]' "${vnfid}.json" | transformlist)
+        swimageUUID="$($OPENVIM image-list "$swimage" | awk '{print $1}')"
+        if [ -z "$swimageUUID" ]; then
+            echo "$swimage image not found. Please onboard it on openvim first"
+            exit 1
+        fi
+        UUID_IMAGES[${vduid}]=${swimageUUID}
+        # the hypervisor for "normal" VMs is xenhvm
+        VDUHYPERVISOR[${vduid}]="xenhvm"
+    fi
+    echo "UUID: " ${UUID_images[${vduid}]}
     # ASSUMPTION: ids (vduid, vlid) are strings without spaces
     # keep track of the correspondance between VNF and VDU
     VNF2VDU[${vnfid}]=${vduid}
-
-    # create a new image corresponding to the click configuration
-    cp "$STAMINALCLICKOSIMAGE" "${YAMLDIR}/clickos_${vduid}"
-    $CLICKINJECTOR "${vduid}.click" "${YAMLDIR}/clickos_${vduid}"
-    chmod u+rw "${YAMLDIR}/clickos_${vduid}"
-
-    # copy the image to the server. The way to do this is not defined by openvim, so we use scp
-    # ASSUMPTION: we are using scp to transfer images to openvim
-    scp -P2222 "${YAMLDIR}/clickos_${vduid}" root@127.0.0.1:/var/lib/libvirt/images/
-
-    # create the yaml for the image
-    echo "generating yaml: image-clickos-${vduid}.yaml"
-    generateimageyaml ${vduid} > ${YAMLDIR}/image-clickos-${vduid}.yaml
-    # onboard the image and get its UUID
-    UUID_images[${vduid}]=$($OPENVIM image-create ${YAMLDIR}/image-clickos-${vduid}.yaml | awk '{print $1}')
-    # TODO: check if onboarding was successful
-    echo "UUID: " ${UUID_images[${vduid}]}
-
 done
 
 
@@ -228,7 +252,8 @@ for vnfid in $vnfids; do
     done
 
     # generate the YAML for this VNF
-    generatevmyaml ${vnfid} ${UUID_images[$vduid]} "xen-unik" ${NETUUIDS[@]} > ${YAMLDIR}/vm-clickos-${vnfid}.yaml
+    generatevmyaml ${vnfid} ${UUID_images[$vduid]} ${VDUHYPERVISOR[$vduid]} ${NETUUIDS[@]} > ${YAMLDIR}/vm-${vnfid}.yaml
     # onboard
-    $OPENVIM vm-create ${YAMLDIR}/vm-clickos-${vnfid}.yaml
+    $OPENVIM vm-create ${YAMLDIR}/vm-${vnfid}.yaml
 done
+
