@@ -12,6 +12,9 @@ FLAVORUUID="5a258552-0a51-11e7-a086-0cc47a7794be"
 OPENVIM="/home/rfb/openvimclient/openvim"
 CLICKINJECTOR="/home/rfb/configinjector/configinjector"
 STAMINALCLICKOSIMAGE="/home/rfb/configinjector/clickos_x86_64_staminal"
+OPENVIMHOST="127.0.0.1"
+OPENVIMHOSTPORT="2222"
+OPENVIMHOSTUSERNAME="root"
 
 # directory to store yamls
 YAMLDIR="$(pwd)/yamls"
@@ -147,7 +150,7 @@ for vnfid in $vnfids; do
 
         # copy the image to the server. The way to do this is not defined by openvim, so we use scp
         # ASSUMPTION: we are using scp to transfer images to openvim
-        scp -P2222 "${YAMLDIR}/clickos_${vduid}" root@127.0.0.1:/var/lib/libvirt/images/
+        scp -P${OPENVIMHOSTPORT} "${YAMLDIR}/clickos_${vduid}" ${OPENVIMHOSTUSERNAME}@${OPENVIMHOST}:/var/lib/libvirt/images/
 
         # create the yaml for the image
         echo "generating yaml: image-clickos-${vduid}.yaml"
@@ -192,7 +195,7 @@ for vlid in $vlids; do
     # FIXME: openvim does not yet create the ovs bridge automatically, so here we create it manually
     uuid=${UUID_networks[${vlid}]}
     vlanid=$($OPENVIM net-list -vvv $uuid | grep 'provider:vlan' | awk '{print $2}')
-    ssh root@127.0.0.1 -p 2222 sudo ovs-vsctl --may-exist add-br ovim-${vlanid}
+    ssh ${OPENVIMHOSTUSERNAME}@${OPENVIMHOST} -p ${OPENVIMHOSTPORT} sudo ovs-vsctl --may-exist add-br ovim-${vlanid}
 done
 
 
