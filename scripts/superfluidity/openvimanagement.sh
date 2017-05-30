@@ -7,7 +7,10 @@
 #######################
 
 NSDFILE="nsd.json"
-FLAVORUUID="5a258552-0a51-11e7-a086-0cc47a7794be"
+# flavor for ClickOS VMs
+CLICKFLAVORUUID="5a258552-0a51-11e7-a086-0cc47a7794be"
+# flavor for "normal" VMs
+VMFLAVOURUUID="40f7908a-3bb0-11e7-ad8f-0cc47a7794be"
 # openvim client
 OPENVIM="/home/rfb/openvimclient/openvim"
 CLICKINJECTOR="/home/rfb/configinjector/configinjector"
@@ -27,8 +30,9 @@ declare -A UUID_networks
 # ASSUMPTION: a VNF has only one VDU
 declare -A VNF2VDU
 
-# store the vdu hypervisors here
+# store the vdu hypervisors and flavors here
 declare -A VDUHYPERVISOR
+declare -A VDUFLAVOR
 
 # map virtualLinkProfileId to virtualLinkId
 declare -A VLPID2VLID
@@ -79,14 +83,15 @@ generatevmyaml() {
     name=$1
     imageuuid=$2
     hypervisor=$3
-    shift 3
+    flavoruuid=$4
+    shift 4
     netuuids="$@"
     cat - <<EOF
 server:
   name: vm-clickos-${name}
   description: ClickOS vm
   imageRef: '${imageuuid}'
-  flavorRef: '${FLAVORUUID}'
+  flavorRef: '${flavoruuid}'
   start:    "yes"
   hypervisor: "${hypervisor}"
   osImageType: "clickos"
@@ -160,6 +165,7 @@ for vnfid in $vnfids; do
         # TODO: check if onboarding was successful
         # the hypervisor for ClickOS VMs is called xen-unik
         VDUHYPERVISOR[${vduid}]="xen-unik"
+        VDUFLAVOR[${vduid}]="$CLICKFLAVORUUID"
     else
         # ASSUMPTION: we have a "normal" VDU, which corresponds to an HVM virtual machine
         # find the image UUID corresponding to swImageDesc
@@ -172,6 +178,7 @@ for vnfid in $vnfids; do
         UUID_IMAGES[${vduid}]=${swimageUUID}
         # the hypervisor for "normal" VMs is xenhvm
         VDUHYPERVISOR[${vduid}]="xenhvm"
+        VDUFLAVOR[${vduid}]="$VMFLAVOURUUID"
     fi
     echo "UUID: " ${UUID_images[${vduid}]}
     # ASSUMPTION: ids (vduid, vlid) are strings without spaces
@@ -255,7 +262,7 @@ for vnfid in $vnfids; do
     done
 
     # generate the YAML for this VNF
-    generatevmyaml ${vnfid} ${UUID_images[$vduid]} ${VDUHYPERVISOR[$vduid]} ${NETUUIDS[@]} > ${YAMLDIR}/vm-${vnfid}.yaml
+    generatevmyaml ${vnfid} ${UUID_images[$vduid]} ${VDUHYPERVISOR[$vduid]} ${VDUFLAVOR[$vduid]} ${NETUUIDS[@]} > ${YAMLDIR}/vm-${vnfid}.yaml
     # onboard
     $OPENVIM vm-create ${YAMLDIR}/vm-${vnfid}.yaml
 done
