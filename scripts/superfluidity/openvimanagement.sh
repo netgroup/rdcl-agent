@@ -72,7 +72,8 @@ generatevmyaml() {
     # generates a yaml for an openvim vm
     name=$1
     imageuuid=$2
-    shift 2
+    hypervisor=$3
+    shift 3
     netuuids="$@"
     cat - <<EOF
 server:
@@ -81,7 +82,7 @@ server:
   imageRef: '${imageuuid}'
   flavorRef: '${FLAVORUUID}'
   start:    "yes"
-  hypervisor: "xen-unik"
+  hypervisor: "${hypervisor}"
   osImageType: "clickos"
   networks:
 EOF
@@ -227,7 +228,7 @@ for vnfid in $vnfids; do
     done
 
     # generate the YAML for this VNF
-    generatevmyaml ${vnfid} ${UUID_images[$vduid]} ${NETUUIDS[@]} > ${YAMLDIR}/vm-clickos-${vnfid}.yaml
+    generatevmyaml ${vnfid} ${UUID_images[$vduid]} "xen-unik" ${NETUUIDS[@]} > ${YAMLDIR}/vm-clickos-${vnfid}.yaml
     # onboard
     $OPENVIM vm-create ${YAMLDIR}/vm-clickos-${vnfid}.yaml
 done
