@@ -88,7 +88,7 @@ generatevmyaml() {
     netuuids="$@"
     cat - <<EOF
 server:
-  name: vm-clickos-${name}
+  name: vm-${hypervisor}-${name}
   description: ClickOS vm
   imageRef: '${imageuuid}'
   flavorRef: '${flavoruuid}'
@@ -215,6 +215,9 @@ done
 
 # 3. create the VNFs, using references to the created images and networks
 
+# prepare/reset the file which will contain the VM UUIDs
+echo > ${YAMLDIR}/vmuuids.txt
+
 # find the mapping between each virtualLinkProfileId and virtualLinkDescId
 # ASSUMPTION: we have only one nsDf in the NSD
 # populate the VLPID2VLID array
@@ -271,7 +274,7 @@ for vnfid in $vnfids; do
     # generate the YAML for this VNF
     generatevmyaml ${vnfid} ${UUID_images[$vduid]} ${VDUHYPERVISOR[$vduid]} ${VDUFLAVOR[$vduid]} ${NETUUIDS[@]} > ${YAMLDIR}/vm-${vnfid}.yaml
     # onboard
-    VMUUID=$($OPENVIM vm-create ${YAMLDIR}/vm-${vnfid}.yaml)
+    VMUUID=$($OPENVIM vm-create ${YAMLDIR}/vm-${vnfid}.yaml | awk '{print $1}')
     validateUUID $VMUUID
     # keep a list of VM UUIDs
     echo "$vnfid : $VMUUID" >> ${YAMLDIR}/vmuuids.txt

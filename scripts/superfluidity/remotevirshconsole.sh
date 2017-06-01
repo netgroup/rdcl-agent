@@ -10,7 +10,7 @@ if [ -z "$VMNAME" ]; then
 fi
 
 # find the VM UUID
-UUID=$(egrep "\b$VMNAME\b" $VMUUIDSFILE | awk '{print $3}') 
+UUID=$(egrep "\b$VMNAME\b" $VMUUIDSFILE | awk -F ':' '{print $2}')
 if [ -z "$UUID" ];then
     echo "$VMNAME not found"
     exit 2
