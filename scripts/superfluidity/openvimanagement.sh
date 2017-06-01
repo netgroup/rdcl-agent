@@ -273,5 +273,7 @@ for vnfid in $vnfids; do
     # onboard
     VMUUID=$($OPENVIM vm-create ${YAMLDIR}/vm-${vnfid}.yaml)
     validateUUID $VMUUID
+    # keep a list of VM UUIDs
+    echo "$vnfid : $VMUUID" >> ${YAMLDIR}/vmuuids.txt
 done
 
