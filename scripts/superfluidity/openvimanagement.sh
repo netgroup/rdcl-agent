@@ -169,7 +169,7 @@ for vnfid in $vnfids; do
     else
         # ASSUMPTION: we have a "normal" VDU, which corresponds to an HVM virtual machine
         # find the image UUID corresponding to swImageDesc
-        swimage=$(jq '.["vdu"][] | select(.vduId == "vnf_click_vdu_ping") | .["swImageDesc"]["swImage"]' "${vnfid}.json" | transformlist)
+        swimage=$(jq '.["vdu"][] | select(.vduId == "'$vduid'") | .["swImageDesc"]["swImage"]' "${vnfid}.json" | transformlist)
         swimageUUID="$($OPENVIM image-list "$swimage" | awk '{print $1}')"
         if [ -z "$swimageUUID" ]; then
             echo "$swimage image not found. Please onboard it on openvim first"
