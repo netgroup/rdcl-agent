@@ -108,7 +108,12 @@ done
 }
 
 validateUUID() {
-    echo "$1" | egrep "^[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}$" >/dev/null || exit 2
+    if echo "$1" | egrep "^[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}$" >/dev/null; then
+        true
+    else
+        echo "\"$1\" is not a valid UUID"
+        exit 2
+    fi
 }
 
 
@@ -279,4 +284,6 @@ for vnfid in $vnfids; do
     # keep a list of VM UUIDs
     echo "$vnfid : $VMUUID" >> ${YAMLDIR}/vmuuids.txt
 done
+
+echo "***** NETWORK SERVICE DEPLOYMENT DONE *****"
 
