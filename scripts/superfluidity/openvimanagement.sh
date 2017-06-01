@@ -18,6 +18,7 @@ STAMINALCLICKOSIMAGE="/home/rfb/configinjector/clickos_x86_64_staminal"
 OPENVIMHOST="127.0.0.1"
 OPENVIMHOSTPORT="2222"
 OPENVIMHOSTUSERNAME="root"
+OPENVIMENV="/home/rfb/openvimclient/openvimconfig.sh"
 
 # directory to store yamls
 YAMLDIR="$(pwd)/yamls"
@@ -120,6 +121,8 @@ validateUUID() {
 #######################
 ################## MAIN
 #######################
+
+source $OPENVIMENV
 
 mkdir -p "$YAMLDIR"
 
