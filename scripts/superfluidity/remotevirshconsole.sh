@@ -1,0 +1,20 @@
+#!/bin/bash
+# connect to a remote virsh console
+
+VMNAME=$1
+VMUUIDSFILE=/home/rfb/vim-agent/scripts/superfluidity/yamls/vmuuids.txt
+
+if [ -z "$VMNAME" ]; then
+    echo "Usage: $0 <vm name>"
+    exit 1
+fi
+
+# find the VM UUID
+UUID=$(egrep "\b$VMNAME\b" $VMUUIDSFILE | awk '{print $3}') 
+if [ -z "$UUID" ];then
+    echo "$VMNAME not found"
+    exit 2
+fi
+
+# connect to the remote console
+ssh -p2222 -t root@127.0.0.1 "bash -c \"virsh -c xen:/// console $UUID\""
