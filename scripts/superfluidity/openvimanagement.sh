@@ -107,6 +107,10 @@ done
 
 }
 
+validateUUID() {
+    echo "$1" | egrep "^[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}$" >/dev/null || exit 2
+}
+
 
 #######################
 ################## MAIN
@@ -162,6 +166,7 @@ for vnfid in $vnfids; do
         generateimageyaml ${vduid} > ${YAMLDIR}/image-clickos-${vduid}.yaml
         # onboard the image and get its UUID
         UUID_images[${vduid}]=$($OPENVIM image-create ${YAMLDIR}/image-clickos-${vduid}.yaml | awk '{print $1}')
+        validateUUID "${UUID_images[$vduid]}"
         # TODO: check if onboarding was successful
         # the hypervisor for ClickOS VMs is called xen-unik
         VDUHYPERVISOR[${vduid}]="xen-unik"
@@ -175,7 +180,8 @@ for vnfid in $vnfids; do
             echo "$swimage image not found. Please onboard it on openvim first"
             exit 1
         fi
-        UUID_IMAGES[${vduid}]=${swimageUUID}
+        UUID_images[${vduid}]=${swimageUUID}
+        validateUUID "${UUID_images[$vduid]}"
         # the hypervisor for "normal" VMs is xenhvm
         VDUHYPERVISOR[${vduid}]="xenhvm"
         VDUFLAVOR[${vduid}]="$VMFLAVOURUUID"
@@ -198,6 +204,7 @@ for vlid in $vlids; do
     generatenetworkyaml ${vlid} > ${YAMLDIR}/net-${vlid}.yaml
     # onboard the network and get its UUID
     UUID_networks[${vlid}]=$($OPENVIM net-create ${YAMLDIR}/net-${vlid}.yaml | awk '{print $1}')
+    validateUUID "${UUID_networks[$vlid]}"
 
     # FIXME: openvim does not yet create the ovs bridge automatically, so here we create it manually
     uuid=${UUID_networks[${vlid}]}
@@ -264,6 +271,7 @@ for vnfid in $vnfids; do
     # generate the YAML for this VNF
     generatevmyaml ${vnfid} ${UUID_images[$vduid]} ${VDUHYPERVISOR[$vduid]} ${VDUFLAVOR[$vduid]} ${NETUUIDS[@]} > ${YAMLDIR}/vm-${vnfid}.yaml
     # onboard
-    $OPENVIM vm-create ${YAMLDIR}/vm-${vnfid}.yaml
+    VMUUID=$($OPENVIM vm-create ${YAMLDIR}/vm-${vnfid}.yaml)
+    validateUUID $VMUUID
 done
 
