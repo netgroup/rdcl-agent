@@ -13,7 +13,7 @@ config.shellinabox = {};
 var shellinabox  = config.shellinabox;
 shellinabox.port = 8089;
 shellinabox.script_path = '/home/rfb/vim-agent/scripts/shellinabox/superfluidity/remotevirshconsole.sh';
-shellinabox.start_cmd = ['-t', '-s', '/:user:user:HOME:' + shellinabox.script_path +' ${url}', '-p', shellinabox.port, '-b'];
+shellinabox.start_cmd = ['-t', '-s', '/:rfb:rfb:HOME:' + shellinabox.script_path +' ${url}', '-p', shellinabox.port, '-b'];
 
 
 config.openvim = {};
