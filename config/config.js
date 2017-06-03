@@ -12,8 +12,7 @@ config.redis.port = 6379;
 config.shellinabox = {};
 var shellinabox  = config.shellinabox;
 shellinabox.port = 8089;
-//shellinabox.script_path = '/home/user/workspace/rdcl-agents/scripts/shellinabox/mininet/mininet_ssh_connect.sh';
-shellinabox.script_path = '/home/user/workspace/rdcl-agents/scripts/shellinabox/superfluidity/remotevirshconsole.sh';
+shellinabox.script_path = '/home/user/workspace/vim-agent/scripts/shellinabox/superfluidity/remotevirshconsole.sh';
 shellinabox.start_cmd = ['-t', '-s', '/:user:user:HOME:' + shellinabox.script_path +' ${url}', '-p', shellinabox.port, '-b'];
 
 
