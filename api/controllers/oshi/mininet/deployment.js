@@ -148,7 +148,7 @@ dreamer.DeploymentController = (function (global){
                     }
                 if(node_data && node_data['mgt_IP']){
 
-                    args['mgt_IP'] = node_data['mgt_IP'];
+                    args['nodeUUID'] = node_data['mgt_IP'];
                     result.console_info.url = shellinabox.getNodeEndPoint(args);
                     result.console_enabled = true;
                 }

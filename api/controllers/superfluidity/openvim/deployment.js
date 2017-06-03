@@ -119,7 +119,7 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.stop = function(success, error){
         var self = this;
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController stop");
-        for(var elm_cat in this._openvim){
+        /*for(var elm_cat in this._openvim){
 
             this._openvim[elm_cat].forEach(function(element){
                 var arg_del = elm_cat + '-delete';
@@ -141,7 +141,7 @@ dreamer.DeploymentController = (function (global){
                       console.log(stdout);
                 });
             });
-        }
+        }*/
         //FIXME we have to decide an error criteria
         success && success();
     };
@@ -175,7 +175,7 @@ dreamer.DeploymentController = (function (global){
                 'type': 'shellinabox'
             }
         };
-
+        console.log("getNodeConsole",JSON.stringify(args))
         return success(result);
     };
 
