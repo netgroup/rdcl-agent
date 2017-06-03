@@ -160,7 +160,7 @@ dreamer.DeploymentController = (function (global){
         var info_data = {
             id: this._id,
             deployment_descriptor: this._deployment_descriptor,
-            topology_deployment: thi.buildTopologyDeployment
+            topology_deployment: this.buildTopologyDeployment
         };
 
         return success(info_data);
