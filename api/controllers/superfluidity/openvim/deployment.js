@@ -93,7 +93,7 @@ dreamer.DeploymentController = (function (global){
 
              }
         }
-        /*
+        
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
@@ -112,7 +112,7 @@ dreamer.DeploymentController = (function (global){
         },function(e){
             error(e);
         });
-*/
+
 
     };
 
