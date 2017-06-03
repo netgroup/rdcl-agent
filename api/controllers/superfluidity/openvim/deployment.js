@@ -93,7 +93,7 @@ dreamer.DeploymentController = (function (global){
 
              }
         }
-        
+
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
@@ -160,6 +160,7 @@ dreamer.DeploymentController = (function (global){
         var info_data = {
             id: this._id,
             deployment_descriptor: this._deployment_descriptor,
+            topology_deployment: thi.buildTopologyDeployment
         };
 
         return success(info_data);
@@ -176,6 +177,129 @@ dreamer.DeploymentController = (function (global){
         };
 
         return success(result);
+    };
+
+    DeploymentController.prototype.buildTopologyDeployment = function(args){
+        var result = {
+            "edges": [
+        		{
+        			"source": "testvm",
+        			"group": [],
+        			"target": "vl3",
+        			"view": "ns"
+        		},
+                {
+        			"source": "vlan",
+        			"group": [],
+        			"target": "vl3",
+        			"view": "ns"
+        		},
+                {
+        			"source": "vlan",
+        			"group": [],
+        			"target": "vl1",
+        			"view": "ns"
+        		},
+                {
+        			"source": "firewall",
+        			"group": [],
+        			"target": "vl1",
+        			"view": "ns"
+        		},
+                {
+        			"source": "firewall",
+        			"group": [],
+        			"target": "vl2",
+        			"view": "ns"
+        		},
+                {
+        			"source": "ping",
+        			"group": [],
+        			"target": "vl2",
+        			"view": "ns"
+        		}
+        	],
+            "vertices": [
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "vnf"
+        			},
+        			"id": "testvm"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "vnf"
+        			},
+        			"id": "vlan"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "vnf"
+        			},
+        			"id": "firewall"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "vnf"
+        			},
+        			"id": "ping"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "ns_vl"
+        			},
+        			"id": "vl3"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "ns_vl"
+        			},
+        			"id": "vl2"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "ns_vl"
+        			},
+        			"id": "vl1"
+        		}
+            ]
+        };
+        return result;
     };
 
 
