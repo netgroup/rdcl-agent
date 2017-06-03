@@ -175,6 +175,11 @@ dreamer.DeploymentController = (function (global){
                 'type': 'shellinabox'
             }
         };
+        if(args['node_id']){
+            args['nodeUUID'] = args['node_id'];
+            result.console_info.url = shellinabox.getNodeEndPoint(args);
+            result.console_enabled = true;
+        }
         console.log("getNodeConsole",JSON.stringify(args))
         return success(result);
     };
