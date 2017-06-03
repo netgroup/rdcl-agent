@@ -17,12 +17,12 @@ shellinabox.start_cmd = ['-t', '-s', '/:user:user:HOME:' + shellinabox.script_pa
 
 
 config.openvim = {};
-config.openvim.BASE_CWD = '/home/rfb/rdcl-agents/scripts/superfluidity';
-config.openvim.OPENVIM_CLI_HOME = '/home/rfb/openvimclient'
+config.openvim.BASE_CWD = '/home/rfb/vim-agent/scripts/superfluidity';
+config.openvim.OPENVIM_CLI_HOME = '/home/rfb/openvimclient';
 config.openvim.OPENVIM_HOST = 'localhost';
 config.openvim.OPENVIM_PORT = 9080;
 config.openvim.OPENVIM_ADMIN_PORT = 9085;
-config.openvim.OPENVIM_TENANT= '96035cba-b313-11e6-866f-0cc47a7794be'
+config.openvim.OPENVIM_TENANT= '96035cba-b313-11e6-866f-0cc47a7794be';
 
 
 config.web = {};
