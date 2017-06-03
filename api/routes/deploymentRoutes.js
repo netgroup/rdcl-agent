@@ -28,7 +28,7 @@ module.exports = function(args){
             },function(){
                 res.status(201).json({'result': 'Deployment successiful loaded.'});
             },function(error){
-                res.status(201).json({'error': error});
+                res.status(201).json({'error': (error!= undefined) ? error : "Unknow error"});
             });
         }
         else{
@@ -81,7 +81,7 @@ module.exports = function(args){
             res.status(201).json({'result': 'Deployment stopped.'});
         },
         function(error) {
-            res.status(500).json({'error': error});
+            res.status(500).json({'error': (error != undefined) ? error : "Unknow error."});
         });
 
     });
@@ -98,7 +98,7 @@ module.exports = function(args){
             res.status(201).json(result);
         },
         function(error) {
-            res.status(500).json({'error': error});
+            res.status(500).json({'error': (error!=undefined) ? error : "Unknow error"});
         });
     });
 

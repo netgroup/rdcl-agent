@@ -13,7 +13,7 @@ dreamer.DeploymentController = (function (global){
     var config = require('../../../../config/config');
     var Helper = require('../../../../helpers/helper');
     var ShellInABox = require('../../../../helpers/shellinabox');
-    
+
     /**
         Constructor
     */
@@ -77,13 +77,23 @@ dreamer.DeploymentController = (function (global){
         for(var desc_type in this._deployment_descriptor){
             log.info("[%s] %s", DEBUG_LOG, desc_type)
             for(var filename in this._deployment_descriptor[desc_type]){
-                var ext_file = (desc_type !== 'click')? 'json':'click';
-                var fullfilename = config.openvim.BASE_CWD + "/" + filename + "."  + ext_file;
-                log.info("[%s]  creating file %s.%s", DEBUG_LOG, filename, ext_file);
-                var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename];
-                fs.writeFile(fullfilename, data);
+
+                try {
+                    var ext_file = (desc_type !== 'click')? 'json':'click';
+                    var fullfilename = config.openvim.BASE_CWD + "/" + filename + "."  + ext_file;
+                    log.info("[%s]  creating file %s.%s", DEBUG_LOG, filename, ext_file);
+                    var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename];
+                    fs.writeFileSync(fullfilename, data);
+                } catch (e) {
+                    log.info("[%s] error creating local descriptor file %s",DEBUG_LOG ,e)
+                    if (error) {
+                        return error("error starting deployment");
+                    }
+                }
+
              }
         }
+        /*
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
@@ -102,7 +112,7 @@ dreamer.DeploymentController = (function (global){
         },function(e){
             error(e);
         });
-
+*/
 
     };
 
