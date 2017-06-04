@@ -8,24 +8,24 @@ dreamer.AgentController = (function (global){
     var Log = require('log')
     var log = new Log('info');
 
-    var DEBUG_LOG = "AgentController";
+    var DEBUG_LOG = "AgentControllerBase";
     var spawn = require('child_process').spawn;
     var config = require('../../config/config');
-    var DeploymentController = require('../controllers/deployment');
+    
     var shellInABoxController = require('../../helpers/shellinabox')();
 
     function AgentController(args){
         log.info("[%s] %s", 'Constructor');
         this.log_actions = [];
-        this.deployment = null;
+        this.deployments = {};
         this.status = "Runnig";
     }
 
     AgentController.prototype.createDeployment = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'createDeployment');
         var self = this;
-        this.deployment = new DeploymentController(args);
-        this.deployment.launch(
+        this.deployments = new DeploymentController(args);
+        this.deployments.launch(
             function(){
                 log.info("[%s] %s", DEBUG_LOG, 'createDeployment callback launch success');
                 success();
@@ -40,9 +40,9 @@ dreamer.AgentController = (function (global){
     AgentController.prototype.stopDeployment = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'stopDeployment');
 
-        if(this.deployment){
-            this.deployment.stop(success, fail)
-            this.deployment = null;
+        if(this.deployments){
+            this.deployments.stop(success, fail)
+            this.deployments = null;
         }
         else{
             fail('Deployment not found');
@@ -68,8 +68,8 @@ dreamer.AgentController = (function (global){
     };
     AgentController.prototype.getDeploymentStatus = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getDeploymentStatus');
-        if(this.deployment){
-            this.deployment.getStatus(args, success, fail);
+        if(this.deployments){
+            this.deployments.getStatus(args, success, fail);
         }
         else{
             fail('Deployment not found');
@@ -78,8 +78,8 @@ dreamer.AgentController = (function (global){
 
     AgentController.prototype.getDeploymentInfo = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getDeploymentInfo');
-        if(this.deployment){
-            this.deployment.getInfo(args, success, fail);
+        if(this.deployments){
+            this.deployments.getInfo(args, success, fail);
         }
         else{
             fail('Deployment not found');
@@ -90,8 +90,8 @@ dreamer.AgentController = (function (global){
     AgentController.prototype.getNodeConsole = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getNodeConsole');
 
-        if(this.deployment){
-            this.deployment.getNodeConsole(args, success, fail);
+        if(this.deployments){
+            this.deployments.getNodeConsole(args, success, fail);
         }
         else{
             return fail('Deployment not found.');
