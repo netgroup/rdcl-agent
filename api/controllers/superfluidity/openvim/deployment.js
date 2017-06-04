@@ -119,6 +119,23 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.stop = function(success, error){
         var self = this;
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController stop");
+
+        execFile(config.openvim.CLEAN_UP_SCRIPT, {
+            'cwd': config.openvim.BASE_CWD,
+            'env': {
+                'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
+                'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
+                'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
+                'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
+            }
+        },function(err, stdout, stderr){
+            if (err) {
+                console.error(err);
+                //error && error();
+            }
+            console.log(stdout);
+        });
+
         /*for(var elm_cat in this._openvim){
 
             this._openvim[elm_cat].forEach(function(element){
