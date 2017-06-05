@@ -1,0 +1,72 @@
+---
+  kind: "sfwless-deployment"
+  api: "v1"
+  Functional-blocks: 
+    - 
+      rfb-level: "rfb/0"
+      name: "cran1_fb"
+      rfb-list: 
+        - "epc1_fb"
+        - "fhaul1_fb"
+        - "enb1_fb"
+    - 
+      rfb-level: "rfb/1"
+      name: "epc1_fb"
+      rfb-list: 
+        - "epc1"
+    - 
+      rfb-level: "rfb/1"
+      name: "enb1_fb"
+      rfb-list: 
+        - "rrh1"
+        - "bbu1"
+    - 
+      rfb-level: "rfb/1"
+      name: "fhaul1_fb"
+      links: 
+        - "enb1_fb"
+      rfb-list: 
+        - "switch1"
+    - 
+      rfb-level: "leaf"
+      type: "cran/epcbox"
+      name: "epc1"
+      zone: 
+        - "edge"
+        - "core"
+    - 
+      rfb-level: "leaf"
+      type: "cran/rrh"
+      name: "rrh1"
+      zone: 
+        - "feu"
+    - 
+      rfb-level: "leaf"
+      zone: 
+        - "edge"
+      type: "cran/bbu"
+      name: "bbu1"
+      links: 
+        - "epc1"
+        - "rrh1"
+    - 
+      rfb-level: "leaf"
+      links: 
+        - "bbu1"
+        - "rrh1"
+      type: "fhaul/fw_switch"
+      name: "switch1"
+      zone: 
+        - "fhaul"
+  metadata: 
+    customer: "Orange"
+    priority: "medium"
+    name: "superfluidity-demo1"
+    app: "cran"
+    zone-range: 
+      - "edge"
+      - "feu"
+      - "core"
+      - "fhaul"
+    cluster: "cluster-demo1"
+    size: "xsmall"

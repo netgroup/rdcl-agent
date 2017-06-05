@@ -26,6 +26,8 @@ config.openvim.OPENVIM_ADMIN_PORT = 9085;
 config.openvim.OPENVIM_TENANT = '96035cba-b313-11e6-866f-0cc47a7794be';
 config.openvim.CLEAN_UP_SCRIPT = 'cleanup.sh'
 
+config.cran = {};
+config.cran.BASE_CWD = '/home/user/workspace/rdcl-agent/scripts/cran'
 
 config.web = {};
 config.web.port = process.env.PORT || 3030;
