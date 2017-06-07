@@ -61,6 +61,10 @@ typings/
 # dotenv environment variables file
 .env
 
+# MacOS files
+.DS_Store
+
+# Superfluidity deployment files
 scripts/superfluidity/*.json
 scripts/superfluidity/*.click
 scripts/superfluidity/yamls/

@@ -15,7 +15,7 @@ dreamer.AgentController = (function (global){
     var shellInABoxController = require('../../../../helpers/shellinabox')();
 
     function AgentController(args){
-        log.info("[%s] %s", 'Constructor');
+        log.info("[%s] %s", DEBUG_LOG, 'Constructor');
         this.log_actions = [];
         this.deployment = null;
         this.status = "Runnig";

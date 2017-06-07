@@ -87,9 +87,16 @@ dreamer.DeploymentController = (function (global){
         var stsh = spawn("sudo",['python','mininet_deployer.py' , '--stop-all'], {
                 'cwd': config.mininet.mininet_extension_path
             });
+        
+            this.sh.stdout.setEncoding('utf-8');
             stsh.on('error', function(e){
                 log.info("[%s] %s",DEBUG_LOG,"error: " + e);
                 error(e);
+            });
+
+
+            stsh.stdout.on('data', function(data){
+                log.info("[%s] %s",DEBUG_LOG,"stdout:", data);
             });
 
             stsh.on('close', function(code){
@@ -148,7 +155,7 @@ dreamer.DeploymentController = (function (global){
                     }
                 if(node_data && node_data['mgt_IP']){
 
-                    args['mgt_IP'] = node_data['mgt_IP'];
+                    args['nodeUUID'] = node_data['mgt_IP'];
                     result.console_info.url = shellinabox.getNodeEndPoint(args);
                     result.console_enabled = true;
                 }

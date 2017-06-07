@@ -13,7 +13,7 @@ dreamer.DeploymentController = (function (global){
     var config = require('../../../../config/config');
     var Helper = require('../../../../helpers/helper');
     var ShellInABox = require('../../../../helpers/shellinabox');
-    
+
     /**
         Constructor
     */
@@ -77,13 +77,23 @@ dreamer.DeploymentController = (function (global){
         for(var desc_type in this._deployment_descriptor){
             log.info("[%s] %s", DEBUG_LOG, desc_type)
             for(var filename in this._deployment_descriptor[desc_type]){
-                var ext_file = (desc_type !== 'click')? 'json':'click';
-                var fullfilename = config.openvim.BASE_CWD + "/" + filename + "."  + ext_file;
-                log.info("[%s]  creating file %s.%s", DEBUG_LOG, filename, ext_file);
-                var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename];
-                fs.writeFile(fullfilename, data);
+
+                try {
+                    var ext_file = (desc_type !== 'click')? 'json':'click';
+                    var fullfilename = config.openvim.BASE_CWD + "/" + filename + "."  + ext_file;
+                    log.info("[%s]  creating file %s.%s", DEBUG_LOG, filename, ext_file);
+                    var data = (desc_type !== 'click')?JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename];
+                    fs.writeFileSync(fullfilename, data);
+                } catch (e) {
+                    log.info("[%s] error creating local descriptor file %s",DEBUG_LOG ,e)
+                    if (error) {
+                        return error("error starting deployment");
+                    }
+                }
+
              }
         }
+
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
@@ -109,7 +119,24 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.stop = function(success, error){
         var self = this;
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController stop");
-        for(var elm_cat in this._openvim){
+
+        execFile(config.openvim.CLEAN_UP_SCRIPT, {
+            'cwd': config.openvim.BASE_CWD,
+            'env': {
+                'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
+                'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
+                'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
+                'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
+            }
+        },function(err, stdout, stderr){
+            if (err) {
+                console.error(err);
+                //error && error();
+            }
+            console.log(stdout);
+        });
+
+        /*for(var elm_cat in this._openvim){
 
             this._openvim[elm_cat].forEach(function(element){
                 var arg_del = elm_cat + '-delete';
@@ -131,7 +158,7 @@ dreamer.DeploymentController = (function (global){
                       console.log(stdout);
                 });
             });
-        }
+        }*/
         //FIXME we have to decide an error criteria
         success && success();
     };
@@ -150,6 +177,7 @@ dreamer.DeploymentController = (function (global){
         var info_data = {
             id: this._id,
             deployment_descriptor: this._deployment_descriptor,
+            topology_deployment: this.buildTopologyDeployment()
         };
 
         return success(info_data);
@@ -164,8 +192,137 @@ dreamer.DeploymentController = (function (global){
                 'type': 'shellinabox'
             }
         };
-
+        if(args['node_id']){
+            var shellinabox = new ShellInABox();
+            args['nodeUUID'] = args['node_id'];
+            result.console_info.url = shellinabox.getNodeEndPoint(args);
+            result.console_enabled = true;
+        }
+        console.log("getNodeConsole",JSON.stringify(args))
         return success(result);
+    };
+
+    DeploymentController.prototype.buildTopologyDeployment = function(args){
+        var result = {
+            "edges": [
+        		{
+        			"source": "testvm",
+        			"group": [],
+        			"target": "vl3",
+        			"view": "ns"
+        		},
+                {
+        			"source": "vlan",
+        			"group": [],
+        			"target": "vl3",
+        			"view": "ns"
+        		},
+                {
+        			"source": "vlan",
+        			"group": [],
+        			"target": "vl1",
+        			"view": "ns"
+        		},
+                {
+        			"source": "firewall",
+        			"group": [],
+        			"target": "vl1",
+        			"view": "ns"
+        		},
+                {
+        			"source": "firewall",
+        			"group": [],
+        			"target": "vl2",
+        			"view": "ns"
+        		},
+                {
+        			"source": "ping",
+        			"group": [],
+        			"target": "vl2",
+        			"view": "ns"
+        		}
+        	],
+            "vertices": [
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "vnf"
+        			},
+        			"id": "testvm"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "vnf"
+        			},
+        			"id": "vlan"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "vnf"
+        			},
+        			"id": "firewall"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "vnf"
+        			},
+        			"id": "ping"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "ns_vl"
+        			},
+        			"id": "vl3"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "ns_vl"
+        			},
+        			"id": "vl2"
+        		},
+                {
+        			"info": {
+        				"group": [],
+        				"property": {
+        					"custom_label": "",
+
+        				},
+        				"type": "ns_vl"
+        			},
+        			"id": "vl1"
+        		}
+            ]
+        };
+        return result;
     };
 
 
