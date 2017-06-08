@@ -12,13 +12,13 @@ config.redis.port = 6379;
 config.shellinabox = {};
 var shellinabox  = config.shellinabox;
 shellinabox.port = 8089;
-shellinabox.script_path = '/home/user/workspace/rdcl-agent/scripts/shellinabox/mininet/mininet_ssh_connect.sh';
-shellinabox.user_group = 'user:user';
+shellinabox.script_path = '/home/rfb/ovim-agent/scripts/shellinabox/mininet/mininet_ssh_connect.sh';
+shellinabox.user_group = 'rfb:rfb';
 shellinabox.start_cmd = ['-t', '-s', '/:'+shellinabox.user_group+':HOME:' + shellinabox.script_path +' ${url}', '-p', shellinabox.port, '-b'];
 
 
 config.openvim = {};
-config.openvim.BASE_CWD = '/home/rfb/vim-agent/scripts/superfluidity';
+config.openvim.BASE_CWD = '/home/rfb/ovim-agent/scripts/superfluidity';
 config.openvim.OPENVIM_CLI_HOME = '/home/rfb/openvimclient';
 config.openvim.OPENVIM_HOST = 'localhost';
 config.openvim.OPENVIM_PORT = 9080;
