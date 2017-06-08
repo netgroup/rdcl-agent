@@ -12,7 +12,7 @@ config.redis.port = 6379;
 config.shellinabox = {};
 var shellinabox  = config.shellinabox;
 shellinabox.port = 8089;
-shellinabox.script_path = '/home/rfb/ovim-agent/scripts/shellinabox/mininet/mininet_ssh_connect.sh';
+shellinabox.script_path = '/home/rfb/ovim-agent/scripts/shellinabox/superfluidity/remotevirshconsole.sh';
 shellinabox.user_group = 'rfb:rfb';
 shellinabox.start_cmd = ['-t', '-s', '/:'+shellinabox.user_group+':HOME:' + shellinabox.script_path +' ${url}', '-p', shellinabox.port, '-b'];
 
