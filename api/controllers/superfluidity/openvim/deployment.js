@@ -202,6 +202,18 @@ dreamer.DeploymentController = (function (global){
         return success(result);
     };
 
+    DeploymentController.prototype.getNodeInfo = function(args, success, fail){
+        log.info("[%s] %s", DEBUG_LOG, 'getNodeInfo');
+        var result = {
+            
+        };
+        if(args['node_id']){
+            
+        }
+        console.log("getNodeConsole",JSON.stringify(args))
+        return success(result);
+    };
+
     DeploymentController.prototype.buildTopologyDeployment = function(args){
         var result = {
             "edges": [
