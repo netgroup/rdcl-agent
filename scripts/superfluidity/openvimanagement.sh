@@ -38,6 +38,16 @@ declare -A VDUFLAVOR
 # map virtualLinkProfileId to virtualLinkId
 declare -A VLPID2VLID
 
+# association between hypervisors and VM types
+declare -A VMTYPES
+VMTYPES['xenhvm']="HVM"
+VMTYPES['xen-unik']="ClickOS"
+
+# association between hypervisors and OS image types
+declare -A IMAGETYPES
+IMAGETYPES['xenhvm']="raw"
+IMAGETYPES['xen-unik']="clickos"
+
 #######################
 ################## FUNCTIONS
 #######################
@@ -90,12 +100,12 @@ generatevmyaml() {
     cat - <<EOF
 server:
   name: vm-${hypervisor}-${name}
-  description: ClickOS vm
+  description: ${VMTYPES[$hypervisor]} VM
   imageRef: '${imageuuid}'
   flavorRef: '${flavoruuid}'
   start:    "yes"
   hypervisor: "${hypervisor}"
-  osImageType: "clickos"
+  osImageType: "${IMAGETYPES[$hypervisor]}"
   networks:
 EOF
     i=0
