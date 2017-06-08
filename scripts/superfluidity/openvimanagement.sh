@@ -100,7 +100,7 @@ generatevmyaml() {
     cat - <<EOF
 server:
   name: vm-${hypervisor}-${name}
-  description: ${VMTYPES[$hypervisor]} VM
+  description: "${VMTYPES[$hypervisor]} VM"
   imageRef: '${imageuuid}'
   flavorRef: '${flavoruuid}'
   start:    "yes"
@@ -287,6 +287,7 @@ for vnfid in $vnfids; do
 
         # populate the NETUUIDS array
         NETUUIDS[$internalIfRef]=$netUUID
+        validateUUID ${NETUUIDS[$internalIfRef]}
     done
 
     # generate the YAML for this VNF
