@@ -45,7 +45,7 @@ VMTYPES['xen-unik']="ClickOS"
 
 # association between hypervisors and OS image types
 declare -A IMAGETYPES
-IMAGETYPES['xenhvm']="raw"
+IMAGETYPES['xenhvm']="clickos"
 IMAGETYPES['xen-unik']="clickos"
 
 #######################
