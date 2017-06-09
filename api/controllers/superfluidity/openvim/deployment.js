@@ -189,9 +189,56 @@ dreamer.DeploymentController = (function (global){
             var filename = config.openvim.BASE_CWD + '/yamls/vmuuids.txt'
             var lines = require('fs').readFileSync(filename, 'utf-8').split('\n').filter(Boolean);
             console.log(lines)
+            for( var l in lines){
+                var current = lines[l];
+                if(current.indexOf(args['node_id']) == 0){
+                    var uuid = current.split(' : ')[1]
+                    console.log("UUID", uuid)
+
+                    var sh = spawn("./openvim",['vm-list', '-v', uuid], {
+                        'cwd': config.openvim.OPENVIM_CLI_HOME,
+                        'env': {
+                            'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
+                            'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
+                            'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
+                            'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
+                        }
+                    });
+
+                    sh.stderr.setEncoding('utf-8');
+                    sh.stdout.setEncoding('utf-8');
+                    sh.stdout.on('data', function(data){
+                        log.info("[%s] %s",DEBUG_LOG,"stdout:", data);
+                        
+                    });
+
+                    sh.stderr.on('data', function (data){
+                        log.info("[%s] %s",DEBUG_LOG,"stderr:", data);
+                        
+                    });
+
+                    sh.on('error', function(e){
+                        log.info("[%s] %s",DEBUG_LOG,"error:", e);
+                        fail(e);
+                    });
+
+                    sh.on('close', function(code){
+                        var msg_exit = "openvimcli vm info process exited with code: " + code;
+                        log.info("[%s] %s",DEBUG_LOG,msg_exit);
+                        
+                        if (code !== 0) {
+                            fail(msg_exit);
+                        }
+                        else{
+                            success();
+                        }
+                    });
+
+                }
+            }
         }
         //console.log("getNodeConsole",JSON.stringify(args))
-        return success(result);
+        //return success(result);
     };
 
     DeploymentController.prototype.buildTopologyDeployment = function(args){
