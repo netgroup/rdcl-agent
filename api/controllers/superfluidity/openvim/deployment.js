@@ -136,29 +136,7 @@ dreamer.DeploymentController = (function (global){
             console.log(stdout);
         });
 
-        /*for(var elm_cat in this._openvim){
 
-            this._openvim[elm_cat].forEach(function(element){
-                var arg_del = elm_cat + '-delete';
-                console.log(element);
-
-                var delete_elem = execFile('./openvim', [arg_del, '-f', element],{
-                    'cwd': config.openvim.OPENVIM_CLI_HOME,
-                    'env': {
-                        'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
-                        'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
-                        'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
-                        'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
-                    }
-                }, function(err, stdout, stderr){
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                      console.log(stdout);
-                });
-            });
-        }*/
         //FIXME we have to decide an error criteria
         success && success();
     };
@@ -208,9 +186,11 @@ dreamer.DeploymentController = (function (global){
             
         };
         if(args['node_id']){
-            
+            var filename = config.openvim.BASE_CWD + '/yamls/vmuuids.txt'
+            var lines = require('fs').readFileSync(filename, 'utf-8').split('\n').filter(Boolean);
+            console.log(lines)
         }
-        console.log("getNodeConsole",JSON.stringify(args))
+        //console.log("getNodeConsole",JSON.stringify(args))
         return success(result);
     };
 
