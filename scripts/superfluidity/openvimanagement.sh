@@ -95,7 +95,8 @@ generatevmyaml() {
     imageuuid=$2
     hypervisor=$3
     flavoruuid=$4
-    shift 4
+    vduid=$5
+    shift 5
     netuuids="$@"
     cat - <<EOF
 server:
@@ -110,7 +111,7 @@ server:
 EOF
     i=0
 for netuuid in $netuuids; do
-    echo "  - name: vif${i}"
+    echo "  - name: net-${vduid}_vif${i}"
     echo "    uuid: ${netuuid}"
     echo "    mac_address: $(generatemacaddress)"
     i=$(($i + 1))
@@ -291,7 +292,7 @@ for vnfid in $vnfids; do
     done
 
     # generate the YAML for this VNF
-    generatevmyaml ${vnfid} ${UUID_images[$vduid]} ${VDUHYPERVISOR[$vduid]} ${VDUFLAVOR[$vduid]} ${NETUUIDS[@]} > ${YAMLDIR}/vm-${vnfid}.yaml
+    generatevmyaml ${vnfid} ${UUID_images[$vduid]} ${VDUHYPERVISOR[$vduid]} ${VDUFLAVOR[$vduid]} $vduid ${NETUUIDS[@]} > ${YAMLDIR}/vm-${vnfid}.yaml
     # onboard
     VMUUID=$($OPENVIM vm-create ${YAMLDIR}/vm-${vnfid}.yaml | awk '{print $1}')
     validateUUID $VMUUID
