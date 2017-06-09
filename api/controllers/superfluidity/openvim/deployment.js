@@ -211,7 +211,10 @@ dreamer.DeploymentController = (function (global){
                     sh.stderr.on('data', function (data){
                         log.info("[%s] %s",DEBUG_LOG,"stderr:", data);
                         var YAML = require('json2yaml')
-                        self._cmd_result['node_info'] = YMAL.stringify(data);
+                        console.log(typeof data)
+                        self._cmd_result['node_info'] = data;
+                        console.log("########")
+                   
                         console.log(JSON.stringify(self._cmd_result['node_info']))
                     });
 
