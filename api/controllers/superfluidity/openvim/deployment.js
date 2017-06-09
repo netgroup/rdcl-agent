@@ -227,6 +227,7 @@ dreamer.DeploymentController = (function (global){
                             fail(msg_exit);
                         }
                         else{
+                            console.log(JSON.stringify(result))
                             success(result);
                         }
                     });
