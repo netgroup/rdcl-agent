@@ -205,17 +205,18 @@ dreamer.DeploymentController = (function (global){
                     sh.stdout.setEncoding('utf-8');
                     sh.stdout.on('data', function(data){
                         log.info("[%s] %s",DEBUG_LOG,"stdout:", data);
+                        var YAML = require('json2yaml')
+                        console.log(typeof data)
+                        self._cmd_result['node_info'] = YAML.stringify(data);
+                        console.log("########")
+                   
+                        console.log(JSON.stringify(self._cmd_result['node_info']))
                         
                     });
 
                     sh.stderr.on('data', function (data){
                         log.info("[%s] %s",DEBUG_LOG,"stderr:", data);
-                        var YAML = require('json2yaml')
-                        console.log(typeof data)
-                        self._cmd_result['node_info'] = data;
-                        console.log("########")
-                   
-                        console.log(JSON.stringify(self._cmd_result['node_info']))
+                        
                     });
 
                     sh.on('error', function(e){
