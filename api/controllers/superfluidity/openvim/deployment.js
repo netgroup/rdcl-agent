@@ -233,7 +233,7 @@ dreamer.DeploymentController = (function (global){
                         }
                         else{
                             console.log(JSON.stringify(self._cmd_result['node_info']))
-                            return success(self._cmd_result['node_info']);
+                            return success({ 'node_info': self._cmd_result['node_info']});
                         }
                     });
 
