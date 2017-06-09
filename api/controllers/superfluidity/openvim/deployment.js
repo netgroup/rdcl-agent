@@ -22,7 +22,7 @@ dreamer.DeploymentController = (function (global){
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._deployment_descriptor = args.deployment_descriptor;
-        
+        this._cmd_result = {}
 
 
         //this.start();
@@ -178,9 +178,9 @@ dreamer.DeploymentController = (function (global){
 
     DeploymentController.prototype.getNodeInfo = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getNodeInfo');
-        var result = {
-            
-        };
+        var result = {};
+        var self = this;
+        self._cmd_result['node_info'] = {};
         if(args['node_id']){
             var filename = config.openvim.BASE_CWD + '/yamls/vmuuids.txt'
             var lines = require('fs').readFileSync(filename, 'utf-8').split('\n').filter(Boolean);
@@ -211,7 +211,7 @@ dreamer.DeploymentController = (function (global){
                     sh.stderr.on('data', function (data){
                         log.info("[%s] %s",DEBUG_LOG,"stderr:", data);
                         var YAML = require('json2yaml')
-                        result['node_info'] = YMAL.stringify(data);
+                        self._cmd_result['node_info'] = YMAL.stringify(data);
                     });
 
                     sh.on('error', function(e){
@@ -227,8 +227,8 @@ dreamer.DeploymentController = (function (global){
                             return fail(msg_exit);
                         }
                         else{
-                            console.log(JSON.stringify(result))
-                            return success(result);
+                            console.log(JSON.stringify(self._cmd_result['node_info']))
+                            return success(self._cmd_result['node_info']);
                         }
                     });
 
