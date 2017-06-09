@@ -216,7 +216,7 @@ dreamer.DeploymentController = (function (global){
 
                     sh.on('error', function(e){
                         log.info("[%s] %s",DEBUG_LOG,"error:", e);
-                        fail(e);
+                        return fail(e);
                     });
 
                     sh.on('close', function(code){
@@ -224,11 +224,11 @@ dreamer.DeploymentController = (function (global){
                         log.info("[%s] %s",DEBUG_LOG,msg_exit);
                         
                         if (code !== 0) {
-                            fail(msg_exit);
+                            return fail(msg_exit);
                         }
                         else{
                             console.log(JSON.stringify(result))
-                            success(result);
+                            return success(result);
                         }
                     });
 
