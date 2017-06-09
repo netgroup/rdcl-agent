@@ -22,11 +22,7 @@ dreamer.DeploymentController = (function (global){
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._deployment_descriptor = args.deployment_descriptor;
-        this._openvim = {
-            'vm': ['vm-clickos-vlan', 'vm-clickos-ping', 'vm-clickos-firewall'],
-            'net': ['net-vl1', 'net-vl2', 'net-vl3'],
-            'image': ['clickos-vnf_click_vdu_ping', 'clickos-vnf_click_vdu_vlan', 'clickos-vnf_click_vdu_fwall']
-        }
+        
 
 
         //this.start();
@@ -214,7 +210,8 @@ dreamer.DeploymentController = (function (global){
 
                     sh.stderr.on('data', function (data){
                         log.info("[%s] %s",DEBUG_LOG,"stderr:", data);
-                        
+                        var YAML = require('json2yaml')
+                        result['node_info'] = YMAL.stringify(data);
                     });
 
                     sh.on('error', function(e){
@@ -230,7 +227,7 @@ dreamer.DeploymentController = (function (global){
                             fail(msg_exit);
                         }
                         else{
-                            success();
+                            success(result);
                         }
                     });
 
