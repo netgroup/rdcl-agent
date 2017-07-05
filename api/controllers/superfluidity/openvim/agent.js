@@ -104,6 +104,17 @@ dreamer.AgentController = (function (global){
         }
     };
 
+    AgentController.prototype.getNodeInfo = function(args, success, fail){
+        log.info("[%s] %s", DEBUG_LOG, 'getNodeInfo');
+
+        if(this.deployment){
+            this.deployment.getNodeInfo(args, success, fail);
+        }
+        else{
+            return fail('Deployment not found.');
+        }
+    };
+
 
 
 

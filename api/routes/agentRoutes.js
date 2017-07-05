@@ -3,7 +3,8 @@ var router = express.Router();
 var Log = require('log');
 var log = new Log('info');
 
-var AgentController = require('../controllers/oshi/mininet/agent');
+var AgentController = require('../controllers/superfluidity/openvim/agent');
+//var AgentController = require('../controllers/oshi/mininet/agent');
 //var AgentController = require('../controllers/cran/agent');
 
 var controller = new AgentController();

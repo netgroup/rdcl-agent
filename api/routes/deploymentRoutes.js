@@ -86,6 +86,20 @@ module.exports = function(args){
 
     });
 
+     //Get info for a node
+    router.get('/:id/node/:nodeId/', function(req, res) {
+
+        agentController.getNodeInfo({
+            deployment_id: req.params.id,
+            node_id: req.params.nodeId,
+        }, function(result){
+            res.status(201).json(result);
+        },
+        function(error) {
+            res.status(500).json({'error': (error!=undefined) ? error : "Unknow error"});
+        });
+    });
+
     //Get web console information for a node
     router.get('/:id/node/:nodeId/console', function(req, res) {
         var hostname = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host;
@@ -101,6 +115,8 @@ module.exports = function(args){
             res.status(500).json({'error': (error!=undefined) ? error : "Unknow error"});
         });
     });
+
+    
 
     function logErrors (err, req, res, next) {
       log.error("[%s] %s",MODULE_NAME, err.stack);
