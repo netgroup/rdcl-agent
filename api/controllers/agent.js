@@ -8,14 +8,14 @@ dreamer.AgentController = (function (global){
     var Log = require('log')
     var log = new Log('info');
 
-    var DEBUG_LOG = "AgentControllerBase";
+    var DEBUG_LOG = "AgentController";
+
     var spawn = require('child_process').spawn;
     var config = require('../../config/config');
-    
-    var shellInABoxController = require('../../helpers/shellinabox')();
 
     function AgentController(args){
-        log.info("[%s] %s", 'Constructor');
+
+        log.info("[%s] %s", DEBUG_LOG, 'Constructor');
         this.log_actions = [];
         this.deployments = {};
         this.status = "Runnig";
@@ -24,16 +24,22 @@ dreamer.AgentController = (function (global){
     AgentController.prototype.createDeployment = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'createDeployment');
         var self = this;
-        this.deployments = new DeploymentController(args);
-        this.deployments.launch(
-            function(){
-                log.info("[%s] %s", DEBUG_LOG, 'createDeployment callback launch success');
-                success();
-            }, function(error){
-                log.error("[%s] %s", DEBUG_LOG, 'createDeployment callback launch fail');
-                fail(error);
-            }
-        );
+        if(this.deployments =! undefined){
+            this.deployments = new DeploymentController(args);
+            this.deployments.launch(
+                function(){
+                    log.info("[%s] %s", DEBUG_LOG, 'createDeployment callback launch success');
+                    success();
+                }, function(error){
+                    log.error("[%s] %s", DEBUG_LOG, 'createDeployment callback launch fail');
+                    fail(error);
+                }
+            );
+        }
+        else{
+            fail("Agent busy with another deployment.")
+        }
+
 
     };
 
@@ -92,6 +98,17 @@ dreamer.AgentController = (function (global){
 
         if(this.deployments){
             this.deployments.getNodeConsole(args, success, fail);
+        }
+        else{
+            return fail('Deployment not found.');
+        }
+    };
+
+    AgentController.prototype.getNodeInfo = function(args, success, fail){
+        log.info("[%s] %s", DEBUG_LOG, 'getNodeInfo');
+
+        if(this.deployments){
+            this.deployments.getNodeInfo(args, success, fail);
         }
         else{
             return fail('Deployment not found.');
