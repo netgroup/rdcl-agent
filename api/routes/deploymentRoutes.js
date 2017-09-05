@@ -1,10 +1,10 @@
 var express = require('express');
-var Log = require('log');
-var log = new Log('info');
+
 
 module.exports = function(args){
     var agentController = args.agentController;
     var router = express.Router();
+    var log = args.log;
 
     var MODULE_NAME = 'route/deploymentRoutes';
 
@@ -22,14 +22,14 @@ module.exports = function(args){
         console.log(req.body.deployment_id);
         if (req.body.deployment_descriptor && req.body.deployment_id) {
             console.log("Loading new deployment with id: ", req.body.deployment_id);
-                agentController.createDeployment({
+            agentController.createDeployment({
                 deployment_descriptor: req.body.deployment_descriptor,
                 deployment_id: req.body.deployment_id
-            },function(){
-                res.status(201).json({'result': 'Deployment successiful loaded.'});
-            },function(error){
-                res.status(201).json({'error': (error!= undefined) ? error : "Unknow error"});
-            });
+                },function(){
+                    res.status(201).json({'result': 'Deployment successiful loaded.'});
+                },function(error){
+                    res.status(201).json({'error': (error!= undefined) ? error : "Unknow error"});
+                });
         }
         else{
             log.info("[%s] No deployment descriptor data in the request.", MODULE_NAME);

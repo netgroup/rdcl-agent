@@ -5,13 +5,18 @@ if (typeof dreamer === 'undefined') {
 
 dreamer.AgentController = (function (global){
     'use strict';
-    var Log = require('log')
+    var Log = require('log');
     var log = new Log('info');
 
     var DEBUG_LOG = "AgentController";
 
     var spawn = require('child_process').spawn;
     var config = require('../../config/config');
+
+    var controller_mapping = {
+        "superfluidity-nsd-openvim": "./superfluidity/nsd/openvim/deployment" ,
+        "oshi-mininet": "./oshi/mininet/deployment"
+    };
 
     function AgentController(args){
 
@@ -24,9 +29,12 @@ dreamer.AgentController = (function (global){
     AgentController.prototype.createDeployment = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'createDeployment');
         var self = this;
-        if(this.deployments =! undefined){
-            this.deployments = new DeploymentController(args);
-            this.deployments.launch(
+        if(this.deployments != undefined){
+
+
+            var deployment = new (require(controller_mapping[args.deployment_type]))(args);
+            this.deployments[args.deployment_id] = deployment;
+            deployment.launch(
                 function(){
                     log.info("[%s] %s", DEBUG_LOG, 'createDeployment callback launch success');
                     success();
@@ -35,9 +43,10 @@ dreamer.AgentController = (function (global){
                     fail(error);
                 }
             );
+
         }
         else{
-            fail("Agent busy with another deployment.")
+            fail("The agent is not capable to create a new deployment.")
         }
 
 
@@ -45,10 +54,10 @@ dreamer.AgentController = (function (global){
 
     AgentController.prototype.stopDeployment = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'stopDeployment');
-
-        if(this.deployments){
-            this.deployments.stop(success, fail)
-            this.deployments = null;
+        var deployment = this.deployments[args.deployment_id];
+        if(deployment){
+            deployment.stop(success, fail);
+            deployment = null;
         }
         else{
             fail('Deployment not found');
@@ -74,8 +83,9 @@ dreamer.AgentController = (function (global){
     };
     AgentController.prototype.getDeploymentStatus = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getDeploymentStatus');
-        if(this.deployments){
-            this.deployments.getStatus(args, success, fail);
+        var deployment = this.deployments[args.deployment_id];
+        if(deployment){
+            deployment.getStatus(args, success, fail);
         }
         else{
             fail('Deployment not found');
@@ -84,8 +94,9 @@ dreamer.AgentController = (function (global){
 
     AgentController.prototype.getDeploymentInfo = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getDeploymentInfo');
-        if(this.deployments){
-            this.deployments.getInfo(args, success, fail);
+        var deployment = this.deployments[args.deployment_id];
+        if(deployment){
+            deployment.getInfo(args, success, fail);
         }
         else{
             fail('Deployment not found');
@@ -96,8 +107,9 @@ dreamer.AgentController = (function (global){
     AgentController.prototype.getNodeConsole = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getNodeConsole');
 
-        if(this.deployments){
-            this.deployments.getNodeConsole(args, success, fail);
+        var deployment = this.deployments[args.deployment_id];
+        if(deployment){
+            deployment.getNodeConsole(args, success, fail);
         }
         else{
             return fail('Deployment not found.');
@@ -106,16 +118,14 @@ dreamer.AgentController = (function (global){
 
     AgentController.prototype.getNodeInfo = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getNodeInfo');
-
-        if(this.deployments){
-            this.deployments.getNodeInfo(args, success, fail);
+        var deployment = this.deployments[args.deployment_id];
+        if(deployment){
+            deployment.getNodeInfo(args, success, fail);
         }
         else{
             return fail('Deployment not found.');
         }
     };
-
-
 
 
     return AgentController;

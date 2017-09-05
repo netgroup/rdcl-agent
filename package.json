@@ -4,7 +4,7 @@
   "description": "Agent for RDCL3D project",
   "main": "app.js",
   "scripts": {
-    "test": "test",
+    "test": "node test/ref_test.js",
     "start": "nodemon app.js"
   },
   "author": "Francesco Lombardo",

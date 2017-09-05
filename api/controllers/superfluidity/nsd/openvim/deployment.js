@@ -10,9 +10,9 @@ dreamer.DeploymentController = (function (global){
     var DEBUG_LOG = "DeploymentController";
     var spawn = require('child_process').spawn;
     var execFile = require('child_process').execFile;
-    var config = require('../../../../config/config');
-    var Helper = require('../../../../helpers/helper');
-    var ShellInABox = require('../../../../helpers/shellinabox');
+    var config = require('../../../../../config/config');
+    var Helper = require('../../../../../helpers/helper');
+    var ShellInABox = require('../../../../../helpers/shellinabox');
 
     /**
         Constructor
@@ -182,14 +182,14 @@ dreamer.DeploymentController = (function (global){
         var self = this;
         self._cmd_result['node_info'] = {};
         if(args['node_id']){
-            var filename = config.openvim.BASE_CWD + '/yamls/vmuuids.txt'
+            var filename = config.openvim.BASE_CWD + '/yamls/vmuuids.txt';
             var lines = require('fs').readFileSync(filename, 'utf-8').split('\n').filter(Boolean);
             console.log(lines)
             for( var l in lines){
                 var current = lines[l];
                 if(current.indexOf(args['node_id']) == 0){
-                    var uuid = current.split(' : ')[1]
-                    console.log("UUID", uuid)
+                    var uuid = current.split(' : ')[1];
+                    console.log("UUID", uuid);
 
                     var sh = spawn("./openvim",['vm-list', '-v', uuid], {
                         'cwd': config.openvim.OPENVIM_CLI_HOME,
