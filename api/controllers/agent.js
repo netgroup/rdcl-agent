@@ -94,10 +94,8 @@ dreamer.AgentController = (function (global){
 
     AgentController.prototype.getDeploymentInfo = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getDeploymentInfo');
-        console.log(JSON.stringify(args))
         var deployment = this.deployments[args.deployment_id];
         if(deployment){
-            console.log("TROVATO")
             deployment.getInfo(args, success, fail);
         }
         else{
