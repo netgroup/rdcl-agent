@@ -30,8 +30,8 @@ dreamer.AgentController = (function (global){
         log.info("[%s] %s", DEBUG_LOG, 'createDeployment');
         var self = this;
         if(this.deployments != undefined){
-
-
+            console.log(JSON.stringify(args))
+            console.log(args.deployment_type)
             var deployment = new (require(controller_mapping[args.deployment_type]))(args);
             this.deployments[args.deployment_id] = deployment;
             deployment.launch(
@@ -94,8 +94,10 @@ dreamer.AgentController = (function (global){
 
     AgentController.prototype.getDeploymentInfo = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getDeploymentInfo');
+        console.log(JSON.stringify(args))
         var deployment = this.deployments[args.deployment_id];
         if(deployment){
+            console.log("TROVATO")
             deployment.getInfo(args, success, fail);
         }
         else{

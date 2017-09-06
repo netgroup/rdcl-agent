@@ -14,13 +14,18 @@ config.redis.port = 6379;
 config.shellinabox = {};
 var shellinabox  = config.shellinabox;
 shellinabox.port = 8089;
-shellinabox.script_path = '/home/rfb/ovim-agent/scripts/shellinabox/superfluidity/remotevirshconsole.sh';
 shellinabox.user_group = config.os_user + ':' + config.os_user_group;
-shellinabox.start_cmd = ['-t', '-s', '/:'+shellinabox.user_group+':HOME:' + shellinabox.script_path +' ${url}', '-p', shellinabox.port, '-b'];
 
 /* Mininet configurations*/
 config.mininet = {};
 config.mininet.mininet_extension_path = "/home/user/workspace/Dreamer-Mininet-Extensions";
+config.mininet.SHELLINABOX_SCRIPT = path.join(process.env.PWD, 'scripts/shellinabox/mininet/mininet_ssh_connect.sh');
+config.mininet.start_cmd = ['-t', 
+	'-s', 
+	'/:'+shellinabox.user_group+':HOME:' + config.mininet.SHELLINABOX_SCRIPT +' ${url}', 
+	'-p', shellinabox.port, 
+	'-b'];
+
 
 /* Openvim configurations */
 config.openvim = {};
@@ -32,7 +37,11 @@ config.openvim.OPENVIM_ADMIN_PORT = 9085;
 config.openvim.OPENVIM_TENANT = '96035cba-b313-11e6-866f-0cc47a7794be';
 config.openvim.CLEAN_UP_SCRIPT = 'cleanup.sh';
 config.openvim.SHELLINABOX_SCRIPT = path.join(process.env.PWD, 'scripts/shellinabox/superfluidity/remotevirshconsole.sh');
-
+config.openvim.start_cmd = ['-t', 
+	'-s', 
+	'/:'+shellinabox.user_group+':HOME:' + config.openvim.SHELLINABOX_SCRIPT +' ${url}', 
+	'-p', shellinabox.port, 
+	'-b'];
 /* CRAN configurations*/
 config.cran = {};
 config.cran.BASE_CWD = path.join(process.env.PWD,'scripts/cran');

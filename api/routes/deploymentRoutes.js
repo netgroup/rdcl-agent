@@ -24,7 +24,9 @@ module.exports = function(args){
             console.log("Loading new deployment with id: ", req.body.deployment_id);
             agentController.createDeployment({
                 deployment_descriptor: req.body.deployment_descriptor,
-                deployment_id: req.body.deployment_id
+                deployment_id: req.body.deployment_id,
+                deployment_type: req.body.deployment_type,
+                project_type: req.body.project_type
                 },function(){
                     res.status(201).json({'result': 'Deployment successiful loaded.'});
                 },function(error){

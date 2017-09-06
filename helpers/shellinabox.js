@@ -16,7 +16,7 @@ dreamer.ShellInABox = (function (global) {
 
     ShellInABox.prototype.start = function (data, success, error) {
         console.log(DEBUG_LOG, "Start process...");
-        var sib_arguments = config.shellinabox.start_cmd;
+        var sib_arguments = data.cmd;
         this.stop(data, function () {
                 console.log(DEBUG_LOG, "Starting process...");
 

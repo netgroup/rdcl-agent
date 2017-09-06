@@ -23,7 +23,14 @@ dreamer.DeploymentController = (function (global){
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._deployment_descriptor = args.deployment_descriptor;
         this._cmd_result = {}
-
+        var shellinabox = new ShellInABox();
+        shellinabox.isInstalled(function(){
+            shellinabox.start({cmd: config.openvim.start_cmd},function(){
+                    console.log("ShellInABox started.")
+                });
+            }, function(){
+                console.log("ShellInABox not Installed.")
+        });
 
         //this.start();
         this.console_output = [];
