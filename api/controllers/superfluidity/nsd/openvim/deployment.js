@@ -10,9 +10,9 @@ dreamer.DeploymentController = (function (global){
     var DEBUG_LOG = "DeploymentController";
     var spawn = require('child_process').spawn;
     var execFile = require('child_process').execFile;
-    var config = require('../../../../config/config');
-    var Helper = require('../../../../helpers/helper');
-    var ShellInABox = require('../../../../helpers/shellinabox');
+    var config = require('../../../../../config/config');
+    var Helper = require('../../../../../helpers/helper');
+    var ShellInABox = require('../../../../../helpers/shellinabox');
 
     /**
         Constructor
@@ -22,12 +22,15 @@ dreamer.DeploymentController = (function (global){
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._deployment_descriptor = args.deployment_descriptor;
-        this._openvim = {
-            'vm': ['vm-clickos-vlan', 'vm-clickos-ping', 'vm-clickos-firewall'],
-            'net': ['net-vl1', 'net-vl2', 'net-vl3'],
-            'image': ['clickos-vnf_click_vdu_ping', 'clickos-vnf_click_vdu_vlan', 'clickos-vnf_click_vdu_fwall']
-        }
-
+        this._cmd_result = {}
+        var shellinabox = new ShellInABox();
+        shellinabox.isInstalled(function(){
+            shellinabox.start({cmd: config.openvim.start_cmd},function(){
+                    console.log("ShellInABox started.")
+                });
+            }, function(){
+                console.log("ShellInABox not Installed.")
+        });
 
         //this.start();
         this.console_output = [];
@@ -136,29 +139,7 @@ dreamer.DeploymentController = (function (global){
             console.log(stdout);
         });
 
-        /*for(var elm_cat in this._openvim){
 
-            this._openvim[elm_cat].forEach(function(element){
-                var arg_del = elm_cat + '-delete';
-                console.log(element);
-
-                var delete_elem = execFile('./openvim', [arg_del, '-f', element],{
-                    'cwd': config.openvim.OPENVIM_CLI_HOME,
-                    'env': {
-                        'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
-                        'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
-                        'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
-                        'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
-                    }
-                }, function(err, stdout, stderr){
-                    if (err) {
-                        console.error(err);
-                        return;
-                    }
-                      console.log(stdout);
-                });
-            });
-        }*/
         //FIXME we have to decide an error criteria
         success && success();
     };
@@ -200,6 +181,74 @@ dreamer.DeploymentController = (function (global){
         }
         console.log("getNodeConsole",JSON.stringify(args))
         return success(result);
+    };
+
+    DeploymentController.prototype.getNodeInfo = function(args, success, fail){
+        log.info("[%s] %s", DEBUG_LOG, 'getNodeInfo');
+        var result = {};
+        var self = this;
+        self._cmd_result['node_info'] = {};
+        if(args['node_id']){
+            var filename = config.openvim.BASE_CWD + '/yamls/vmuuids.txt';
+            var lines = require('fs').readFileSync(filename, 'utf-8').split('\n').filter(Boolean);
+            console.log(lines)
+            for( var l in lines){
+                var current = lines[l];
+                if(current.indexOf(args['node_id']) == 0){
+                    var uuid = current.split(' : ')[1];
+                    console.log("UUID", uuid);
+
+                    var sh = spawn("./openvim",['vm-list', '-v', uuid], {
+                        'cwd': config.openvim.OPENVIM_CLI_HOME,
+                        'env': {
+                            'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
+                            'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
+                            'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
+                            'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
+                        }
+                    });
+
+                    sh.stderr.setEncoding('utf-8');
+                    sh.stdout.setEncoding('utf-8');
+                    sh.stdout.on('data', function(data){
+                        log.info("[%s] %s",DEBUG_LOG,"stdout:", data);
+                        var YAML = require('json2yaml')
+                        console.log(typeof data)
+                        self._cmd_result['node_info'] = data;
+                        console.log("########")
+                   
+                        console.log(JSON.stringify(self._cmd_result['node_info']))
+                        
+                    });
+
+                    sh.stderr.on('data', function (data){
+                        log.info("[%s] %s",DEBUG_LOG,"stderr:", data);
+                        
+                    });
+
+                    sh.on('error', function(e){
+                        log.info("[%s] %s",DEBUG_LOG,"error:", e);
+                        return fail(e);
+                    });
+
+                    sh.on('close', function(code){
+                        var msg_exit = "openvimcli vm info process exited with code: " + code;
+                        log.info("[%s] %s",DEBUG_LOG,msg_exit);
+                        
+                        if (code !== 0) {
+                            return fail(msg_exit);
+                        }
+                        else{
+                            console.log(JSON.stringify(self._cmd_result['node_info']))
+                            return success({ 'node_info': self._cmd_result['node_info']});
+                        }
+                    });
+
+                }
+            }
+        }
+        //console.log("getNodeConsole",JSON.stringify(args))
+        //return success(result);
     };
 
     DeploymentController.prototype.buildTopologyDeployment = function(args){

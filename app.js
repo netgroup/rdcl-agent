@@ -17,9 +17,7 @@ app.listen(port);
 
 console.log( config.name + ' server started on: ' + port);
 shellinabox.isInstalled(function(){
-	shellinabox.start({},function(){
-		console.log("ShellInABox started.")
-	});
+
 }, function(){
 	console.log("ShellInABox not Installed.")
 });

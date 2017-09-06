@@ -14,13 +14,22 @@ dreamer.DeploymentController = (function (global){
     var ShellInABox = require('../../../../helpers/shellinabox');
 
     /**
-        Constructor
-    */
+     Constructor
+     */
     function DeploymentController(args){
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController Constructor");
         this._id = args.deployment_id;
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._deployment_descriptor = args.deployment_descriptor;
+        this._cmd_result = {}
+        var shellinabox = new ShellInABox();
+        shellinabox.isInstalled(function(){
+            shellinabox.start({cmd: config.mininet.start_cmd},function(){
+                    console.log("ShellInABox started.")
+                });
+            }, function(){
+                console.log("ShellInABox not Installed.")
+        });
 
         //this.start();
         this.console_output = [];
