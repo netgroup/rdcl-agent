@@ -1,4 +1,4 @@
-var Deployment = require('../api/controllers/superfluidity/openvim/deployment');
+var Deployment = require('../api/controllers/superfluidity/nsd/openvim/deployment');
 
 
 var ovdeployment = new Deployment({

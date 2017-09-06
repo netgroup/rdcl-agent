@@ -1,15 +1,11 @@
 {
-  "name": "oshi-rdcl-agent",
+  "name": "rdcl-agent",
   "version": "1.0.0",
-  "description": "Oshi agent for RDCL3D project",
+  "description": "Agent for RDCL3D project",
   "main": "app.js",
   "scripts": {
-    "test": "test",
+    "test": "node test/ref_test.js",
     "start": "nodemon app.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git@bitbucket.org:zvfvrv/oshi-rdcl-agent.git"
   },
   "author": "Francesco Lombardo",
   "license": "Apache 2.0",

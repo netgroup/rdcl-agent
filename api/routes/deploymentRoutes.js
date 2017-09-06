@@ -1,10 +1,10 @@
 var express = require('express');
-var Log = require('log');
-var log = new Log('info');
+
 
 module.exports = function(args){
     var agentController = args.agentController;
     var router = express.Router();
+    var log = args.log;
 
     var MODULE_NAME = 'route/deploymentRoutes';
 
@@ -22,14 +22,16 @@ module.exports = function(args){
         console.log(req.body.deployment_id);
         if (req.body.deployment_descriptor && req.body.deployment_id) {
             console.log("Loading new deployment with id: ", req.body.deployment_id);
-                agentController.createDeployment({
+            agentController.createDeployment({
                 deployment_descriptor: req.body.deployment_descriptor,
-                deployment_id: req.body.deployment_id
-            },function(){
-                res.status(201).json({'result': 'Deployment successiful loaded.'});
-            },function(error){
-                res.status(201).json({'error': (error!= undefined) ? error : "Unknow error"});
-            });
+                deployment_id: req.body.deployment_id,
+                deployment_type: req.body.deployment_type,
+                project_type: req.body.project_type
+                },function(){
+                    res.status(201).json({'result': 'Deployment successiful loaded.'});
+                },function(error){
+                    res.status(201).json({'error': (error!= undefined) ? error : "Unknow error"});
+                });
         }
         else{
             log.info("[%s] No deployment descriptor data in the request.", MODULE_NAME);
@@ -86,6 +88,20 @@ module.exports = function(args){
 
     });
 
+     //Get info for a node
+    router.get('/:id/node/:nodeId/', function(req, res) {
+
+        agentController.getNodeInfo({
+            deployment_id: req.params.id,
+            node_id: req.params.nodeId,
+        }, function(result){
+            res.status(201).json(result);
+        },
+        function(error) {
+            res.status(500).json({'error': (error!=undefined) ? error : "Unknow error"});
+        });
+    });
+
     //Get web console information for a node
     router.get('/:id/node/:nodeId/console', function(req, res) {
         var hostname = ( req.headers.host.match(/:/g) ) ? req.headers.host.slice( 0, req.headers.host.indexOf(":") ) : req.headers.host;
@@ -101,6 +117,8 @@ module.exports = function(args){
             res.status(500).json({'error': (error!=undefined) ? error : "Unknow error"});
         });
     });
+
+    
 
     function logErrors (err, req, res, next) {
       log.error("[%s] %s",MODULE_NAME, err.stack);
