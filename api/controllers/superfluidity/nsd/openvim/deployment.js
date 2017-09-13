@@ -70,7 +70,7 @@ dreamer.DeploymentController = (function (global) {
         var mkdirp = require('mkdirp');
         mkdirp.sync(this._yamlsdir)
 
-        var shellinabox = new ShellInABox();
+        this.shellinabox = new ShellInABox();
         shellinabox.isInstalled(function () {
             shellinabox.start({cmd: config.openvim.start_cmd}, function () {
                 console.log("ShellInABox started.")

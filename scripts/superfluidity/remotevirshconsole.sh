@@ -18,3 +18,5 @@
 
 # connect to the remote console
 ssh -p2222 -t root@127.0.0.1 "bash -c \"virsh -c xen:/// console $1\""
+
+
