@@ -429,7 +429,7 @@ dreamer.DeploymentController = (function (global) {
                     });
                     var vm_uuid = this._onboardVm(vm_yaml_path);
                     if(vm_uuid){
-                        UUID_vms.append(vm_uuid);
+                        UUID_vms.push(vm_uuid);
                     }
                     //TODO APPEND to vm_uuid list
                 }
