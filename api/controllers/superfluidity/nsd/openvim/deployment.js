@@ -338,7 +338,7 @@ dreamer.DeploymentController = (function (global) {
                             var image_UUID = this._onboardImage(image_yaml_path);
                             UUID_images[vdu.vduId] = image_UUID;
                             VDUHYPERVISOR[vdu.vduId] = "xen-unik";
-                            VDUFLAVOR[vdu.vduId] = CLICKFLAVORUUID;
+                            VDUFLAVOR[vdu.vduId] = config.openvim.CLICKFLAVORUUID;
                         }
 
                     }
@@ -350,7 +350,7 @@ dreamer.DeploymentController = (function (global) {
                     var swimageUUID = this._getSwImageUUID(swImage);
                     UUID_images[vdu.vduId] = swimageUUID;
                     VDUHYPERVISOR[vdu.vduId] = "xenhvm";
-                    VDUFLAVOR[vdu.vduId] = VMFLAVOURUUID;
+                    VDUFLAVOR[vdu.vduId] = config.openvim.VMFLAVOURUUID;
                 }
                 if( VNF2VDU[vnfid] == undefined)
                     VNF2VDU[vnfid] = []
