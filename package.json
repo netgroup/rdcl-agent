@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "node test/ref_test.js",
-    "start": "nodemon app.js"
+    "start": "nodemon app.js --ignore 'deployments_data'"
   },
   "author": "Francesco Lombardo",
   "license": "Apache 2.0",
