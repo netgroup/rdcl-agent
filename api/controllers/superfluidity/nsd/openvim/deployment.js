@@ -223,8 +223,8 @@ dreamer.DeploymentController = (function (global) {
             'env': {
                 'OPENVIM_HOST': config.openvim.env.OPENVIM_HOST,
                 'OPENVIM_PORT': config.openvim.env.OPENVIM_PORT,
-                'OPENVIM_ADMIN_PORT': config.env.openvim.OPENVIM_ADMIN_PORT,
-                'OPENVIM_TENANT': config.env.openvim.OPENVIM_TENANT,
+                'OPENVIM_ADMIN_PORT': config.openvim.env.OPENVIM_ADMIN_PORT,
+                'OPENVIM_TENANT': config.openvim.env.OPENVIM_TENANT,
             }
         });
         log.debug("[%s] exit with: %s ", DEBUG_LOG, exec_res.status);
