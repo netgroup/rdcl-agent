@@ -14,7 +14,7 @@ dreamer.AgentController = (function (global){
     var config = require('../../config/config');
 
     var controller_mapping = {
-        "superfluidity-nsd-openvim": "./superfluidity/nsd/openvim/deployment" ,
+        "superfluidity-openvim": "./superfluidity/nsd/openvim/deployment" ,
         "oshi-mininet": "./oshi/mininet/deployment"
     };
 
