@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="6caf7750-751b-4edf-851e-0be7045e051b" name="Default" comment="" />
+    <list default="true" id="6caf7750-751b-4edf-851e-0be7045e051b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" afterPath="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -98,11 +100,11 @@
       <file leaf-file-name="deployment.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="53" lean-forward="true" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+            <state relative-caret-position="178">
+              <caret line="115" column="28" lean-forward="false" selection-start-line="115" selection-start-column="28" selection-end-line="115" selection-end-column="28" />
               <folding>
-                <element signature="e#27408#30766#0" expanded="false" />
-                <element signature="e#27431#28523#0" expanded="false" />
+                <element signature="e#27438#30796#0" expanded="false" />
+                <element signature="e#27461#28553#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -172,8 +174,8 @@
         <option value="$PROJECT_DIR$/scripts/superfluidity/ov-deployment.js" />
         <option value="$PROJECT_DIR$/test/openvimdeployment.js" />
         <option value="$PROJECT_DIR$/config/config.js" />
-        <option value="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
       </list>
     </option>
   </component>
@@ -469,16 +471,15 @@
       <workItem from="1504615196353" duration="2737000" />
       <workItem from="1504712326121" duration="1636000" />
       <workItem from="1504878670325" duration="58790000" />
-      <workItem from="1505286642158" duration="1889000" />
+      <workItem from="1505286642158" duration="1993000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="79765000" />
+    <option name="totallyTimeSpent" value="79869000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="725" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
@@ -487,7 +488,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18824464" sideWeight="0.33695653" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31111112" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3936508" sideWeight="0.49722" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3936508" sideWeight="0.49722" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18824464" sideWeight="0.6630435" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
@@ -571,8 +572,8 @@
         <state relative-caret-position="1395">
           <caret line="93" column="41" lean-forward="false" selection-start-line="93" selection-start-column="27" selection-end-line="93" selection-end-column="41" />
           <folding>
-            <element signature="e#27408#30766#0" expanded="false" />
-            <element signature="e#27431#28523#0" expanded="false" />
+            <element signature="e#27438#30796#0" expanded="false" />
+            <element signature="e#27461#28553#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -919,11 +920,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="53" lean-forward="true" selection-start-line="14" selection-start-column="53" selection-end-line="14" selection-end-column="53" />
+        <state relative-caret-position="178">
+          <caret line="115" column="28" lean-forward="false" selection-start-line="115" selection-start-column="28" selection-end-line="115" selection-end-column="28" />
           <folding>
-            <element signature="e#27408#30766#0" expanded="false" />
-            <element signature="e#27431#28523#0" expanded="false" />
+            <element signature="e#27438#30796#0" expanded="false" />
+            <element signature="e#27461#28553#0" expanded="false" />
           </folding>
         </state>
       </provider>

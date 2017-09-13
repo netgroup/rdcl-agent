@@ -134,7 +134,7 @@ dreamer.DeploymentController = (function (global) {
         var result = true;
         //scp -P${OPENVIMHOSTPORT} "${YAMLDIR}/clickos_${vduid}" ${OPENVIMHOSTUSERNAME}@${OPENVIMHOST}:/var/lib/libvirt/images/
         var args = ['-P' + config.openvim.OPENVIMHOSTPORT, image_yaml_path, config.openvim.OPENVIMHOSTUSERNAME + "@" + config.openvim.OPENVIMHOST + ":/var/lib/libvirt/images/"];
-        log.debug("[%s] Command: %s %s", DEBUG_LOG, 'scp', args[c].toString());
+        log.debug("[%s] Command: %s %s", DEBUG_LOG, 'scp', args.toString());
         var exec_res = sync('scp', args);
         log.debug("[%s] exit with: %s", DEBUG_LOG, exec_res.status);
         return result;
