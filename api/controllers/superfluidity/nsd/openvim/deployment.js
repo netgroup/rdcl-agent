@@ -112,8 +112,8 @@ dreamer.DeploymentController = (function (global) {
         var image_file_name = 'clickos_' + vduId;
         var new_image_path = this.YAMLDIR + '/' + image_file_name;
         var commands = [
-            ['cp', STAMINALCLICKOSIMAGE, new_image_path],
-            [CLICKINJECTOR, vduId + '.click', new_image_path],
+            ['cp', config.openvim.STAMINALCLICKOSIMAGE, new_image_path],
+            [config.openvim.CLICKINJECTOR, vduId + '.click', new_image_path],
             ['chmod', 'u+rw', new_image_path]
         ];
         for (var c in commands) {
