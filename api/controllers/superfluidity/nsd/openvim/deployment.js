@@ -520,7 +520,8 @@ dreamer.DeploymentController = (function (global) {
         };
         if (args['node_id']) {
             var shellinabox = new ShellInABox();
-            args['nodeUUID'] = args['node_id'];
+            args['nodeUUID'] = UUID_vms[args['node_id']];
+            console.log(args['nodeUUID']);
             result.console_info.url = shellinabox.getNodeEndPoint(args);
             result.console_enabled = true;
         }
