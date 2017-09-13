@@ -58,10 +58,10 @@ dreamer.DeploymentController = (function (global) {
     function DeploymentController(args) {
         log.info("[%s] %s", DEBUG_LOG, "DeploymentController Constructor");
         this._id = args.deployment_id;
-        
+
         this._deployment_descriptor = args.deployment_descriptor;
         this._cmd_result = {};
-        this._deployment_path = path.join(process.env.PWD,'deployments_data', 'superfluidity-nsd-openvim', 'deployment_'+this._id)
+        this._deployment_path = path.join(process.env.PWD, 'deployments_data', 'superfluidity-nsd-openvim', 'deployment_' + this._id)
         this._yamlsdir = path.join(this._deployment_path, "yamls");
 
         this._deployment_data_file = path.join(this._deployment_path, 'deployment_' + this._id + '.json');
@@ -291,150 +291,160 @@ dreamer.DeploymentController = (function (global) {
 
 
     DeploymentController.prototype._deploy = function (success, error) {
+        var result = false;
+        try {
 
-        // 1. create and onboard the ClickOS images
-        var vnfd_list = this._deployment_descriptor['vnfd'];
-        for (var vnfid in vnfd_list) {
-            var current_vnfd = vnfd_list[vnfid];
-            var vdu_list = current_vnfd.vdu;
-            for (var v in vdu_list) {
-                var vdu = vdu_list[v];
-                if (vdu.vduNestedDesc) {
-                    var h = new Helper();
-                    var nestedDesc = h.getNestedDesc(current_vnfd, vdu.vduNestedDesc);
-                    if (nestedDesc.vduNestedDescriptorType == "click") {
-                        //create a new image corresponding to the click configuration
-                        var new_image_path = this._createImageCLick(vdu.vduId);
-                        if (new_image_path != undefined) {
 
-                            // upload image to the server. The way to do this is not defined by openvim, so we use scp
-                            this._uploadImage(new_image_path);
 
-                            // create the yaml for the image
-                            var image_yaml_path = this._generateImageYaml(vdu.vduId);
-                            // onboard the image and get its UUID
-                            var image_UUID = this._onboardImage(image_yaml_path);
-                            UUID_images[vdu.vduId] = image_UUID;
-                            VDUHYPERVISOR[vdu.vduId] = "xen-unik";
-                            VDUFLAVOR[vdu.vduId] = config.openvim.CLICKFLAVORUUID;
+            // 1. create and onboard the ClickOS images
+            var vnfd_list = this._deployment_descriptor['vnfd'];
+            for (var vnfid in vnfd_list) {
+                var current_vnfd = vnfd_list[vnfid];
+                var vdu_list = current_vnfd.vdu;
+                for (var v in vdu_list) {
+                    var vdu = vdu_list[v];
+                    if (vdu.vduNestedDesc) {
+                        var h = new Helper();
+                        var nestedDesc = h.getNestedDesc(current_vnfd, vdu.vduNestedDesc);
+                        if (nestedDesc.vduNestedDescriptorType == "click") {
+                            //create a new image corresponding to the click configuration
+                            var new_image_path = this._createImageCLick(vdu.vduId);
+                            if (new_image_path != undefined) {
+
+                                // upload image to the server. The way to do this is not defined by openvim, so we use scp
+                                this._uploadImage(new_image_path);
+
+                                // create the yaml for the image
+                                var image_yaml_path = this._generateImageYaml(vdu.vduId);
+                                // onboard the image and get its UUID
+                                var image_UUID = this._onboardImage(image_yaml_path);
+                                UUID_images[vdu.vduId] = image_UUID;
+                                VDUHYPERVISOR[vdu.vduId] = "xen-unik";
+                                VDUFLAVOR[vdu.vduId] = config.openvim.CLICKFLAVORUUID;
+                            }
+
                         }
-
                     }
+                    else {
+                        // ASSUMPTION: we have a "normal" VDU, which corresponds to an HVM virtual machine
+                        // find the image UUID corresponding to swImageDesc
+                        var swImage = vdu.swImageDesc.swImage;
+                        var swimageUUID = this._getSwImageUUID(swImage);
+                        UUID_images[vdu.vduId] = swimageUUID;
+                        VDUHYPERVISOR[vdu.vduId] = "xenhvm";
+                        VDUFLAVOR[vdu.vduId] = config.openvim.VMFLAVOURUUID;
+                    }
+                    if (VNF2VDU[vnfid] == undefined)
+                        VNF2VDU[vnfid] = []
+                    VNF2VDU[vnfid].push(vdu.vduId)
                 }
-                else {
-                    // ASSUMPTION: we have a "normal" VDU, which corresponds to an HVM virtual machine
-                    // find the image UUID corresponding to swImageDesc
-                    var swImage = vdu.swImageDesc.swImage;
-                    var swimageUUID = this._getSwImageUUID(swImage);
-                    UUID_images[vdu.vduId] = swimageUUID;
-                    VDUHYPERVISOR[vdu.vduId] = "xenhvm";
-                    VDUFLAVOR[vdu.vduId] = config.openvim.VMFLAVOURUUID;
-                }
-                if (VNF2VDU[vnfid] == undefined)
-                    VNF2VDU[vnfid] = []
-                VNF2VDU[vnfid].push(vdu.vduId)
             }
-        }
 
-        // 2. create the networks corresponding to the virtuallinks
-        for (var v in this._deployment_descriptor.nsd['nsd']['virtualLinkDesc']) {
-            var vld = this._deployment_descriptor.nsd['nsd']['virtualLinkDesc'][v];
-            // create the yaml for the network corresponding to the virtuallink
-            var net_yaml_path = this._generateNetworkYaml(vld.virtualLinkDescId);
-            // onboard the network and get its UUID
-            var net_UUID = this._onboardNetwork(net_yaml_path);
-            UUID_networks[vld.virtualLinkDescId] = net_UUID;
+            // 2. create the networks corresponding to the virtuallinks
+            for (var v in this._deployment_descriptor.nsd['nsd']['virtualLinkDesc']) {
+                var vld = this._deployment_descriptor.nsd['nsd']['virtualLinkDesc'][v];
+                // create the yaml for the network corresponding to the virtuallink
+                var net_yaml_path = this._generateNetworkYaml(vld.virtualLinkDescId);
+                // onboard the network and get its UUID
+                var net_UUID = this._onboardNetwork(net_yaml_path);
+                UUID_networks[vld.virtualLinkDescId] = net_UUID;
 
-            // openvim does not yet create the ovs bridge automatically, so here we create it manually
-            this._createOVSBridge(net_UUID);
-        }
+                // openvim does not yet create the ovs bridge automatically, so here we create it manually
+                this._createOVSBridge(net_UUID);
+            }
 
-        // 3. create the VNFs, using references to the created images and networks
-        log.info("[%s] %s", DEBUG_LOG, "Create the VNFs, using references to the created images and networks");
-        // prepare/reset the file which will contain the VM UUIDs
-        //FIXME store vmuuids in a different way
-        fs.openSync(path.join(this._yamlsdir, 'vmuuids.txt'), 'w');
+            // 3. create the VNFs, using references to the created images and networks
+            log.info("[%s] %s", DEBUG_LOG, "Create the VNFs, using references to the created images and networks");
+            // prepare/reset the file which will contain the VM UUIDs
+            //FIXME store vmuuids in a different way
+            fs.openSync(path.join(this._yamlsdir, 'vmuuids.txt'), 'w');
 
-        // find the mapping between each virtualLinkProfileId and virtualLinkDescId
-        // ASSUMPTION: we have only one nsDf in the NSD
-        // populate the VLPID2VLID array
-        var nsDf = this._deployment_descriptor.nsd['nsd']['nsDf'][0];
-        for (var p in nsDf.virtualLinkProfile) {
-            var vlp = nsDf.virtualLinkProfile[p];
-            VLPID2VLID[vlp.virtualLinkProfileId] = vlp.virtualLinkDescId;
-        }
+            // find the mapping between each virtualLinkProfileId and virtualLinkDescId
+            // ASSUMPTION: we have only one nsDf in the NSD
+            // populate the VLPID2VLID array
+            var nsDf = this._deployment_descriptor.nsd['nsd']['nsDf'][0];
+            for (var p in nsDf.virtualLinkProfile) {
+                var vlp = nsDf.virtualLinkProfile[p];
+                VLPID2VLID[vlp.virtualLinkProfileId] = vlp.virtualLinkDescId;
+            }
 
-        for (vnfid in this._deployment_descriptor.vnfd) {
-            var vnfd = this._deployment_descriptor.vnfd[vnfid];
-            // ASSUMPTION only one VDU IN VNF
-            var vdu_id = VNF2VDU[vnfid][0];
-            var image_UUID = UUID_images[vdu_id];
-            log.debug("[%s] Vnfd %s vdu %s  image UUID %s", DEBUG_LOG, vnfd, vdu_id, image_UUID);
-            var NETUUIDS = {};
-            // search for the connection points of this VNF in the nsd, and their associated virtualLinkProfileId, to find the UUIDs of the networks
-            // ASSUMPTION: on a virtuallink there is at most one extCP per VNF (i.e. a VNF does not have two interfaces on the same network)
-            for (p in nsDf.vnfProfile) {
-                var vnfProfile = nsDf.vnfProfile[p];
-                if (vnfProfile.vnfdId == vnfid) {
-                    for (var n in vnfProfile.nsVirtualLinkConnectivity) {
-                        var nsVirtualLinkConnectivity = vnfProfile.nsVirtualLinkConnectivity[n];
-                        if (nsVirtualLinkConnectivity.virtualLinkProfileId != null && nsVirtualLinkConnectivity.virtualLinkProfileId != "") {
+            for (vnfid in this._deployment_descriptor.vnfd) {
+                var vnfd = this._deployment_descriptor.vnfd[vnfid];
+                // ASSUMPTION only one VDU IN VNF
+                var vdu_id = VNF2VDU[vnfid][0];
+                var image_UUID = UUID_images[vdu_id];
+                log.debug("[%s] Vnfd %s vdu %s  image UUID %s", DEBUG_LOG, vnfd, vdu_id, image_UUID);
+                var NETUUIDS = {};
+                // search for the connection points of this VNF in the nsd, and their associated virtualLinkProfileId, to find the UUIDs of the networks
+                // ASSUMPTION: on a virtuallink there is at most one extCP per VNF (i.e. a VNF does not have two interfaces on the same network)
+                for (p in nsDf.vnfProfile) {
+                    var vnfProfile = nsDf.vnfProfile[p];
+                    if (vnfProfile.vnfdId == vnfid) {
+                        for (var n in vnfProfile.nsVirtualLinkConnectivity) {
+                            var nsVirtualLinkConnectivity = vnfProfile.nsVirtualLinkConnectivity[n];
+                            if (nsVirtualLinkConnectivity.virtualLinkProfileId != null && nsVirtualLinkConnectivity.virtualLinkProfileId != "") {
 
-                            var cpdId = nsVirtualLinkConnectivity.cpdId[0];
-                            var virtualLinkProfileId = nsVirtualLinkConnectivity.virtualLinkProfileId;
-                            // virtualLinkProfileId -> virtualLinkDescId
-                            var vlid = VLPID2VLID[virtualLinkProfileId];
-                            // virtualLinkDescId -> openvim UUID
-                            var netUUID = UUID_networks[vlid];
+                                var cpdId = nsVirtualLinkConnectivity.cpdId[0];
+                                var virtualLinkProfileId = nsVirtualLinkConnectivity.virtualLinkProfileId;
+                                // virtualLinkProfileId -> virtualLinkDescId
+                                var vlid = VLPID2VLID[virtualLinkProfileId];
+                                // virtualLinkDescId -> openvim UUID
+                                var netUUID = UUID_networks[vlid];
 
-                            // now search for the corresponding internalIfRef
-                            // cpdId -> intVirtualLinkDesc
-                            log.debug("[%s] virtualLinkProfileId %s vlid %s  netUUID %s", DEBUG_LOG, virtualLinkProfileId, vlid, netUUID);
+                                // now search for the corresponding internalIfRef
+                                // cpdId -> intVirtualLinkDesc
+                                log.debug("[%s] virtualLinkProfileId %s vlid %s  netUUID %s", DEBUG_LOG, virtualLinkProfileId, vlid, netUUID);
 
-                            for (var i in vnfd.vnfExtCpd) {
-                                var vnfExtCpd = vnfd.vnfExtCpd[i];
+                                for (var i in vnfd.vnfExtCpd) {
+                                    var vnfExtCpd = vnfd.vnfExtCpd[i];
 
-                                if (vnfExtCpd.cpdId == cpdId) {
-                                    var intVirtualLinkDesc = vnfExtCpd.intVirtualLinkDesc;
-                                    for (var u in vnfd.vdu) {
-                                        var current_vdu = vnfd.vdu[u];
-                                        var index_no_internalIfRef = 0;
-                                        for (var d in current_vdu.intCpd) {
-                                            var intCpd = current_vdu.intCpd[d];
-                                            if (intCpd.intVirtualLinkDesc == intVirtualLinkDesc) {
-                                                if (intCpd.internalIfRef != undefined)
-                                                    NETUUIDS[intCpd.internalIfRef] = netUUID;
-                                                else {
-                                                    NETUUIDS[index_no_internalIfRef] = netUUID;
-                                                    index_no_internalIfRef++;
+                                    if (vnfExtCpd.cpdId == cpdId) {
+                                        var intVirtualLinkDesc = vnfExtCpd.intVirtualLinkDesc;
+                                        for (var u in vnfd.vdu) {
+                                            var current_vdu = vnfd.vdu[u];
+                                            var index_no_internalIfRef = 0;
+                                            for (var d in current_vdu.intCpd) {
+                                                var intCpd = current_vdu.intCpd[d];
+                                                if (intCpd.intVirtualLinkDesc == intVirtualLinkDesc) {
+                                                    if (intCpd.internalIfRef != undefined)
+                                                        NETUUIDS[intCpd.internalIfRef] = netUUID;
+                                                    else {
+                                                        NETUUIDS[index_no_internalIfRef] = netUUID;
+                                                        index_no_internalIfRef++;
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+
+                            //vnfid, uuidImage, vduhypervisor, vduflavor, vdu_id, NETUUIDS
+
+
                         }
-
-                        //vnfid, uuidImage, vduhypervisor, vduflavor, vdu_id, NETUUIDS
-
-
+                        var vm_yaml_path = this._generateVMYaml({
+                            vnfid: vnfid,
+                            uuidImage: UUID_images[vdu_id],
+                            vduhypervisor: VDUHYPERVISOR[vdu_id],
+                            vduflavor: VDUFLAVOR[vdu_id],
+                            vdu_id: vdu_id,
+                            netuuids: NETUUIDS
+                        });
+                        var vm_uuid = this._onboardVm(vm_yaml_path);
+                        if (vm_uuid) {
+                            UUID_vms.push(vm_uuid);
+                        }
+                        //TODO APPEND to vm_uuid list
                     }
-                    var vm_yaml_path = this._generateVMYaml({
-                        vnfid: vnfid,
-                        uuidImage: UUID_images[vdu_id],
-                        vduhypervisor: VDUHYPERVISOR[vdu_id],
-                        vduflavor: VDUFLAVOR[vdu_id],
-                        vdu_id: vdu_id,
-                        netuuids: NETUUIDS
-                    });
-                    var vm_uuid = this._onboardVm(vm_yaml_path);
-                    if(vm_uuid){
-                        UUID_vms.push(vm_uuid);
-                    }
-                    //TODO APPEND to vm_uuid list
                 }
             }
+
         }
+        catch (e) {
+            return error(e);
+        }
+        return success();
 
     };
 
