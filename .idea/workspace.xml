@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6caf7750-751b-4edf-851e-0be7045e051b" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" afterPath="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -68,8 +69,8 @@
       <file leaf-file-name="deployment.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="435" column="41" lean-forward="false" selection-start-line="435" selection-start-column="37" selection-end-line="435" selection-end-column="41" />
+            <state relative-caret-position="-149">
+              <caret line="604" column="45" lean-forward="false" selection-start-line="604" selection-start-column="45" selection-end-line="604" selection-end-column="45" />
               <folding />
             </state>
           </provider>
@@ -127,7 +128,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>_cmd_result</find>
       <find>trovato</find>
       <find>UUID</find>
       <find>is not a valid UUID</find>
@@ -157,6 +157,7 @@
       <find>_topology_path</find>
       <find>helper</find>
       <find>superfluidity-openvim</find>
+      <find>UUID_vms</find>
     </findStrings>
     <replaceStrings>
       <replace>//console.log</replace>
@@ -465,12 +466,12 @@
       <workItem from="1504615196353" duration="2737000" />
       <workItem from="1504712326121" duration="1636000" />
       <workItem from="1504878670325" duration="58790000" />
-      <workItem from="1505286642158" duration="15147000" />
+      <workItem from="1505286642158" duration="15607000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="93023000" />
+    <option name="totallyTimeSpent" value="93483000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="725" extended-state="0" />
@@ -921,8 +922,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="435" column="41" lean-forward="false" selection-start-line="435" selection-start-column="37" selection-end-line="435" selection-end-column="41" />
+        <state relative-caret-position="-149">
+          <caret line="604" column="45" lean-forward="false" selection-start-line="604" selection-start-column="45" selection-end-line="604" selection-end-column="45" />
           <folding />
         </state>
       </provider>

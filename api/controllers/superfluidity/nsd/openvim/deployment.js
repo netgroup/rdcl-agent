@@ -602,37 +602,37 @@ dreamer.DeploymentController = (function (global) {
         var result = {
             "edges": [
                 {
-                    "source": "testvm",
+                    "source": "vnf_vdu_testvm",
                     "group": [],
                     "target": "vl3",
                     "view": "ns"
                 },
                 {
-                    "source": "vlan",
+                    "source": "vnf_click_vdu_vlan",
                     "group": [],
                     "target": "vl3",
                     "view": "ns"
                 },
                 {
-                    "source": "vlan",
+                    "source": "vnf_click_vdu_vlan",
                     "group": [],
                     "target": "vl1",
                     "view": "ns"
                 },
                 {
-                    "source": "firewall",
+                    "source": "vnf_click_vdu_firewall",
                     "group": [],
                     "target": "vl1",
                     "view": "ns"
                 },
                 {
-                    "source": "firewall",
+                    "source": "vnf_click_vdu_firewall",
                     "group": [],
                     "target": "vl2",
                     "view": "ns"
                 },
                 {
-                    "source": "ping",
+                    "source": "vnf_click_vdu_ping",
                     "group": [],
                     "target": "vl2",
                     "view": "ns"
@@ -648,7 +648,7 @@ dreamer.DeploymentController = (function (global) {
                         },
                         "type": "vnf"
                     },
-                    "id": "testvm"
+                    "id": "vnf_vdu_testvm"
                 },
                 {
                     "info": {
@@ -659,7 +659,7 @@ dreamer.DeploymentController = (function (global) {
                         },
                         "type": "vnf"
                     },
-                    "id": "vlan"
+                    "id": "vnf_click_vdu_vlan"
                 },
                 {
                     "info": {
@@ -670,7 +670,7 @@ dreamer.DeploymentController = (function (global) {
                         },
                         "type": "vnf"
                     },
-                    "id": "firewall"
+                    "id": "vnf_click_vdu_firewall"
                 },
                 {
                     "info": {
@@ -681,7 +681,7 @@ dreamer.DeploymentController = (function (global) {
                         },
                         "type": "vnf"
                     },
-                    "id": "ping"
+                    "id": "vnf_click_vdu_ping"
                 },
                 {
                     "info": {
