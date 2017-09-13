@@ -54,7 +54,7 @@ dreamer.DeploymentController = (function (global) {
         this._topology_path = '/tmp/deployment_' + this._id + '.json';
         this._deployment_descriptor = args.deployment_descriptor;
         this._cmd_result = {};
-        this.YAMLDIR = "yamls";
+        this.YAMLDIR = path.join(config.openvim.BASE_CWD, "yamls");
         var shellinabox = new ShellInABox();
         shellinabox.isInstalled(function () {
             shellinabox.start({cmd: config.openvim.start_cmd}, function () {
