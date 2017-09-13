@@ -6,7 +6,7 @@ if (typeof dreamer === 'undefined') {
 dreamer.DeploymentController = (function (global) {
     'use strict';
     var Log = require('log')
-    var log = new Log('info');
+    var log = new Log('debug');
     var fs = require('fs');
     var path = require("path");
     var sync = require('child_process').spawnSync;
