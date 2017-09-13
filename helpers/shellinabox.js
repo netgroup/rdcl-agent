@@ -19,7 +19,7 @@ dreamer.ShellInABox = (function (global) {
         var sib_arguments = data.cmd;
         this.stop(data, function () {
                 console.log(DEBUG_LOG, "Starting process...");
-
+                console.log(DEBUG_LOG, "shellinaboxd " + JSON.stringify(sib_arguments));
                 var spawn = require('child_process').spawn;
                 var sh = spawn('shellinaboxd', sib_arguments, {
                     stdio: 'ignore', // piping all stdio to /dev/null
