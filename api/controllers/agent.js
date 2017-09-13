@@ -32,6 +32,7 @@ dreamer.AgentController = (function (global){
         if(this.deployments != undefined){
             console.log(JSON.stringify(args))
             console.log(args.deployment_type)
+            console.log(controller_mapping[args.deployment_type]);
             var deployment = new (require(controller_mapping[args.deployment_type]))(args);
             this.deployments[args.deployment_id] = deployment;
             deployment.launch(
