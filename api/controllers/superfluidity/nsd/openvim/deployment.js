@@ -18,28 +18,34 @@ dreamer.DeploymentController = (function (global) {
     var Helper = require('../../../../../helpers/helper');
     var ShellInABox = require('../../../../../helpers/shellinabox');
 
-    /////
+
     // store the UUIDs in these arrays
+    // vdu -> image UUID
     var UUID_images = {};
+    // vdu -> net UUID
     var UUID_networks = {};
 
-// map VNF to VDU
+    var UUID_vms = [];
+
+    // map VNF to VDU
     var VNF2VDU = {};
 
-// store the vdu hypervisors and flavors here
+    // store the vdu hypervisors and flavors here
+    // vdu -> hypervisor
     var VDUHYPERVISOR = {};
+    // vdu -> flavor
     var VDUFLAVOR = {};
 
-// map virtualLinkProfileId to virtualLinkId
+    // map virtualLinkProfileId to virtualLinkId
     var VLPID2VLID = {};
 
-// association between hypervisors and VM types
+    // association between hypervisors and VM types
     var VMTYPES = {
         'xenhvm': "HVM",
         'xen-unik': "ClickOS"
     };
 
-// association between hypervisors and OS image types
+    // association between hypervisors and OS image types
     var IMAGETYPES = {
         'xenhvm': "clickos",
         'xen-unik': "clickos"
@@ -52,10 +58,18 @@ dreamer.DeploymentController = (function (global) {
     function DeploymentController(args) {
         log.info("[%s] %s", DEBUG_LOG, "DeploymentController Constructor");
         this._id = args.deployment_id;
-        this._topology_path = '/tmp/deployment_' + this._id + '.json';
+        
         this._deployment_descriptor = args.deployment_descriptor;
         this._cmd_result = {};
-        this.YAMLDIR = path.join(config.openvim.BASE_CWD, "yamls");
+        this._deployment_path = path.join(process.env.PWD,'deployments_data', 'superfluidity-nsd-openvim', 'deployment_'+this._id)
+        this._yamlsdir = path.join(this._deployment_path, "yamls");
+
+        this._deployment_data_file = path.join(this._deployment_path, 'deployment_' + this._id + '.json');
+
+        //init directory if not exist (mkdir -p)
+        var mkdirp = require('mkdirp');
+        mkdirp.sync(this._yamlsdir)
+
         var shellinabox = new ShellInABox();
         shellinabox.isInstalled(function () {
             shellinabox.start({cmd: config.openvim.start_cmd}, function () {
@@ -70,48 +84,12 @@ dreamer.DeploymentController = (function (global) {
     }
 
 
-    DeploymentController.prototype._initSh = function (success, error) {
-        log.info("[%s] %s", DEBUG_LOG, "DeploymentController _initSh");
-        var self = this;
-        this.sh.stderr.setEncoding('utf-8');
-        this.sh.stdout.setEncoding('utf-8');
-        this.sh.stdout.on('data', function (data) {
-            log.info("[%s] %s", DEBUG_LOG, "stdout:", data);
-            self.console_output.push(data);
-        });
-
-        this.sh.stderr.on('data', function (data) {
-            log.info("[%s] %s", DEBUG_LOG, "stderr:", data);
-            self.console_output.push(data);
-        });
-
-        this.sh.on('error', function (e) {
-            log.info("[%s] %s", DEBUG_LOG, "error:", e);
-            error(e);
-        });
-
-        this.sh.on('close', function (code) {
-            var msg_exit = "OpenVimDeployment process exited with code: " + code;
-            log.info("[%s] %s", DEBUG_LOG, msg_exit);
-            self.console_output.push(msg_exit);
-            if (code !== 0) {
-                error(msg_exit);
-            }
-            else {
-                success();
-            }
-        });
-
-
-    };
-
-
     DeploymentController.prototype._createImageCLick = function (vduId) {
         //TODO add exception on command errors
         log.info("[%s] %s", DEBUG_LOG, "start creating Clickimage");
         var result;
         var image_file_name = 'clickos_' + vduId;
-        var new_image_path = this.YAMLDIR + '/' + image_file_name;
+        var new_image_path = this._yamlsdir + '/' + image_file_name;
         var commands = [
             ['cp', config.openvim.STAMINALCLICKOSIMAGE, new_image_path],
             [config.openvim.CLICKINJECTOR, vduId + '.click', new_image_path],
@@ -146,7 +124,7 @@ dreamer.DeploymentController = (function (global) {
         log.info("[%s] %s %s", DEBUG_LOG, "generateImageYaml", vduId);
         var result;
         var file_name = 'image-clickos-' + vduId + '.yaml';
-        var file_path = this.YAMLDIR+'/'+file_name;
+        var file_path = this._yamlsdir + '/' + file_name;
         var yaml_template = "image:\n" +
             "    name:         clickos-" + vduId + "\n" +
             "    description:  click-os " + vduId + " image\n" +
@@ -164,9 +142,9 @@ dreamer.DeploymentController = (function (global) {
         log.info("[%s] %s %s", DEBUG_LOG, "generateNetworkYaml", virtualLinkDescId);
         var result;
         var file_name = 'net-' + virtualLinkDescId + '.yaml';
-        var file_path = this.YAMLDIR+'/'+file_name;
+        var file_path = this._yamlsdir + '/' + file_name;
         var yaml_template = "network:\n" +
-            "    name:               net-"+virtualLinkDescId+"\n" +
+            "    name:               net-" + virtualLinkDescId + "\n" +
             "    type:               bridge_data\n" +
             "    provider:           OVS:default\n" +
             "    enable_dhcp:        false\n" +
@@ -178,7 +156,7 @@ dreamer.DeploymentController = (function (global) {
     };
 
     DeploymentController.prototype._getRandomMacAddress = function () {
-        var mac_random = "00:15:17:XX:XX:XX".replace(/X/g, function() {
+        var mac_random = "00:15:17:XX:XX:XX".replace(/X/g, function () {
             return "0123456789ABCDEF".charAt(Math.floor(Math.random() * 16))
         });
         return mac_random;
@@ -187,24 +165,24 @@ dreamer.DeploymentController = (function (global) {
     DeploymentController.prototype._generateVMYaml = function (args) {
         log.info("[%s] %s %s", DEBUG_LOG, "generateVMYaml", JSON.stringify(args));
         var result;
-        var vm_name = 'vm-' + args.vduhypervisor+'-' + args.vnfid;
+        var vm_name = 'vm-' + args.vduhypervisor + '-' + args.vnfid;
         var file_name = vm_name + '.yaml';
-        var file_path = path.join(this.YAMLDIR, file_name);
+        var file_path = path.join(this._yamlsdir, file_name);
         var yaml_template =
             "server:\n" +
-            "  name: "+vm_name+"\n" +
-            "  description: \""+VMTYPES[args.vduhypervisor] +" VM\"\n" +
-            "  imageRef: '"+args.uuidImage+"'\n" +
-            "  flavorRef: '"+args.vduflavor+"'\n" +
+            "  name: " + vm_name + "\n" +
+            "  description: \"" + VMTYPES[args.vduhypervisor] + " VM\"\n" +
+            "  imageRef: '" + args.uuidImage + "'\n" +
+            "  flavorRef: '" + args.vduflavor + "'\n" +
             "  start:    \"yes\"\n" +
-            "  hypervisor: \""+args.vduhypervisor+"\"\n" +
+            "  hypervisor: \"" + args.vduhypervisor + "\"\n" +
             "  osImageType: \"" + IMAGETYPES[args.vduhypervisor] + "\"\n";
-        if(Object.keys(args.netuuids).length > 0){
+        if (Object.keys(args.netuuids).length > 0) {
             yaml_template += "  networks:\n";
-            for(var k in args.netuuids){
+            for (var k in args.netuuids) {
                 var network =
-                    "  - name: net-"+args.vdu_id+"_vif"+ k + "\n" +
-                    "    uuid: "+args.netuuids[k]+"\n" +
+                    "  - name: net-" + args.vdu_id + "_vif" + k + "\n" +
+                    "    uuid: " + args.netuuids[k] + "\n" +
                     "    mac_address: " + this._getRandomMacAddress() + "\n";
                 yaml_template += network;
             }
@@ -276,7 +254,7 @@ dreamer.DeploymentController = (function (global) {
         return result;
     };
 
-    DeploymentController.prototype._getSwImageUUID = function(swImage) {
+    DeploymentController.prototype._getSwImageUUID = function (swImage) {
         //TODO add exception on command errors
         log.info("[%s] %s %s", DEBUG_LOG, "getSwImageUUID", swImage);
         var result;
@@ -297,9 +275,9 @@ dreamer.DeploymentController = (function (global) {
         var exec_res = this._executeOpenVimClientCommand(args);
         if (exec_res != undefined) {
             var yaml_object = YAML.parse(exec_res.substring(exec_res.indexOf("\n") + 1));
-            var vlanid = yaml_object['network']['provider:vlan'] ;//=  (output_split[0] != "") ? output_split[0] : output_split[1];
+            var vlanid = yaml_object['network']['provider:vlan'];//=  (output_split[0] != "") ? output_split[0] : output_split[1];
             log.debug("[%s] Vlan id: %s ", DEBUG_LOG, vlanid);
-            if(vlanid) {
+            if (vlanid) {
                 var args_ssh = [config.openvim.OPENVIMHOSTUSERNAME + '@' + config.openvim.OPENVIMHOST, '-p', config.openvim.OPENVIMHOSTPORT, 'sudo', 'ovs-vsctl', '--may-exist', 'add-br', 'ovim-' + vlanid];
                 log.debug("[%s] Command: ssh %s ", DEBUG_LOG, args_ssh.toString());
                 var exec_res_ssh = sync('ssh', args_ssh);
@@ -343,7 +321,7 @@ dreamer.DeploymentController = (function (global) {
 
                     }
                 }
-                else{
+                else {
                     // ASSUMPTION: we have a "normal" VDU, which corresponds to an HVM virtual machine
                     // find the image UUID corresponding to swImageDesc
                     var swImage = vdu.swImageDesc.swImage;
@@ -352,14 +330,14 @@ dreamer.DeploymentController = (function (global) {
                     VDUHYPERVISOR[vdu.vduId] = "xenhvm";
                     VDUFLAVOR[vdu.vduId] = config.openvim.VMFLAVOURUUID;
                 }
-                if( VNF2VDU[vnfid] == undefined)
+                if (VNF2VDU[vnfid] == undefined)
                     VNF2VDU[vnfid] = []
                 VNF2VDU[vnfid].push(vdu.vduId)
             }
         }
 
         // 2. create the networks corresponding to the virtuallinks
-        for(var v in this._deployment_descriptor.nsd['nsd']['virtualLinkDesc']) {
+        for (var v in this._deployment_descriptor.nsd['nsd']['virtualLinkDesc']) {
             var vld = this._deployment_descriptor.nsd['nsd']['virtualLinkDesc'][v];
             // create the yaml for the network corresponding to the virtuallink
             var net_yaml_path = this._generateNetworkYaml(vld.virtualLinkDescId);
@@ -375,18 +353,18 @@ dreamer.DeploymentController = (function (global) {
         log.info("[%s] %s", DEBUG_LOG, "Create the VNFs, using references to the created images and networks");
         // prepare/reset the file which will contain the VM UUIDs
         //FIXME store vmuuids in a different way
-        fs.openSync(path.join(this.YAMLDIR, 'vmuuids.txt'),'w');
+        fs.openSync(path.join(this._yamlsdir, 'vmuuids.txt'), 'w');
 
         // find the mapping between each virtualLinkProfileId and virtualLinkDescId
         // ASSUMPTION: we have only one nsDf in the NSD
         // populate the VLPID2VLID array
         var nsDf = this._deployment_descriptor.nsd['nsd']['nsDf'][0];
-        for(var p in nsDf.virtualLinkProfile){
+        for (var p in nsDf.virtualLinkProfile) {
             var vlp = nsDf.virtualLinkProfile[p];
             VLPID2VLID[vlp.virtualLinkProfileId] = vlp.virtualLinkDescId;
         }
 
-        for(vnfid in this._deployment_descriptor.vnfd) {
+        for (vnfid in this._deployment_descriptor.vnfd) {
             var vnfd = this._deployment_descriptor.vnfd[vnfid];
             // ASSUMPTION only one VDU IN VNF
             var vdu_id = VNF2VDU[vnfid][0];
@@ -395,7 +373,7 @@ dreamer.DeploymentController = (function (global) {
             var NETUUIDS = {};
             // search for the connection points of this VNF in the nsd, and their associated virtualLinkProfileId, to find the UUIDs of the networks
             // ASSUMPTION: on a virtuallink there is at most one extCP per VNF (i.e. a VNF does not have two interfaces on the same network)
-            for(p in nsDf.vnfProfile){
+            for (p in nsDf.vnfProfile) {
                 var vnfProfile = nsDf.vnfProfile[p];
                 if (vnfProfile.vnfdId == vnfid) {
                     for (var n in vnfProfile.nsVirtualLinkConnectivity) {
@@ -423,10 +401,10 @@ dreamer.DeploymentController = (function (global) {
                                         var index_no_internalIfRef = 0;
                                         for (var d in current_vdu.intCpd) {
                                             var intCpd = current_vdu.intCpd[d];
-                                            if (intCpd.intVirtualLinkDesc == intVirtualLinkDesc ) {
-                                                if(intCpd.internalIfRef != undefined)
+                                            if (intCpd.intVirtualLinkDesc == intVirtualLinkDesc) {
+                                                if (intCpd.internalIfRef != undefined)
                                                     NETUUIDS[intCpd.internalIfRef] = netUUID;
-                                                else{
+                                                else {
                                                     NETUUIDS[index_no_internalIfRef] = netUUID;
                                                     index_no_internalIfRef++;
                                                 }
@@ -450,6 +428,9 @@ dreamer.DeploymentController = (function (global) {
                         netuuids: NETUUIDS
                     });
                     var vm_uuid = this._onboardVm(vm_yaml_path);
+                    if(vm_uuid){
+                        UUID_vms.append(vm_uuid);
+                    }
                     //TODO APPEND to vm_uuid list
                 }
             }
@@ -460,43 +441,12 @@ dreamer.DeploymentController = (function (global) {
     DeploymentController.prototype.launch = function (success, error) {
         log.info("[%s] %s", DEBUG_LOG, "DeploymentController launch ");
         var self = this;
-        var fs = require('fs');
-        for (var desc_type in this._deployment_descriptor) {
-            log.info("[%s] %s", DEBUG_LOG, desc_type)
-            for (var filename in this._deployment_descriptor[desc_type]) {
-
-                try {
-                    var ext_file = (desc_type !== 'click') ? 'json' : 'click';
-                    var fullfilename = config.openvim.BASE_CWD + "/" + filename + "." + ext_file;
-                    log.info("[%s] creating file %s.%s", DEBUG_LOG, filename, ext_file);
-                    var data = (desc_type !== 'click') ? JSON.stringify(this._deployment_descriptor[desc_type][filename], null, 4) : this._deployment_descriptor[desc_type][filename];
-                    fs.writeFileSync(fullfilename, data);
-                } catch (e) {
-                    log.info("[%s] error creating local descriptor file %s", DEBUG_LOG, e)
-                    if (error) {
-                        return error("error starting deployment");
-                    }
-                }
-
-            }
-        }
 
         var h = new Helper();
-        h.newJSONfile(this._topology_path, this._deployment_descriptor,
+        h.newJSONfile(this._deployment_data_file, this._deployment_descriptor,
             function () {
-                self._deploy(success,error);
-                /*
-                self.sh = spawn("bash", ['openvimanagement.sh'], {
-                    'cwd': config.openvim.BASE_CWD,
-                    'env': {
-                        'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
-                        'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
-                        'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
-                        'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
-                    }
-                });
-                self._initSh(success, error);
-                */
+                self._deploy(success, error);
+
             }, function (e) {
                 error(e);
             });
@@ -507,7 +457,7 @@ dreamer.DeploymentController = (function (global) {
     DeploymentController.prototype.stop = function (success, error) {
         var self = this;
         log.info("[%s] %s", DEBUG_LOG, "DeploymentController stop");
-
+        //FIXME without stop script
         execFile(config.openvim.CLEAN_UP_SCRIPT, {
             'cwd': config.openvim.BASE_CWD,
             'env': {

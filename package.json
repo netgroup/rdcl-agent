@@ -18,6 +18,7 @@
     "express": "*",
     "json2yaml": "^1.1.0",
     "log": "^1.4.0",
+    "mkdirp": "^0.5.1",
     "ps-node": "^0.1.5",
     "underscore": "^1.8.3",
     "yamljs": "^0.3.0"
