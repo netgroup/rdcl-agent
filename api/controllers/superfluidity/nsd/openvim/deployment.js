@@ -8,6 +8,7 @@ dreamer.DeploymentController = (function (global) {
     var Log = require('log')
     var log = new Log('info');
     var fs = require('fs');
+    var path = require("path");
     var sync = require('child_process').spawnSync;
     var YAML = require('yamljs');
     var DEBUG_LOG = "DeploymentController";
