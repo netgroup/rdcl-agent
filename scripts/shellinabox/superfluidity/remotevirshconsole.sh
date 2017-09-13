@@ -5,7 +5,7 @@ arr=(${QUERY_STRING//[=&]/ })
 UUID=${arr[1]}
 
 if [ -z "$UUID" ]; then
-    echo "Usage: $0 <vm name>"
+    echo "Usage: $0 <vm uuid>"
     exit 1
 fi
 
