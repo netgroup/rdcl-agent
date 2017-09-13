@@ -61,6 +61,8 @@ typings/
 # dotenv environment variables file
 .env
 
+.idea
+
 # MacOS files
 .DS_Store
 

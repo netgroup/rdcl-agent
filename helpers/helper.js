@@ -45,6 +45,15 @@ dreamer.Helper = (function (global){
 
   	};
 
+	Helper.prototype.getNestedDesc = function (vnfd_data, vdu_nested_desc_id) {
+        var result = {};
+        for (var n in vnfd_data.vduNestedDesc){
+            if(vnfd_data.vduNestedDesc[n].id == vdu_nested_desc_id)
+                return vnfd_data.vduNestedDesc[n];
+        }
+        return result;
+    };
+
 
   return Helper;
 

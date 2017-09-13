@@ -2,8 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6caf7750-751b-4edf-851e-0be7045e051b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/scripts/superfluidity/ov-deployment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" afterPath="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/config.js" afterPath="$PROJECT_DIR$/config/config.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/helpers/helper.js" afterPath="$PROJECT_DIR$/helpers/helper.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/openvimdeployment.js" afterPath="$PROJECT_DIR$/test/openvimdeployment.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,58 +24,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="agent.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="agent.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/controllers/agent.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1438">
-              <caret line="109" column="62" lean-forward="false" selection-start-line="109" selection-start-column="62" selection-end-line="109" selection-end-column="62" />
+            <state relative-caret-position="150">
+              <caret line="106" column="77" lean-forward="true" selection-start-line="106" selection-start-column="77" selection-end-line="106" selection-end-column="77" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deployment.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/deployment.js">
+      <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/config/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" column="5" lean-forward="false" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
+            <state relative-caret-position="585">
+              <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deployment.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/controllers/deployment.js">
+      <file leaf-file-name="cleanup.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/superfluidity/cleanup.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1738">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="90">
+              <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deployment.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2730">
-              <caret line="182" column="24" lean-forward="false" selection-start-line="182" selection-start-column="13" selection-end-line="182" selection-end-column="24" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="deploymentRoutes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/routes/deploymentRoutes.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="344">
-              <caret line="26" column="53" lean-forward="false" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="53" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nodeRoutes.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/api/routes/nodeRoutes.js">
+      <file leaf-file-name="openvimvminfo.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/scripts/superfluidity/openvimvminfo.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -81,12 +67,41 @@
       <file leaf-file-name="ref_test.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/test/ref_test.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="1080" column="30" lean-forward="false" selection-start-line="1080" selection-start-column="30" selection-end-line="1080" selection-end-column="30" />
+            <state relative-caret-position="45">
+              <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="1075" selection-end-column="0" />
               <folding>
-                <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-                <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-                <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+                <element signature="e#79#48289#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="openvimdeployment.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/test/openvimdeployment.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="1764" column="1" lean-forward="false" selection-start-line="1764" selection-start-column="1" selection-end-line="1764" selection-end-column="1" />
+              <folding>
+                <element signature="e#121#79469#0" expanded="false" />
+                <element signature="e#282#16562#0" expanded="false" />
+                <element signature="e#396#4422#0" expanded="false" />
+                <element signature="e#18336#35272#0" expanded="false" />
+                <element signature="e#35294#52259#0" expanded="false" />
+                <element signature="e#52281#66159#0" expanded="false" />
+                <element signature="e#58905#59347#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="deployment.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1296">
+              <caret line="467" column="44" lean-forward="false" selection-start-line="467" selection-start-column="44" selection-end-line="467" selection-end-column="44" />
+              <folding>
+                <element signature="e#27408#30766#0" expanded="false" />
+                <element signature="e#27431#28523#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -94,13 +109,45 @@
       </file>
     </leaf>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="JavaScript File" />
+      </list>
+    </option>
+  </component>
   <component name="FindInProjectRecents">
     <findStrings>
       <find>openvim/\</find>
       <find>getDeploymentInfo</find>
-      <find>_topology_path</find>
       <find>_cmd_result</find>
+      <find>trovato</find>
+      <find>UUID</find>
+      <find>is not a valid UUID</find>
+      <find>&quot;40f7908a-3bb0-11e7-ad8f-0cc47a7794be&quot;</find>
+      <find>_topology_path</find>
+      <find>vm-xen-unik</find>
+      <find>OPENVIMHOSTPORT</find>
+      <find>vlids</find>
+      <find>console.log</find>
+      <find>xen-unik</find>
+      <find>.output.</find>
+      <find>VNF2VDU</find>
+      <find>virtualLinkProfileIdvl3</find>
+      <find>vnf_vdu_cp_to07</find>
+      <find>vnf_vl_testvm</find>
+      <find>vif</find>
+      <find>osImageType</find>
+      <find>OPENVIM_TENANT</find>
+      <find>vm-xen-unik-vlan</find>
+      <find>YAMLDIR</find>
+      <find>_generateNetworkYaml</find>
+      <find>_generateVMYaml</find>
     </findStrings>
+    <replaceStrings>
+      <replace>//console.log</replace>
+      <replace>.stdout.</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -116,10 +163,16 @@
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/api/routes/agentRoutes.js" />
         <option value="$PROJECT_DIR$/api/routes/deploymentRoutes.js" />
-        <option value="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
-        <option value="$PROJECT_DIR$/api/controllers/agent.js" />
         <option value="$PROJECT_DIR$/api/controllers/oshi/mininet/deployment.js" />
+        <option value="$PROJECT_DIR$/api/controllers/agent.js" />
         <option value="$PROJECT_DIR$/test/ref_test.js" />
+        <option value="$PROJECT_DIR$/scripts/superfluidity/openvimanagement.sh" />
+        <option value="$PROJECT_DIR$/helpers/helper.js" />
+        <option value="$PROJECT_DIR$/scripts/superfluidity/ov-deployment.js" />
+        <option value="$PROJECT_DIR$/test/openvimdeployment.js" />
+        <option value="$PROJECT_DIR$/config/config.js" />
+        <option value="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -166,8 +219,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="Scratches" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -234,6 +287,16 @@
             <path>
               <item name="rdcl-agent" type="b2602c69:ProjectViewProjectNode" />
               <item name="rdcl-agent" type="462c0819:PsiDirectoryNode" />
+              <item name="config" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rdcl-agent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rdcl-agent" type="462c0819:PsiDirectoryNode" />
+              <item name="helpers" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rdcl-agent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rdcl-agent" type="462c0819:PsiDirectoryNode" />
               <item name="scripts" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -261,6 +324,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.customizations" />
     <property name="ShowLogLevels" value="true" />
     <property name="ShowStoredExecutions" value="true" />
+    <property name="add_unversioned_files" value="$PROJECT_DIR$/scripts/superfluidity/vnf_click_vdu_ping.click" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -402,36 +466,63 @@
       <workItem from="1502356386747" duration="98000" />
       <workItem from="1504534533874" duration="6727000" />
       <workItem from="1504615196353" duration="2737000" />
+      <workItem from="1504712326121" duration="1636000" />
+      <workItem from="1504878670325" duration="58790000" />
+      <workItem from="1505286642158" duration="601000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="17450000" />
+    <option name="totallyTimeSpent" value="78477000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="725" extended-state="0" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18824464" sideWeight="0.2920635" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.76031744" sideWeight="0.50277996" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18824464" sideWeight="0.33695653" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31111112" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26984128" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18824464" sideWeight="0.7079365" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3936508" sideWeight="0.49722" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18824464" sideWeight="0.6630435" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+    <layout-to-restore>
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug Logs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.76031744" sideWeight="0.50277996" order="9" side_tool="true" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32998326" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18824464" sideWeight="0.33695653" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31111112" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3936508" sideWeight="0.49722" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18824464" sideWeight="0.6630435" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Salesforce" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+    </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
@@ -452,7 +543,9 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="9" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -468,7 +561,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
           <caret line="28" column="5" lean-forward="false" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -476,7 +568,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1395">
           <caret line="93" column="41" lean-forward="false" selection-start-line="93" selection-start-column="27" selection-end-line="93" selection-end-column="41" />
-          <folding />
+          <folding>
+            <element signature="e#27408#30766#0" expanded="false" />
+            <element signature="e#27431#28523#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -484,7 +579,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -493,9 +587,7 @@
         <state relative-caret-position="210">
           <caret line="1080" column="30" lean-forward="false" selection-start-line="1080" selection-start-column="30" selection-end-line="1080" selection-end-column="30" />
           <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+            <element signature="e#79#48289#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -513,21 +605,12 @@
         <state relative-caret-position="90">
           <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="20" />
           <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+            <element signature="e#79#48289#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" />
     <entry file="file://$PROJECT_DIR$/api/controllers/agent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -541,21 +624,12 @@
         <state relative-caret-position="90">
           <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="20" />
           <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+            <element signature="e#79#48289#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" />
     <entry file="file://$PROJECT_DIR$/api/controllers/agent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -569,9 +643,7 @@
         <state relative-caret-position="90">
           <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="20" />
           <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+            <element signature="e#79#48289#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -589,21 +661,12 @@
         <state relative-caret-position="90">
           <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="20" />
           <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+            <element signature="e#79#48289#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" />
     <entry file="file://$PROJECT_DIR$/api/controllers/agent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -617,21 +680,12 @@
         <state relative-caret-position="90">
           <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="20" />
           <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+            <element signature="e#79#48289#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" />
     <entry file="file://$PROJECT_DIR$/api/controllers/agent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -645,21 +699,12 @@
         <state relative-caret-position="90">
           <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="20" />
           <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+            <element signature="e#79#48289#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" />
     <entry file="file://$PROJECT_DIR$/api/controllers/agent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -673,29 +718,13 @@
         <state relative-caret-position="90">
           <caret line="6" column="20" lean-forward="false" selection-start-line="6" selection-start-column="5" selection-end-line="6" selection-end-column="20" />
           <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
+            <element signature="e#79#48289#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" />
     <entry file="file://$PROJECT_DIR$/.dockerignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -709,47 +738,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="34" lean-forward="false" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/routes/agentRoutes.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
           <caret line="6" column="0" lean-forward="false" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/agent.js" />
-    <entry file="file://$PROJECT_DIR$/test/openvimdeployment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/deployment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="5" lean-forward="false" selection-start-line="28" selection-start-column="5" selection-end-line="28" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test/ref_test.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="1080" column="30" lean-forward="false" selection-start-line="1080" selection-start-column="30" selection-end-line="1080" selection-end-column="30" />
-          <folding>
-            <marker date="1504615153000" expanded="false" signature="247:48284" ph="{...}" />
-            <marker date="1504615153000" expanded="false" signature="10852:12563" ph="{&quot;vnf_click_vdu_vlan&quot;: '\nsource0 :: FromDevice(0);\nsink0   :: ToDevice(1);\nsource1 :: FromDevice(1);\nsink1   :: ToDevice(0);\n\n// VLANDecapsulator :: StripEtherVLANHeader(-1);\n// VLANEncapsulator :: VLANEncap(100);\nVLANDecapsulator ::VLANDecap()\nVLANEncapsulator ::VLANEncap(100)\n\n//source0 -&gt; VLANDecapsulator -&gt; EnsureEther() -&gt; sink0;\nsource0 -&gt; VLANDecapsulator -&gt; sink0;\nsource1 -&gt; VLANEncapsulator -&gt; sink1;\n\n'...}" />
-            <marker date="1504615153000" expanded="false" signature="12581:48278" ph="{...}" />
-          </folding>
+        <state relative-caret-position="525">
+          <caret line="35" column="5" lean-forward="false" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -757,31 +757,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1738">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2730">
-          <caret line="182" column="24" lean-forward="false" selection-start-line="182" selection-start-column="13" selection-end-line="182" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="54" lean-forward="true" selection-start-line="12" selection-start-column="54" selection-end-line="12" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" />
     <entry file="file://$PROJECT_DIR$/api/routes/deploymentRoutes.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="26" column="53" lean-forward="false" selection-start-line="26" selection-start-column="16" selection-end-line="26" selection-end-column="53" />
-          <folding />
+        <state relative-caret-position="390">
+          <caret line="26" column="53" lean-forward="false" selection-start-line="26" selection-start-column="16" selection-end-line="28" selection-end-column="51" />
         </state>
       </provider>
     </entry>
@@ -789,15 +772,157 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/superfluidity/vnf_click_vdu_ping.click">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="31" lean-forward="true" selection-start-line="8" selection-start-column="31" selection-end-line="8" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/superfluidity/vnf_click_vdu_vlan.click">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/superfluidity/vnf_click_vdu_fwall.click">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/superfluidity/remotevirshconsole.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="0" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/superfluidity/openvimanagement.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3388">
+          <caret line="26" column="3" lean-forward="true" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/yamljs/lib/Yaml.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="2" lean-forward="false" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/superfluidity/cleanup.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="22" lean-forward="false" selection-start-line="6" selection-start-column="22" selection-end-line="6" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/superfluidity/openvimvminfo.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="34" lean-forward="false" selection-start-line="6" selection-start-column="34" selection-end-line="6" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/ref_test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="0" lean-forward="false" selection-start-line="3" selection-start-column="0" selection-end-line="1075" selection-end-column="0" />
+          <folding>
+            <element signature="e#79#48289#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/openvimdeployment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="1764" column="1" lean-forward="false" selection-start-line="1764" selection-start-column="1" selection-end-line="1764" selection-end-column="1" />
+          <folding>
+            <element signature="e#121#79469#0" expanded="false" />
+            <element signature="e#282#16562#0" expanded="false" />
+            <element signature="e#396#4422#0" expanded="false" />
+            <element signature="e#18336#35272#0" expanded="false" />
+            <element signature="e#35294#52259#0" expanded="false" />
+            <element signature="e#52281#66159#0" expanded="false" />
+            <element signature="e#58905#59347#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="63" column="19" lean-forward="false" selection-start-line="63" selection-start-column="19" selection-end-line="63" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="585">
+          <caret line="39" column="0" lean-forward="false" selection-start-line="39" selection-start-column="0" selection-end-line="39" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/scripts/superfluidity/ov-deployment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="95">
+          <caret line="49" column="12" lean-forward="false" selection-start-line="49" selection-start-column="0" selection-end-line="1811" selection-end-column="0" />
+          <folding>
+            <element signature="e#1263#80611#0" expanded="false" />
+            <element signature="e#1424#17704#0" expanded="false" />
+            <element signature="e#1538#5564#0" expanded="false" />
+            <element signature="e#19478#36414#0" expanded="false" />
+            <element signature="e#36436#53401#0" expanded="false" />
+            <element signature="e#53423#67301#0" expanded="false" />
+            <element signature="e#60047#60489#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers/helper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="358">
+          <caret line="55" column="0" lean-forward="false" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api/controllers/agent.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1438">
-          <caret line="109" column="62" lean-forward="false" selection-start-line="109" selection-start-column="62" selection-end-line="109" selection-end-column="62" />
+        <state relative-caret-position="150">
+          <caret line="106" column="77" lean-forward="true" selection-start-line="106" selection-start-column="77" selection-end-line="106" selection-end-column="77" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1296">
+          <caret line="467" column="44" lean-forward="false" selection-start-line="467" selection-start-column="44" selection-end-line="467" selection-end-column="44" />
+          <folding>
+            <element signature="e#27408#30766#0" expanded="false" />
+            <element signature="e#27431#28523#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
