@@ -31,8 +31,8 @@
       <file leaf-file-name="config.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config/config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="27" />
+            <state relative-caret-position="111">
+              <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -101,11 +101,11 @@
       <file leaf-file-name="deployment.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="109">
-              <caret line="226" column="52" lean-forward="false" selection-start-line="226" selection-start-column="52" selection-end-line="226" selection-end-column="52" />
+            <state relative-caret-position="-1301">
+              <caret line="352" column="58" lean-forward="false" selection-start-line="352" selection-start-column="58" selection-end-line="352" selection-end-column="58" />
               <folding>
-                <element signature="e#27503#30861#0" expanded="false" />
-                <element signature="e#27526#28618#0" expanded="false" />
+                <element signature="e#27533#30891#0" expanded="false" />
+                <element signature="e#27556#28648#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -148,10 +148,12 @@
       <find>_generateNetworkYaml</find>
       <find>_generateVMYaml</find>
       <find>_generateImageYaml</find>
+      <find>CLICKF</find>
     </findStrings>
     <replaceStrings>
       <replace>//console.log</replace>
       <replace>.stdout.</replace>
+      <replace>config.openvim.env</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -473,12 +475,12 @@
       <workItem from="1504615196353" duration="2737000" />
       <workItem from="1504712326121" duration="1636000" />
       <workItem from="1504878670325" duration="58790000" />
-      <workItem from="1505286642158" duration="3356000" />
+      <workItem from="1505286642158" duration="3416000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="81232000" />
+    <option name="totallyTimeSpent" value="81292000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="725" extended-state="0" />
@@ -574,8 +576,8 @@
         <state relative-caret-position="1395">
           <caret line="93" column="41" lean-forward="false" selection-start-line="93" selection-start-column="27" selection-end-line="93" selection-end-column="41" />
           <folding>
-            <element signature="e#27503#30861#0" expanded="false" />
-            <element signature="e#27526#28618#0" expanded="false" />
+            <element signature="e#27533#30891#0" expanded="false" />
+            <element signature="e#27556#28648#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -914,19 +916,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/config/config.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="27" />
+        <state relative-caret-position="111">
+          <caret line="32" column="0" lean-forward="false" selection-start-line="32" selection-start-column="0" selection-end-line="32" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="109">
-          <caret line="226" column="52" lean-forward="false" selection-start-line="226" selection-start-column="52" selection-end-line="226" selection-end-column="52" />
+        <state relative-caret-position="-1301">
+          <caret line="352" column="58" lean-forward="false" selection-start-line="352" selection-start-column="58" selection-end-line="352" selection-end-column="58" />
           <folding>
-            <element signature="e#27503#30861#0" expanded="false" />
-            <element signature="e#27526#28618#0" expanded="false" />
+            <element signature="e#27533#30891#0" expanded="false" />
+            <element signature="e#27556#28648#0" expanded="false" />
           </folding>
         </state>
       </provider>

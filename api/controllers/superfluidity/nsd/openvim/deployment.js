@@ -252,7 +252,7 @@ dreamer.DeploymentController = (function (global) {
         //TODO add exception on command errors
         log.info("[%s] %s %s", DEBUG_LOG, "onboardNetwork", net_yaml_path);
         var result;
-        var args = ['net-create', image_yaml_path];
+        var args = ['net-create', net_yaml_path];
         var exec_res = this._executeOpenVimClientCommand(args);
         if (exec_res != undefined) {
             var output_split = exec_res.split(' ');
