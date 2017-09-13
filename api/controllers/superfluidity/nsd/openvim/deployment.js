@@ -25,7 +25,7 @@ dreamer.DeploymentController = (function (global) {
     // vdu -> net UUID
     var UUID_networks = {};
 
-    var UUID_vms = [];
+    var UUID_vms = {};
 
     // map VNF to VDU
     var VNF2VDU = {};
@@ -433,7 +433,8 @@ dreamer.DeploymentController = (function (global) {
                         });
                         var vm_uuid = this._onboardVm(vm_yaml_path);
                         if (vm_uuid) {
-                            UUID_vms.push(vm_uuid);
+                            console.log("vdu_id: " + vdu_id)
+                            UUID_vms[vdu_id] =vm_uuid;
                         }
                         //TODO APPEND to vm_uuid list
                     }
