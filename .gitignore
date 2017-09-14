@@ -61,13 +61,12 @@ typings/
 # dotenv environment variables file
 .env
 
-.idea
+.idea/*
 
 # MacOS files
 .DS_Store
 
-# Superfluidity deployment files
-scripts/superfluidity/*.json
-scripts/superfluidity/*.click
-scripts/superfluidity/yamls/
+# Deployment files
+deployments_data/h*
+!deployments_data/*.md
 # End of https://www.gitignore.io/api/node

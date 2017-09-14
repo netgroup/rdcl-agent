@@ -537,69 +537,24 @@ dreamer.DeploymentController = (function (global) {
         var self = this;
         self._cmd_result['node_info'] = {};
         if (args['node_id']) {
-            var filename = config.openvim.BASE_CWD + '/yamls/vmuuids.txt';
-            var lines = require('fs').readFileSync(filename, 'utf-8').split('\n').filter(Boolean);
-            console.log(lines)
-            for (var l in lines) {
-                var current = lines[l];
-                if (current.indexOf(args['node_id']) == 0) {
-                    var uuid = current.split(' : ')[1];
-                    console.log("UUID", uuid);
 
-                    var sh = spawn("./openvim", ['vm-list', '-v', uuid], {
-                        'cwd': config.openvim.OPENVIM_CLI_HOME,
-                        'env': {
-                            'OPENVIM_HOST': config.openvim.OPENVIM_HOST,
-                            'OPENVIM_PORT': config.openvim.OPENVIM_PORT,
-                            'OPENVIM_ADMIN_PORT': config.openvim.OPENVIM_ADMIN_PORT,
-                            'OPENVIM_TENANT': config.openvim.OPENVIM_TENANT,
-                        }
-                    });
+            var nodeUUID = UUID_vms[args['node_id']];
+            var exec_res = this._executeOpenVimClientCommand(['vm-list', '-v', nodeUUID]);
 
-                    sh.stderr.setEncoding('utf-8');
-                    sh.stdout.setEncoding('utf-8');
-                    sh.stdout.on('data', function (data) {
-                        log.info("[%s] %s", DEBUG_LOG, "stdout:", data);
-                        var YAML = require('json2yaml')
-                        console.log(typeof data)
-                        self._cmd_result['node_info'] = data;
-                        console.log("########")
-
-                        console.log(JSON.stringify(self._cmd_result['node_info']))
-
-                    });
-
-                    sh.stderr.on('data', function (data) {
-                        log.info("[%s] %s", DEBUG_LOG, "stderr:", data);
-
-                    });
-
-                    sh.on('error', function (e) {
-                        log.info("[%s] %s", DEBUG_LOG, "error:", e);
-                        return fail(e);
-                    });
-
-                    sh.on('close', function (code) {
-                        var msg_exit = "openvimcli vm info process exited with code: " + code;
-                        log.info("[%s] %s", DEBUG_LOG, msg_exit);
-
-                        if (code !== 0) {
-                            return fail(msg_exit);
-                        }
-                        else {
-                            console.log(JSON.stringify(self._cmd_result['node_info']))
-                            return success({'node_info': self._cmd_result['node_info']});
-                        }
-                    });
-
-                }
+            if (exec_res != undefined) {
+                log.debug("[%s] Node info:\n %s ", DEBUG_LOG, exec_res);
+                success(exec_res);
             }
+
         }
-        //console.log("getNodeConsole",JSON.stringify(args))
-        //return success(result);
+        else {
+            return fail('Node id missing.');
+        }
+
     };
 
     DeploymentController.prototype.buildTopologyDeployment = function (args) {
+
         var result = {
             "edges": [
                 {
