@@ -587,6 +587,17 @@ dreamer.DeploymentController = (function (global) {
                     "id": uuid //
                 };
                 result.vertices.push(vertice);
+
+                for(var n in yaml_object[uuid].networks){
+                    var edge ={
+                        "source": uuid,
+                        "group": [],
+                        "target": yaml_object[uuid].networks[n].net_id,
+                        "view": "ns"
+                    };
+                    result.edges.push(edge);
+                    //console.log(edge);
+                }
             }
 
             var args_net = ['net-list', '-vvv'];
@@ -602,7 +613,7 @@ dreamer.DeploymentController = (function (global) {
 
                 var yaml_net_object = YAML.parse(net_data);
                 for(var uuid_net in yaml_net_object){
-                   if (yaml_net_object[uuid_net]['name'] != 'default' && yaml_net_object[uuid_net]['name'] != 'alpine_man')  {
+                   if (yaml_net_object[uuid_net]['name'] !== 'default' && yaml_net_object[uuid_net]['name'] !== 'alpine_man')  {
                        var vertice = {
                            "info": {
                                "group": [],
@@ -616,16 +627,7 @@ dreamer.DeploymentController = (function (global) {
                            "id": uuid_net//
                        };
                        result.vertices.push(vertice);
-                       for(var p in yaml_net_object[uuid_net].ports){
-                           var edge ={
-                               "source": uuid_net,
-                               "group": [],
-                               "target": yaml_net_object[uuid_net].ports[p].port_id,
-                               "view": "ns"
-                           };
-                           result.edges.push(edge);
-                           //console.log(edge);
-                       }
+
                    }
 
 
@@ -634,13 +636,14 @@ dreamer.DeploymentController = (function (global) {
 
 
         }
+        /*
         var _ = require('underscore');
         var edges = _.pluck(result.edges, 'id');
         result.vertices = _.filter(result.vertices, function (v) {
             if(edges.indexOf(v.source) >-1 && edges.indexOf(v.target) >-1)
                 return v;
 
-        })
+        })*/
         console.log(result);
 
         return result;
