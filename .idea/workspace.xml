@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6caf7750-751b-4edf-851e-0be7045e051b" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/superfluidity/openvimanagement.sh" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/scripts/superfluidity/ov-deployment.js" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" afterPath="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/test/sub.js" afterPath="$PROJECT_DIR$/test/sub.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -61,11 +58,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="deployment.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="deployment.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="552" column="0" lean-forward="true" selection-start-line="552" selection-start-column="0" selection-end-line="552" selection-end-column="0" />
+            <state relative-caret-position="270">
+              <caret line="18" column="68" lean-forward="true" selection-start-line="18" selection-start-column="68" selection-end-line="18" selection-end-column="68" />
+              <folding>
+                <element signature="e#23353#23932#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sub.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/test/sub.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="173">
+              <caret line="344" column="14" lean-forward="false" selection-start-line="344" selection-start-column="14" selection-end-line="344" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -74,8 +83,8 @@
       <file leaf-file-name="shellinabox.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/helpers/shellinabox.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="21" column="85" lean-forward="false" selection-start-line="21" selection-start-column="85" selection-end-line="21" selection-end-column="85" />
+            <state relative-caret-position="105">
+              <caret line="7" column="4" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="34" />
               <folding />
             </state>
           </provider>
@@ -103,21 +112,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>UUID</find>
-      <find>is not a valid UUID</find>
-      <find>&quot;40f7908a-3bb0-11e7-ad8f-0cc47a7794be&quot;</find>
-      <find>vm-xen-unik</find>
-      <find>OPENVIMHOSTPORT</find>
-      <find>vlids</find>
-      <find>console.log</find>
-      <find>xen-unik</find>
-      <find>.output.</find>
-      <find>VNF2VDU</find>
-      <find>virtualLinkProfileIdvl3</find>
-      <find>vnf_vdu_cp_to07</find>
-      <find>vnf_vl_testvm</find>
-      <find>vif</find>
-      <find>osImageType</find>
       <find>OPENVIM_TENANT</find>
       <find>vm-xen-unik-vlan</find>
       <find>YAMLDIR</find>
@@ -133,6 +127,21 @@
       <find>superfluidity-openvim</find>
       <find>UUID_vms</find>
       <find>_executeOpenVimClientCommand</find>
+      <find>net-vnf_vdu_testvm_vif0</find>
+      <find>5837801d-989a-11e7-97af-0cc47a7794c0</find>
+      <find>576b0382-989a-11e7-97af-0cc47a7794c0</find>
+      <find>5837801a-989a-11e7-97af-0cc47a7794c0</find>
+      <find>5837801f-989a-11e7-97af-0cc47a7794c0</find>
+      <find>596e66c7-989a-11e7-97af-0cc47a7794c0</find>
+      <find>YAML</find>
+      <find>exec_vm_result</find>
+      <find>\&quot;property\&quot;\: \{\n                                \&quot;custom_label\&quot;</find>
+      <find>&quot;custom_label&quot;:</find>
+      <find>&quot;info&quot;: {</find>
+      <find>&quot;vertices&quot;</find>
+      <find>execexec_vm_result_vm_result</find>
+      <find>under</find>
+      <find>buildTopologyDeployment</find>
     </findStrings>
     <replaceStrings>
       <replace>//console.log</replace>
@@ -169,6 +178,7 @@
         <option value="$PROJECT_DIR$/scripts/shellinabox/superfluidity/remotevirshconsole.sh" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js" />
+        <option value="$PROJECT_DIR$/test/sub.js" />
       </list>
     </option>
   </component>
@@ -285,6 +295,11 @@
               <item name="rdcl-agent" type="462c0819:PsiDirectoryNode" />
               <item name="scripts" type="462c0819:PsiDirectoryNode" />
               <item name="superfluidity" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="rdcl-agent" type="b2602c69:ProjectViewProjectNode" />
+              <item name="rdcl-agent" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -444,12 +459,12 @@
       <workItem from="1504615196353" duration="2737000" />
       <workItem from="1504712326121" duration="1636000" />
       <workItem from="1504878670325" duration="58790000" />
-      <workItem from="1505286642158" duration="21087000" />
+      <workItem from="1505286642158" duration="34563000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98963000" />
+    <option name="totallyTimeSpent" value="112439000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1280" height="725" extended-state="0" />
@@ -462,7 +477,7 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18824464" sideWeight="0.33695653" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31111112" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Execute Anonymous" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3936508" sideWeight="0.49722" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3936508" sideWeight="0.49722" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18824464" sideWeight="0.6630435" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32857144" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -521,12 +536,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="9" />
+      <option name="time" value="10" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/api/controllers/oshi/mininet/agent.js" />
     <entry file="file://$PROJECT_DIR$/api/controllers/agent.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -699,13 +713,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node_modules/yamljs/lib/Yaml.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="12" column="2" lean-forward="false" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/scripts/superfluidity/cleanup.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="90">
@@ -815,14 +822,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/helpers/shellinabox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="235">
-          <caret line="21" column="85" lean-forward="false" selection-start-line="21" selection-start-column="85" selection-end-line="21" selection-end-column="85" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/config.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="86">
@@ -887,10 +886,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/yamljs/lib/Yaml.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-973">
+          <caret line="12" column="2" lean-forward="false" selection-start-line="12" selection-start-column="2" selection-end-line="12" selection-end-column="2" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/api/controllers/superfluidity/nsd/openvim/deployment.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="552" column="0" lean-forward="true" selection-start-line="552" selection-start-column="0" selection-end-line="552" selection-end-column="0" />
+        <state relative-caret-position="270">
+          <caret line="18" column="68" lean-forward="true" selection-start-line="18" selection-start-column="68" selection-end-line="18" selection-end-column="68" />
+          <folding>
+            <element signature="e#23353#23932#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers/shellinabox.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="4" lean-forward="true" selection-start-line="7" selection-start-column="4" selection-end-line="7" selection-end-column="34" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/sub.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="173">
+          <caret line="344" column="14" lean-forward="false" selection-start-line="344" selection-start-column="14" selection-end-line="344" selection-end-column="14" />
           <folding />
         </state>
       </provider>

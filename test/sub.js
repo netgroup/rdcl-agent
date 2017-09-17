@@ -341,5 +341,12 @@ if (exec_vm_result != undefined) {
         }
     }
 
+    var _ = require('underscore');
+    edges = _.pluck(result.edges, 'id');
+    result.vertices = _.filter(result.vertices, function (v) {
+        if(edges.indexOf(v.source) >-1 && edges.indexOf(v.target) >-1)
+            return v;
+    })
 
+    console.log(result);
 }

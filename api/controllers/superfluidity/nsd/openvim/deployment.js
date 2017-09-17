@@ -631,7 +631,12 @@ dreamer.DeploymentController = (function (global) {
 
 
         }
-
+        var _ = require('underscore');
+        var edges = _.pluck(result.edges, 'id');
+        result.vertices = _.filter(result.vertices, function (v) {
+            if(edges.indexOf(v.source) >-1 && edges.indexOf(v.target) >-1)
+                return v;
+        })
         console.log(result);
 
         return result;
