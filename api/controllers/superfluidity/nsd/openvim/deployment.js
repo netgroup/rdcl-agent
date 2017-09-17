@@ -578,13 +578,13 @@ dreamer.DeploymentController = (function (global) {
                     "info": {
                         "group": [],
                         "property": {
-                            "custom_label": "",
+                            "custom_label": yaml_object[uuid]['name'],
                             "ovim_uuid": uuid,
                         },
                         "type": "vnf"
 
                     },
-                    "id": yaml_object[uuid]['name']
+                    "id": uuid //
                 };
                 result.vertices.push(vertice);
             }
@@ -606,13 +606,13 @@ dreamer.DeploymentController = (function (global) {
                         "info": {
                             "group": [],
                             "property": {
-                                "custom_label": "",
+                                "custom_label": yaml_net_object[uuid_net]['name'],
                                 "net_uuid": uuid_net,
                             },
                             "type": "ns_vl"
 
                         },
-                        "id": yaml_net_object[uuid_net]['name']
+                        "id": uuid_net//
                     };
                     result.vertices.push(vertice);
                     for(var p in yaml_net_object[uuid_net].ports){
