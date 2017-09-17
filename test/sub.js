@@ -272,81 +272,88 @@ var result = {
     "vertices": []
 };
 
-var args_vm = ['vm-list', '-vvv'];
-//var exec_vm_result = this._executeOpenVimClientCommand(args_vm);
+var args_net = ['net-list', '-vvv'];
+//var exec_net_result = this._executeOpenVimClientCommand(args_net);
 
-if (exec_vm_result != undefined) {
-    var vms_data = exec_vm_result.replace(/(^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})([\s]+)(.)+\nserver:)/mg, function (token) {
+if (exec_net_result != undefined) {
+    //net uuid -> name
+    var net_uuid = {};
+    var net_data = exec_net_result.replace(/(^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})([\s]+)(.)+\nnetwork:)/mg, function (token) {
         var res = token.match(/^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/)
-        if(res && res.length >0)
+        if (res && res.length > 0)
             return res[0] + ":";
         return "Error";
     });
 
-    var yaml_object = YAML.parse(vms_data);
-
-    for(var uuid in yaml_object){
-        var vertice = {
-            "info": {
-                "group": [],
-                "property": {
-                    "custom_label": "",
-                    "ovim_uuid": uuid,
-                },
-                "type": "vnf"
-
-            },
-            "id": yaml_object[uuid]['name']
-        };
-        result.vertices.push(vertice);
-    }
-
-    var args_net = ['net-list', '-vvv'];
-    //var exec_net_result = this._executeOpenVimClientCommand(args_net);
-
-    if (exec_vm_result != undefined) {
-        var net_data = exec_net_result.replace(/(^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})([\s]+)(.)+\nnetwork:)/mg, function (token) {
-            var res = token.match(/^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/)
-            if(res && res.length >0)
-                return res[0] + ":";
-            return "Error";
-        });
-
-        var yaml_net_object = YAML.parse(net_data);
-        for(var uuid_net in yaml_net_object){
+    var yaml_net_object = YAML.parse(net_data);
+    for (var uuid_net in yaml_net_object) {
+        if (yaml_net_object[uuid_net]['name'] !== 'default' && yaml_net_object[uuid_net]['name'] !== 'alpine_man') {
             var vertice = {
                 "info": {
                     "group": [],
                     "property": {
-                        "custom_label": "",
+                        "custom_label": yaml_net_object[uuid_net]['name'],
                         "net_uuid": uuid_net,
                     },
                     "type": "ns_vl"
 
                 },
-                "id": yaml_net_object[uuid_net]['name']
+                "id": yaml_net_object[uuid_net]['name']//
             };
+            net_uuid[uuid_net] = yaml_net_object[uuid_net]['name'];
             result.vertices.push(vertice);
-            for(var p in yaml_net_object[uuid_net].ports){
-                var edge ={
-                    "source": uuid_net,
-                    "group": [],
-                    "target": yaml_net_object[uuid_net].ports[p].port_id,
-                    "view": "ns"
-                };
-                result.edges.push(edge);
-                console.log(edge);
-            }
 
         }
+
+
     }
 
-    var _ = require('underscore');
-    edges = _.pluck(result.edges, 'id');
-    result.vertices = _.filter(result.vertices, function (v) {
-        if(edges.indexOf(v.source) >-1 && edges.indexOf(v.target) >-1)
-            return v;
-    })
+    var args_vm = ['vm-list', '-vvv'];
+    //var exec_vm_result = this._executeOpenVimClientCommand(args_vm);
 
-    console.log(result);
+    if (exec_vm_result != undefined) {
+        var vms_data = exec_vm_result.replace(/(^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})([\s]+)(.)+\nserver:)/mg, function (token) {
+            var res = token.match(/^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/)
+            if (res && res.length > 0)
+                return res[0] + ":";
+            return "Error";
+        });
+
+        var yaml_object = YAML.parse(vms_data);
+
+        for (var uuid in yaml_object) {
+            var vertice = {
+                "info": {
+                    "group": [],
+                    "property": {
+                        "custom_label": yaml_object[uuid]['name'],
+                        "ovim_uuid": uuid,
+                    },
+                    "type": "vnf"
+
+                },
+                "id": yaml_object[uuid]['name'] //
+            };
+            result.vertices.push(vertice);
+
+            for (var n in yaml_object[uuid].networks) {
+                if(net_uuid[yaml_object[uuid].networks[n].net_id])  {
+                    var edge = {
+                        "source": yaml_object[uuid]['name'],
+                        "group": [],
+                        "target":net_uuid[yaml_object[uuid].networks[n].net_id],
+                        "view": "ns"
+                    };
+                    result.edges.push(edge);
+                }
+                //console.log(edge);
+            }
+        }
+
+
+    }
+
 }
+
+
+console.log(result);
