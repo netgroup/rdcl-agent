@@ -602,29 +602,32 @@ dreamer.DeploymentController = (function (global) {
 
                 var yaml_net_object = YAML.parse(net_data);
                 for(var uuid_net in yaml_net_object){
-                    var vertice = {
-                        "info": {
-                            "group": [],
-                            "property": {
-                                "custom_label": yaml_net_object[uuid_net]['name'],
-                                "net_uuid": uuid_net,
-                            },
-                            "type": "ns_vl"
+                   if (yaml_net_object[uuid_net]['name'] != 'default' && yaml_net_object[uuid_net]['name'] != 'alpine_man')  {
+                       var vertice = {
+                           "info": {
+                               "group": [],
+                               "property": {
+                                   "custom_label": yaml_net_object[uuid_net]['name'],
+                                   "net_uuid": uuid_net,
+                               },
+                               "type": "ns_vl"
 
-                        },
-                        "id": uuid_net//
-                    };
-                    result.vertices.push(vertice);
-                    for(var p in yaml_net_object[uuid_net].ports){
-                        var edge ={
-                            "source": uuid_net,
-                            "group": [],
-                            "target": yaml_net_object[uuid_net].ports[p].port_id,
-                            "view": "ns"
-                        };
-                        result.edges.push(edge);
-                        //console.log(edge);
-                    }
+                           },
+                           "id": uuid_net//
+                       };
+                       result.vertices.push(vertice);
+                       for(var p in yaml_net_object[uuid_net].ports){
+                           var edge ={
+                               "source": uuid_net,
+                               "group": [],
+                               "target": yaml_net_object[uuid_net].ports[p].port_id,
+                               "view": "ns"
+                           };
+                           result.edges.push(edge);
+                           //console.log(edge);
+                       }
+                   }
+
 
                 }
             }
@@ -636,6 +639,7 @@ dreamer.DeploymentController = (function (global) {
         result.vertices = _.filter(result.vertices, function (v) {
             if(edges.indexOf(v.source) >-1 && edges.indexOf(v.target) >-1)
                 return v;
+
         })
         console.log(result);
 
