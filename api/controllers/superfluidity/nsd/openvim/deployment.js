@@ -435,7 +435,8 @@ dreamer.DeploymentController = (function (global) {
                         var vm_uuid = this._onboardVm(vm_yaml_path);
                         if (vm_uuid) {
                             console.log("vdu_id: " + vdu_id)
-                            UUID_vms[vdu_id] = vm_uuid;
+                            //vm_name = 'vm-' + VDUHYPERVISOR[vdu_id] + '-' + vnfid;
+                            UUID_vms['vm-' + VDUHYPERVISOR[vdu_id] + '-' + vnfid] = vm_uuid;
                         }
                         //TODO APPEND to vm_uuid list
                     }
@@ -538,7 +539,7 @@ dreamer.DeploymentController = (function (global) {
         self._cmd_result['node_info'] = {};
         if (args['node_id']) {
 
-            var nodeUUID = UUID_vms[args['node_id']];
+            var nodeUUID = args['node_id'];
             var exec_res = this._executeOpenVimClientCommand(['vm-list', '-v', nodeUUID]);
 
             if (exec_res != undefined) {
