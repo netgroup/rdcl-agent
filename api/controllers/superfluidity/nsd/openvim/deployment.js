@@ -623,7 +623,7 @@ dreamer.DeploymentController = (function (global) {
                             "view": "ns"
                         };
                         result.edges.push(edge);
-                        console.log(edge);
+                        //console.log(edge);
                     }
 
                 }
@@ -632,7 +632,7 @@ dreamer.DeploymentController = (function (global) {
 
         }
 
-
+        console.log(result);
 
         return result;
     };
