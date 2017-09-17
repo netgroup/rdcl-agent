@@ -556,124 +556,84 @@ dreamer.DeploymentController = (function (global) {
     DeploymentController.prototype.buildTopologyDeployment = function (args) {
 
         var result = {
-            "edges": [
-                {
-                    "source": "vnf_vdu_testvm",
-                    "group": [],
-                    "target": "vl3",
-                    "view": "ns"
-                },
-                {
-                    "source": "vnf_click_vdu_vlan",
-                    "group": [],
-                    "target": "vl3",
-                    "view": "ns"
-                },
-                {
-                    "source": "vnf_click_vdu_vlan",
-                    "group": [],
-                    "target": "vl1",
-                    "view": "ns"
-                },
-                {
-                    "source": "vnf_click_vdu_firewall",
-                    "group": [],
-                    "target": "vl1",
-                    "view": "ns"
-                },
-                {
-                    "source": "vnf_click_vdu_firewall",
-                    "group": [],
-                    "target": "vl2",
-                    "view": "ns"
-                },
-                {
-                    "source": "vnf_click_vdu_ping",
-                    "group": [],
-                    "target": "vl2",
-                    "view": "ns"
-                }
-            ],
-            "vertices": [
-                {
-                    "info": {
-                        "group": [],
-                        "property": {
-                            "custom_label": "",
-
-                        },
-                        "type": "vnf"
-                    },
-                    "id": "vnf_vdu_testvm"
-                },
-                {
-                    "info": {
-                        "group": [],
-                        "property": {
-                            "custom_label": "",
-
-                        },
-                        "type": "vnf"
-                    },
-                    "id": "vnf_click_vdu_vlan"
-                },
-                {
-                    "info": {
-                        "group": [],
-                        "property": {
-                            "custom_label": "",
-
-                        },
-                        "type": "vnf"
-                    },
-                    "id": "vnf_click_vdu_firewall"
-                },
-                {
-                    "info": {
-                        "group": [],
-                        "property": {
-                            "custom_label": "",
-
-                        },
-                        "type": "vnf"
-                    },
-                    "id": "vnf_click_vdu_ping"
-                },
-                {
-                    "info": {
-                        "group": [],
-                        "property": {
-                            "custom_label": "",
-
-                        },
-                        "type": "ns_vl"
-                    },
-                    "id": "vl3"
-                },
-                {
-                    "info": {
-                        "group": [],
-                        "property": {
-                            "custom_label": "",
-
-                        },
-                        "type": "ns_vl"
-                    },
-                    "id": "vl2"
-                },
-                {
-                    "info": {
-                        "group": [],
-                        "property": {
-                            "custom_label": "",
-
-                        },
-                        "type": "ns_vl"
-                    },
-                    "id": "vl1"
-                }
-            ]
+            "edges": [],
+            "vertices": []
         };
+
+        var args_vm = ['vm-list', '-vvv'];
+        var exec_vm_result = this._executeOpenVimClientCommand(args_vm);
+
+        if (exec_vm_result != undefined) {
+            var vms_data = exec_vm_result.replace(/(^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})([\s]+)(.)+\nserver:)/mg, function (token) {
+                var res = token.match(/^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/)
+                if(res && res.length >0)
+                    return res[0] + ":";
+                return "Error";
+            });
+
+            var yaml_object = YAML.parse(vms_data);
+
+            for(var uuid in yaml_object){
+                var vertice = {
+                    "info": {
+                        "group": [],
+                        "property": {
+                            "custom_label": "",
+                            "ovim_uuid": uuid,
+                        },
+                        "type": "vnf"
+
+                    },
+                    "id": yaml_object[uuid]['name']
+                };
+                result.vertices.push(vertice);
+            }
+
+            var args_net = ['net-list', '-vvv'];
+            var exec_net_result = this._executeOpenVimClientCommand(args_net);
+
+            if (exec_vm_result != undefined) {
+                var net_data = exec_net_result.replace(/(^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})([\s]+)(.)+\nnetwork:)/mg, function (token) {
+                    var res = token.match(/^([0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})/)
+                    if(res && res.length >0)
+                        return res[0] + ":";
+                    return "Error";
+                });
+
+                var yaml_net_object = YAML.parse(net_data);
+                for(var uuid_net in yaml_net_object){
+                    var vertice = {
+                        "info": {
+                            "group": [],
+                            "property": {
+                                "custom_label": "",
+                                "net_uuid": uuid_net,
+                            },
+                            "type": "ns_vl"
+
+                        },
+                        "id": yaml_net_object[uuid_net]['name']
+                    };
+                    result.vertices.push(vertice);
+                    for(var p in yaml_net_object[uuid_net].ports){
+                        var edge ={
+                            "source": uuid_net,
+                            "group": [],
+                            "target": yaml_net_object[uuid_net].ports[p].port_id,
+                            "view": "ns"
+                        };
+                        result.edges.push(edge);
+                        console.log(edge);
+                    }
+
+                }
+            }
+
+
+        }
+
+
+
         return result;
     };
 
