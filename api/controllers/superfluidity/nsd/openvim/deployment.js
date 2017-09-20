@@ -85,7 +85,7 @@ dreamer.DeploymentController = (function (global) {
     }
 
 
-    DeploymentController.prototype._createImageCLick = function (vduId) {
+    DeploymentController.prototype._createImageCLick = function (vduId, click_descriptor_path) {
         //TODO add exception on command errors
         log.info("[%s] %s", DEBUG_LOG, "start creating Clickimage");
         var result;
@@ -93,7 +93,7 @@ dreamer.DeploymentController = (function (global) {
         var new_image_path = this._yamlsdir + '/' + image_file_name;
         var commands = [
             ['cp', config.openvim.STAMINALCLICKOSIMAGE, new_image_path],
-            [config.openvim.CLICKINJECTOR, vduId + '.click', new_image_path],
+            [config.openvim.CLICKINJECTOR, click_descriptor_path, new_image_path],
             ['chmod', 'u+rw', new_image_path]
         ];
         for (var c in commands) {
@@ -308,8 +308,11 @@ dreamer.DeploymentController = (function (global) {
                         var h = new Helper();
                         var nestedDesc = h.getNestedDesc(current_vnfd, vdu.vduNestedDesc);
                         if (nestedDesc.vduNestedDescriptorType == "click") {
+                            // create local click file to inject
+                            var click_desc_path =path.join(this._deployment_path, nestedDesc.vduNestedDescriptor + '.click')
+                            fs.writeFileSync(click_desc_path, this._deployment_descriptor['click'][nestedDesc.vduNestedDescriptor]);
                             //create a new image corresponding to the click configuration
-                            var new_image_path = this._createImageCLick(vdu.vduId);
+                            var new_image_path = this._createImageCLick(vdu.vduId, click_desc_path);
                             if (new_image_path != undefined) {
 
                                 // upload image to the server. The way to do this is not defined by openvim, so we use scp
