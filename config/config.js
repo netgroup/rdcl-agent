@@ -3,8 +3,8 @@ var path = require("path");
 config.name = "RDCL AGENT";
 
 
-config.os_user = 'rfb';
-config.os_user_group = 'rfb';
+config.os_user = 'user';
+config.os_user_group = 'user';
 
 config.redis = {};
 config.redis.host = 'hostname';
