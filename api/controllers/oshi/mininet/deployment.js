@@ -78,7 +78,7 @@ dreamer.DeploymentController = (function (global){
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
-            self.sh = spawn("sudo",['python','mininet_deployer.py' , '--topology', self._topology_path, '--version', '2'], {
+            self.sh = spawn("sudo",['python','mininet_deployer.py' , '--topology', self._topology_path, '--version', '2', '--no-cli'], {
                 'cwd': config.mininet.mininet_extension_path
             });
             self._initSh(success, error);

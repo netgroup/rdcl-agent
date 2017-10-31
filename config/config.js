@@ -29,12 +29,25 @@ config.mininet.start_cmd = ['-t',
 
 /* Openvim configurations */
 config.openvim = {};
+// flavor for ClickOS VMs
+config.openvim.CLICKFLAVORUUID = "5a258552-0a51-11e7-a086-0cc47a7794be";
+// flavor for "normal" VMs
+config.openvim.VMFLAVOURUUID="40f7908a-3bb0-11e7-ad8f-0cc47a7794be";
+
+config.openvim.CLICKINJECTOR_HOME = "/home/rfb/configinjector";
+config.openvim.CLICKINJECTOR = path.join(config.openvim.CLICKINJECTOR_HOME, 'configinjector');
+config.openvim.STAMINALCLICKOSIMAGE = path.join(config.openvim.CLICKINJECTOR_HOME,'clickos_x86_64_staminal');
 config.openvim.BASE_CWD =  path.join(process.env.PWD,'scripts/superfluidity');
 config.openvim.OPENVIM_CLI_HOME = '/home/rfb/openvimclient';
-config.openvim.OPENVIM_HOST = 'localhost';
-config.openvim.OPENVIM_PORT = 9080;
-config.openvim.OPENVIM_ADMIN_PORT = 9085;
-config.openvim.OPENVIM_TENANT = '96035cba-b313-11e6-866f-0cc47a7794be';
+config.openvim.OPENVIM = path.join(config.openvim.OPENVIM_CLI_HOME, 'openvim');
+config.openvim.OPENVIMHOST = '127.0.0.1';
+config.openvim.OPENVIMHOSTPORT = "2222";
+config.openvim.OPENVIMHOSTUSERNAME="root";
+config.openvim.env = {};
+config.openvim.env.OPENVIM_HOST = 'localhost';
+config.openvim.env.OPENVIM_PORT = 9080;
+config.openvim.env.OPENVIM_ADMIN_PORT = 9085;
+config.openvim.env.OPENVIM_TENANT = '96035cba-b313-11e6-866f-0cc47a7794be';
 config.openvim.CLEAN_UP_SCRIPT = 'cleanup.sh';
 config.openvim.SHELLINABOX_SCRIPT = path.join(process.env.PWD, 'scripts/shellinabox/superfluidity/remotevirshconsole.sh');
 config.openvim.start_cmd = ['-t', 
