@@ -10,8 +10,8 @@ This agent is used in the RDCL 3D framework to deploy [OSHI (Open Source Hybrid 
 ## Instructions
 
 Dependencies: 
-npm
-node.js
-shellinabox (optional)
+- npm
+- node.js
+- shellinabox (optional)
 
 After cloning the git repository, you have to:
