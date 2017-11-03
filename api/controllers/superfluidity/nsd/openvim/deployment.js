@@ -93,6 +93,7 @@ dreamer.DeploymentController = (function (global) {
         var new_image_path = this._yamlsdir + '/' + image_file_name;
         var commands = [
             ['cp', config.openvim.STAMINALCLICKOSIMAGE, new_image_path],
+            ['chmod', 'u+rw', new_image_path],
             [config.openvim.CLICKINJECTOR, click_descriptor_path, new_image_path],
             ['chmod', 'u+rw', new_image_path]
         ];
@@ -309,7 +310,7 @@ dreamer.DeploymentController = (function (global) {
                         var nestedDesc = h.getNestedDesc(current_vnfd, vdu.vduNestedDesc);
                         if (nestedDesc.vduNestedDescriptorType == "click") {
                             // create local click file to inject
-                            var click_desc_path =path.join(this._deployment_path, nestedDesc.vduNestedDescriptor + '.click')
+                            var click_desc_path = path.join(this._deployment_path, nestedDesc.vduNestedDescriptor + '.click')
                             fs.writeFileSync(click_desc_path, this._deployment_descriptor['click'][nestedDesc.vduNestedDescriptor]);
                             //create a new image corresponding to the click configuration
                             var new_image_path = this._createImageCLick(vdu.vduId, click_desc_path);
