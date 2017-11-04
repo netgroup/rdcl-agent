@@ -67,6 +67,6 @@ typings/
 .DS_Store
 
 # Deployment files
-deployments_data/h*
+deployments_data/*
 !deployments_data/*.md
 # End of https://www.gitignore.io/api/node
