@@ -19,6 +19,7 @@ shellinabox.user_group = config.os_user + ':' + config.os_user_group;
 /* Mininet configurations*/
 config.mininet = {};
 config.mininet.mininet_extension_path = "/home/user/workspace/Dreamer-Mininet-Extensions";
+config.mininet.srv6_mininet_extension_path = "/home/user/workspace/Dreamer-Mininet-Extensions";
 config.mininet.SHELLINABOX_SCRIPT = path.join(process.env.PWD, 'scripts/shellinabox/mininet/mininet_ssh_connect.sh');
 config.mininet.start_cmd = ['-t', 
 	'-s', 
