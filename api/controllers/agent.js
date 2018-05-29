@@ -15,7 +15,8 @@ dreamer.AgentController = (function (global){
 
     var controller_mapping = {
         "superfluidity-openvim": "./superfluidity/nsd/openvim/deployment" ,
-        "oshi-mininet": "./oshi/mininet/deployment"
+        "oshi-mininet": "./oshi/mininet/deployment",
+        "srv6_net_prog-mininet": "./srv6_net_prog/mininet/deployment"
     };
 
     function AgentController(args){
