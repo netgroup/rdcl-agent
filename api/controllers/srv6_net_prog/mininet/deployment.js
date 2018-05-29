@@ -82,7 +82,7 @@ dreamer.DeploymentController = (function (global){
         var h = new Helper();
         h.newJSONfile(this._topology_path, this._deployment_descriptor,
         function(){
-            self.sh = spawn("sudo",['python','srv6_mininet_extension.py' , '--topology', self._topology_path], {
+            self.sh = spawn("sudo",['python','srv6_mininet_extension.py' , '--topology', self._topology_path, '--no-cli'], {
                 'cwd': config.mininet.srv6_mininet_extension_path
             });
             self._initSh(success, error);
@@ -97,8 +97,8 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.stop = function(success, error){
         var self = this;
         log.info("[%s] %s",DEBUG_LOG,"DeploymentController stop");
-        var stsh = spawn("sudo",['python','abilene_prova.py' , '--stop-all'], {
-                'cwd': config.mininet.mininet_extension_path
+        var stsh = spawn("sudo", ['python', 'srv6_mininet_extension.py', '--stop-all'], {
+                'cwd': config.mininet.srv6_mininet_extension_path
             });
 
             this.sh.stdout.setEncoding('utf-8');
@@ -152,41 +152,42 @@ dreamer.DeploymentController = (function (global){
     DeploymentController.prototype.getNodeConsole = function(args, success, fail){
         log.info("[%s] %s", DEBUG_LOG, 'getNodeConsole');
         var helper = new Helper();
-        helper.impJsonFromFile('/tmp/overall_info.json', function(data_result){
+        helper.impJsonFromFile('/tmp/topology.json', function(data_result){
             if(data_result.error){
                 return fail(data_result.error.message)
             }
             else{
-                var node_data = data_result.data[args.node_id] || undefined;
-                var shellinabox = new ShellInABox();
-                var result = {
-                        console_enabled: false,
-                        console_info: {
-                            'url': '',
-                            'type': 'shellinabox'
+                var nodes_data = data_result.data['nodes'] || []
+                // Iterate over the array
+                for(var i in nodes_data){
+                    // Found it
+                    if(nodes_data[i].id == args.node_id){
+                        var shellinabox = new ShellInABox();
+                        var result = {
+                            console_enabled: false,
+                            console_info: {
+                                'url': '',
+                                'type': 'shellinabox'
+                            }
+                        }
+                        if(nodes_data[i].mgmtip){
+                            var tokens = nodes_data[i].mgmtip.split("/")
+                            if(tokens.length == 2){
+                                args['nodeUUID'] = tokens[0];
+                                result.console_info.url = shellinabox.getNodeEndPoint(args);
+                                result.console_enabled = true;
+                                return success(result);
+                            }
                         }
                     }
-                if(node_data && node_data['mgt_IP']){
-
-                    args['nodeUUID'] = node_data['mgt_IP'];
-                    result.console_info.url = shellinabox.getNodeEndPoint(args);
-                    result.console_enabled = true;
                 }
-                return success(result);
-
+                return fail("mgmt ip not found")
             }
 
         });
-
-
-
     };
 
-
-
-
-
-    return DeploymentController;
+return DeploymentController;
 
 }(this));
 
